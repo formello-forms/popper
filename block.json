@@ -1,0 +1,112 @@
+{
+	"apiVersion": 2,
+	"name": "formello/popper",
+	"title": "Popper",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "A great popup block.",
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"className": true,
+		"reusable": false,
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		}
+	},
+	"attributes": {
+	    "width": {
+	      "type": "number",
+	      "default": 400
+	    },
+	    "waitTime": {
+	      "type": "number",
+	      "default": 1
+	    },
+	    "offset": {
+	      "type": "number",
+	      "default": 20
+	    },
+	    "openBehaviour": {
+	      "type": "string",
+	      "default": "load"
+	    },
+	    "showCloseButton": {
+	      "type": "boolean",
+	      "default": true
+	    },
+	    "closeButtonAlignment": {
+	      "type": "string",
+	      "default": "right"
+	    },
+	    "closeButtonColor": {
+	      "type": "string",
+	      "default": "#000000"
+	    },
+	    "overlayColor": {
+	      "type": "string",
+	      "default": "#000000"
+	    },
+	    "overlayOpacity": {
+	      "type": "number",
+	      "default": 75
+	    },
+	    "closeButtonSize": {
+	      "type": "number",
+	      "default": 20
+	    },
+	    "borderRadius": {
+	      "type": "number",
+	      "default": 3
+	    },
+	    "closeOnClickOutside": {
+	      "type": "boolean",
+	      "default": true
+	    },
+	    "closeOnAnchorClick": {
+	      "type": "boolean",
+	      "default": false
+	    },
+	    "closeAnchor": {
+	      "type": "string"
+	    },
+	    "anchor": {
+	      "type": "string",
+	      "default": ""
+	    },
+	    "target": {
+	      "type": "string",
+	      "default": ""
+	    },
+	    "backgroundColor": {
+	      "type": "string"
+	    },
+	    "gradientBackground": {
+	      "type": "string"
+	    },
+	    "dismissForVisitors": {
+	      "type": "boolean",
+	      "default": true
+	    },
+	    "dismissPeriod": {
+	      "type": "number",
+	      "default": 20
+	    },
+	    "uuid": {
+	      "type": "number",
+	      "default": null
+	    }
+	},
+	"textdomain": "popper",
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css",
+	"script": "file:./build/frontend.js"
+}

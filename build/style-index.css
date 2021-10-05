@@ -1,0 +1,101 @@
+@charset "UTF-8";
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+/**************************
+  Basic Modal Styles
+**************************/
+.popper {
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+}
+
+.popper {
+  display: none;
+}
+
+.popper.is-open {
+  display: block;
+}
+
+.popper__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.popper__container {
+  background-color: white;
+  padding: 0px;
+  max-width: 740px;
+  border-radius: 0px;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1000;
+}
+
+.popper__content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 75vh;
+  min-height: 50px;
+}
+
+.popper__close {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  margin: 0px;
+  padding: 0px;
+  z-index: 1000;
+  font-size: 1em;
+  line-height: 1em;
+  outline: none;
+  cursor: pointer !important;
+  background-color: transparent !important;
+}
+
+.popper__close:hover, .popper__close:focus {
+  background-color: transparent;
+  outline: none;
+}
+
+.popper__close:before {
+  content: "✕";
+}
+
+/**************************
+  Mobile custom styles for individual modals
+**************************/
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .popper__container {
+    width: 90% !important;
+    min-width: 90% !important;
+  }
+
+  @supports (display: flex) {
+    .popper__container {
+      width: 90% !important;
+      min-width: 90% !important;
+      max-height: 85vh;
+    }
+  }
+  .popper__content {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/*# sourceMappingURL=style-index.css.map*/
