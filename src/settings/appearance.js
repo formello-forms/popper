@@ -48,13 +48,13 @@ const Appearance = ( props ) => {
 			<PanelBody title={ __( 'Modal Appearance', 'popper' ) } initialOpen={ false }>
 				<PanelRow>
 					<RangeControl
-						value={ width }
-						label={ __( 'Popup Minimum Width', 'popper' ) }
+						value={ overlayOpacity }
+						label={ __( 'Overlay Opacity', 'abs-popup' ) }
 						onChange={ ( val ) => {
-							setAttributes( { width: val } );
+							setAttributes( { overlayOpacity: val } );
 						} }
 						min={ 0 }
-						max={ 1000 }
+						max={ 100 }
 					/>
 				</PanelRow>
 				<PanelRow>
@@ -68,7 +68,6 @@ const Appearance = ( props ) => {
 						max={ 100 }
 					/>
 				</PanelRow>
-				<hr />
 				<PanelRow>
 					<RangeControl
 						value={ closeButtonSize }

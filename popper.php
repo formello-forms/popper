@@ -99,7 +99,7 @@ function popper_register() {
 }
 add_action( 'init', 'popper_register' );
 
-function filter_block_editor_settings_when_post_provided() {
+function popper_positions() {
 	$positions = Popper_Conditions::get_conditions();
 
 	wp_localize_script(
@@ -111,13 +111,10 @@ function filter_block_editor_settings_when_post_provided() {
 	);
 
 }
-add_filter( 'admin_enqueue_scripts', 'filter_block_editor_settings_when_post_provided', 10, 2 );
+add_filter( 'admin_enqueue_scripts', 'popper_positions', 10, 2 );
 
 /**
  * Saves box options and rules
- *
- * @param int $box_id
- *
  */
 function popper_matcher() {
 	if( is_admin() || wp_is_json_request() ){
@@ -144,8 +141,8 @@ function popper_matcher() {
 		$matched = Popper_Conditions::show_data( $rule['location'], $rule['exclude'], array() );
 
 		if ( $matched ) {
-			$form = get_post( $popper_id );
-			$popups .= do_blocks( $form->post_content );
+			$popper = get_post( $popper_id );
+			$popups .= do_blocks( $popper->post_content );
 			$matched = false;
 		}
 

@@ -60,7 +60,7 @@ registerPlugin('popper-display', {
 
 		return (
 			<PluginDocumentSettingPanel
-				title={ __( 'Position', 'popper' ) }
+				title={ __( 'Display', 'popper' ) }
 				icon={ () => '' }
 			>
 				<BaseControl>

@@ -80,6 +80,7 @@ export default function save( props ) {
             <div 
                 className="popper__overlay" 
                 tabindex="-1" 
+                style={ { backgroundColor: 'rgba(0,0,0,' + overlayOpacity/100 + ')' } }
             >
                 <div className="popper__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title" style={ modalStyle }>
                     <button className="popper__close" aria-label="Close modal" style={ closeButtonStyle }></button>

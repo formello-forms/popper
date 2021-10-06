@@ -10,8 +10,11 @@
 .popper-modal .components-form-token-field__help {
   margin-top: 5px;
 }
-.popper-modal button {
+.popper-modal button.components-button {
   margin-bottom: 18px;
+}
+.popper-modal button.components-form-token-field__remove-token {
+  margin-bottom: 0;
 }
 @charset "UTF-8";
 /**

@@ -59,7 +59,7 @@ const OpenBehaviour = ( props ) => {
 						help={
 							<small>
 								{ __(
-									'You can add anchors to button blocks. Using the same anchor here will open the modal when you click the respective button.',
+									'You can add anchors to button blocks. Using the same anchor here will open the popup when you click the respective button.',
 									'popper'
 								) }
 							</small>
@@ -74,7 +74,7 @@ const OpenBehaviour = ( props ) => {
 						help={
 							<small>
 								{ __(
-									'You can open a modal when element with this anchor enter in viewport.',
+									'Show a popup when element with this anchor enter in viewport.',
 									'popper'
 								) }
 							</small>
@@ -91,7 +91,7 @@ const OpenBehaviour = ( props ) => {
 						help={
 							<small>
 								{ __(
-									'Show the modal when this percentage of the page has been scrolled.'
+									'Show the popup when this percentage of the page has been scrolled.'
 								) }
 							</small>
 						}
@@ -122,7 +122,7 @@ const OpenBehaviour = ( props ) => {
 				{ openBehaviour === 'exit' && (
 					<small>
 						{ __(
-							'Shows the modal when the user moves the mouse outside of the top of the window',
+							'Shows the popup when the user moves the mouse outside of the top of the window',
 							'popper'
 						) }
 					</small>

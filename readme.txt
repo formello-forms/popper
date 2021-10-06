@@ -1,14 +1,14 @@
 === Popper ===
-Contributors:      The WordPress Contributors
-Tags:              block
+Contributors:      Formello
+Tags:              popup, pop up, exit intent, popup maker, exit popup, popup builder, wordpress popup plugin
 Requires at least: 5.6.0
-Tested up to:      5.7.0
+Tested up to:      5.8.1
 Stable tag:        0.1.0
-Requires PHP:      7.0.0
+Requires PHP:      5.6.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Example block written with ESNext standard and JSX support – build step required.
+A popup builder to increase Sales, Lead Generation, Conversion rates and receive good Call to Action with exit intent.
 
 == Description ==
 
@@ -16,6 +16,12 @@ This is the long description. No limit, and you can use Markdown (as well as in 
 
 For backwards compatibility, if this section is missing, the full length of the short description will be used, and
 Markdown parsed.
+
+**VARIOUS POPUP TYPES FOR ALL OCCASIONS**
+
+**CONTRIBUTE**
+
+Popper is open source and you can contribute: 
 
 == Installation ==
 
@@ -29,21 +35,22 @@ e.g.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= Is exit intent availbale? =
 
-An answer to that question.
+Yes. We have integrated exit-intent for desktop at the moment. We're planning to add also exit-intent for mobile.
 
-= What about foo bar? =
+= Is required jQuery? =
 
-Answer to foo bar dilemma.
+No. No external library is required. We mantain a clean fast code without dependency.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. Popup creation.
+2. Popper settings
+3. Popper block selection
+4. Popper presets
+5. Popper block settings
+6. Popper display settings
 
 == Changelog ==
 
