@@ -1,6 +1,6 @@
 <?php
 /**
- * This file handles the Display Rule conditions for Elements.
+ * This file handles the Display Rule conditions for Popper blocks.
  *
  * @package Popper
  */

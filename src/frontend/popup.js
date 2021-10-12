@@ -178,6 +178,7 @@ class Popup {
 		this.bindCloseButtons();
 		this.bindAnchorClose();
 		this.bindOverlayClosing();
+		this.bindFormClosing();
 	}
 
 	bindAnchorClose() {
@@ -217,6 +218,14 @@ class Popup {
 			if (e.target == overlay) {
 				this.closeModal();
 			}
+		} );
+	}
+
+	bindFormClosing() {
+		window.addEventListener( 'formello-success', (e) => {
+			setTimeout(() => {
+				this.closeModal();
+			}, 1000);
 		} );
 	}
 

@@ -21,6 +21,9 @@
 
 require __DIR__ . '/includes/class-conditions.php';
 
+/**
+ * Register Popper block
+ */
 function popper_block_init() {
 	register_block_type_from_metadata(
 		__DIR__,
@@ -28,23 +31,25 @@ function popper_block_init() {
 }
 add_action( 'init', 'popper_block_init' );
 
-
+/**
+ * Register CPT.
+ */
 function popper_register() {
 	$args = array(
 		'labels' => array(
-			'name'                => _x( 'Popups', 'Post Type General Name', 'popper' ),
-			'singular_name'       => _x( 'Popup', 'Post Type Singular Name', 'popper' ),
-			'menu_name'           => __( 'Popups', 'popper' ),
-			'parent_item_colon'   => __( 'Parent Popup', 'popper' ),
-			'all_items'           => __( 'Popups', 'popper' ),
-			'view_item'           => __( 'View Popup', 'popper' ),
-			'add_new_item'        => __( 'Add New Popup', 'popper' ),
-			'add_new'             => __( 'Add New', 'popper' ),
-			'edit_item'           => __( 'Edit Popup', 'popper' ),
-			'update_item'         => __( 'Update Popup', 'popper' ),
-			'search_items'        => __( 'Search Popup', 'popper' ),
-			'not_found'           => __( 'Not Found', 'popper' ),
-			'not_found_in_trash'  => __( 'Not found in Trash', 'popper' ),
+			'name'               => _x( 'Popups', 'Post Type General Name', 'popper' ),
+			'singular_name'      => _x( 'Popup', 'Post Type Singular Name', 'popper' ),
+			'menu_name'          => __( 'Popups', 'popper' ),
+			'parent_item_colon'  => __( 'Parent Popup', 'popper' ),
+			'all_items'          => __( 'Popups', 'popper' ),
+			'view_item'          => __( 'View Popup', 'popper' ),
+			'add_new_item'       => __( 'Add New Popup', 'popper' ),
+			'add_new'            => __( 'Add New', 'popper' ),
+			'edit_item'          => __( 'Edit Popup', 'popper' ),
+			'update_item'        => __( 'Update Popup', 'popper' ),
+			'search_items'       => __( 'Search Popup', 'popper' ),
+			'not_found'          => __( 'Not Found', 'popper' ),
+			'not_found_in_trash' => __( 'Not found in Trash', 'popper' ),
 		),
 		'public'              => false,
 		'publicly_queryable'  => false,
@@ -57,11 +62,12 @@ function popper_register() {
 		'show_in_menu'        => true,
 		'show_in_admin_bar'   => true,
 		'show_in_rest'        => true,
+		'menu_icon'           => 'dashicons-external',
 		'capability_type'     => 'post',
-        'template' => array(
-            array( 'formello/popper' ),
-        ),
-        'template_lock' 	  => 'insert',
+		'template'            => array(
+			array( 'formello/popper' ),
+		),
+		'template_lock'       => 'insert',
 		'supports'            => array(
 			'title',
 			'editor',
@@ -99,6 +105,9 @@ function popper_register() {
 }
 add_action( 'init', 'popper_register' );
 
+/**
+ * Print default positions options.
+ */
 function popper_positions() {
 	$positions = Popper_Conditions::get_conditions();
 
@@ -114,10 +123,10 @@ function popper_positions() {
 add_filter( 'admin_enqueue_scripts', 'popper_positions', 10, 2 );
 
 /**
- * Saves box options and rules
+ * Saves box options and rules.
  */
 function popper_matcher() {
-	if( is_admin() || wp_is_json_request() ){
+	if ( is_admin() || wp_is_json_request() ) {
 		return false;
 	}
 	global $wpdb;
@@ -125,10 +134,10 @@ function popper_matcher() {
 	$popups = '';
 
 	$rules = $wpdb->get_results(
-		$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key=%s", 'popper_rules' ) 
+		$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key=%s", 'popper_rules' )
 	);
 
-	$matched = false;
+	$matched   = false;
 	$popper_id = '';
 
 	// loop through all rules for all boxes.
@@ -141,14 +150,13 @@ function popper_matcher() {
 		$matched = Popper_Conditions::show_data( $rule['location'], $rule['exclude'], array() );
 
 		if ( $matched ) {
-			$popper = get_post( $popper_id );
+			$popper  = get_post( $popper_id );
 			$popups .= do_blocks( $popper->post_content );
 			$matched = false;
 		}
-
 	}
 
-	echo $popups;
+	return $popups;
 
 }
-add_action( 'wp_footer', 'popper_matcher' );
+add_action( 'the_content', 'popper_matcher' );

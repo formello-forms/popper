@@ -561,6 +561,7 @@ var Popup = /*#__PURE__*/function () {
       this.bindCloseButtons();
       this.bindAnchorClose();
       this.bindOverlayClosing();
+      this.bindFormClosing();
     }
   }, {
     key: "bindAnchorClose",
@@ -611,6 +612,17 @@ var Popup = /*#__PURE__*/function () {
         if (e.target == overlay) {
           _this9.closeModal();
         }
+      });
+    }
+  }, {
+    key: "bindFormClosing",
+    value: function bindFormClosing() {
+      var _this10 = this;
+
+      window.addEventListener('formello-success', function (e) {
+        setTimeout(function () {
+          _this10.closeModal();
+        }, 1000);
       });
     }
   }, {
