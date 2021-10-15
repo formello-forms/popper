@@ -3,7 +3,6 @@
 	"name": "formello/popper",
 	"title": "Popper",
 	"category": "widgets",
-	"icon": "smiley",
 	"description": "A great popup block.",
 	"supports": {
 		"html": false,
