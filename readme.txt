@@ -3,7 +3,7 @@ Contributors:      Formello
 Tags:              popup, pop up, exit intent, popup maker, exit popup, popup builder, wordpress popup plugin
 Requires at least: 5.6.0
 Tested up to:      5.8.1
-Stable tag:        0.1.0
+Stable tag:        0.1.1
 Requires PHP:      5.6.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,11 +18,11 @@ You can use all available blocks to build your own popup content. If you want co
 
 **DOCUMENTATION**
 
-Here you can find documentation: https://docs.formello.net/addons/popper 
+Here you can find [documentation](https://docs.formello.net/addons/popper).
 
 **CONTRIBUTE**
 
-Popper is open source and you can contribute here: https://github.com/formello-forms/popper 
+Popper is open source and you can [contribute here](https://github.com/formello-forms/popper).
 
 == Installation ==
 
@@ -50,6 +50,9 @@ No. No external library is required. We mantain a clean fast code without depend
 6. Popper display settings
 
 == Changelog ==
+
+= 0.1.1 =
+* Added correct links
 
 = 0.1.0 =
 * Release
