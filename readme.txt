@@ -32,7 +32,11 @@ Popper is open source and you can [contribute here](https://github.com/formello-
 
 == Frequently Asked Questions ==
 
-= Is exit intent availbale? =
+= Will this slow down my site? =
+
+No. Popper has no external dependencies and does not require jQuery. Only 2kb of js is loaded.
+
+= Is exit intent available? =
 
 Yes. We have integrated exit-intent for desktop at the moment. We're planning to add also exit-intent for mobile.
 
