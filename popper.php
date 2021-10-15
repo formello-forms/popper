@@ -23,6 +23,8 @@
 
 require __DIR__ . '/includes/class-conditions.php';
 
+load_plugin_textdomain( 'popper', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
 /**
  * Register Popper block
  */
@@ -30,6 +32,9 @@ function popper_block_init() {
 	register_block_type_from_metadata(
 		__DIR__,
 	);
+	//wp_set_script_translations( 'formello-popper-editor', 'popper', dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+	//wp_set_script_translations( 'formello-popper-editor', 'popper', plugin_dir_path( __FILE__ ) . 'languages' );
+	wp_set_script_translations( 'formello-popper-editor-script', 'popper', plugin_dir_path( __FILE__ ) . '/languages/' );
 }
 add_action( 'init', 'popper_block_init' );
 
@@ -50,8 +55,8 @@ function popper_register() {
 			'edit_item'          => __( 'Edit Popup', 'popper' ),
 			'update_item'        => __( 'Update Popup', 'popper' ),
 			'search_items'       => __( 'Search Popup', 'popper' ),
-			'not_found'          => __( 'Not Found', 'popper' ),
-			'not_found_in_trash' => __( 'Not found in Trash', 'popper' ),
+			'not_found'          => __( 'Not Found' ),
+			'not_found_in_trash' => __( 'Not found in Trash' ),
 		),
 		'public'              => false,
 		'publicly_queryable'  => false,

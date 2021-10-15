@@ -1,0 +1,252 @@
+# Copyright (C) 2021 Formello
+# This file is distributed under the same license as the Popper plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Popper 0.1.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/popper\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-10-15T03:30:16+02:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: popper\n"
+
+#. Plugin Name of the plugin
+msgid "Popper"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://formello.net/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Popup builder with exit-intent powered by Gutenberg."
+msgstr ""
+
+#. Author of the plugin
+msgid "Formello"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://formello.net"
+msgstr ""
+
+#: popper.php:42
+msgctxt "Post Type General Name"
+msgid "Popups"
+msgstr ""
+
+#: popper.php:43
+msgctxt "Post Type Singular Name"
+msgid "Popup"
+msgstr ""
+
+#: popper.php:44
+#: popper.php:46
+msgid "Popups"
+msgstr ""
+
+#: popper.php:45
+msgid "Parent Popup"
+msgstr ""
+
+#: popper.php:47
+msgid "View Popup"
+msgstr ""
+
+#: popper.php:48
+msgid "Add New Popup"
+msgstr ""
+
+#: popper.php:49
+msgid "Add New"
+msgstr ""
+
+#: popper.php:50
+msgid "Edit Popup"
+msgstr ""
+
+#: popper.php:51
+msgid "Update Popup"
+msgstr ""
+
+#: popper.php:52
+msgid "Search Popup"
+msgstr ""
+
+#: popper.php:53
+msgid "Not Found"
+msgstr ""
+
+#: popper.php:54
+msgid "Not found in Trash"
+msgstr ""
+
+#: build/index.js:1
+#: src/plugin/select.js:53
+msgid "Where"
+msgstr ""
+
+#: build/index.js:1
+#: src/plugin/modal.js:98
+msgid "Rules"
+msgstr ""
+
+#: build/index.js:1
+#: src/plugin/modal.js:108
+msgid "Location"
+msgstr ""
+
+#: build/index.js:1
+#: src/plugin/modal.js:116
+msgid "Exclude"
+msgstr ""
+
+#: build/index.js:1
+#: src/plugin/index.js:63
+msgid "Display"
+msgstr ""
+
+#: build/index.js:1
+#: src/plugin/index.js:73
+msgid "Conditions"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/appearance.js:20
+msgid "Colors"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/appearance.js:23
+msgid "Close Button Color"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/appearance.js:34
+msgid "Background Color"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/appearance.js:48
+msgid "Modal Appearance"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/appearance.js:63
+msgid "Popup Border Radius"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/appearance.js:74
+msgid "Close Icon Size"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/open-behaviour.js:35
+msgid "Timer"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/open-behaviour.js:36
+msgid "On Anchor Click"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/open-behaviour.js:37
+msgid "On Target Visibility"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/open-behaviour.js:38
+msgid "On Scroll"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/open-behaviour.js:39
+msgid "On Exit Intent"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/open-behaviour.js:45
+msgid "Open Behaviour"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/close-behaviour.js:62
+#: src/settings/open-behaviour.js:58
+msgid "Anchor"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/open-behaviour.js:61
+msgid "You can add anchors to button blocks. Using the same anchor here will open the popup when you click the respective button."
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/open-behaviour.js:73
+msgid "Target"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/open-behaviour.js:76
+msgid "Show a popup when element with this anchor enter in viewport."
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/open-behaviour.js:87
+msgid "Scroll Distance in Percent"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/open-behaviour.js:107
+msgid "Wait Time in Seconds"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/open-behaviour.js:124
+msgid "Shows the popup when the user moves the mouse outside of the top of the window"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/close-behaviour.js:29
+msgid "Close Behaviour"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/close-behaviour.js:33
+msgid "Show Close Button"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/close-behaviour.js:42
+msgid "Close On Click Outside"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/close-behaviour.js:51
+msgid "Close On Anchor Click"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/close-behaviour.js:65
+msgid "You can add anchors to button blocks. Using the same anchor here will close the modal when you click the respective button."
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/close-behaviour.js:79
+msgid "Dismiss for Recurrent Visitors"
+msgstr ""
+
+#: build/index.js:1
+#: src/settings/close-behaviour.js:93
+msgid "Number of Days Until the Notice is Shown again"
+msgstr ""
+
+#: build/index.js:1
+#: src/edit.js:123
+msgid "Select a popup to start with."
+msgstr ""
