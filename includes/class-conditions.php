@@ -320,7 +320,7 @@ class Popper_Conditions {
 					if ( ! isset( $conditional['object'] ) || empty( $conditional['object'] ) ) {
 						$show = true;
 					} else {
-						if ( in_array( $current_location['object'], $conditional ) ) {
+						if ( in_array( $current_location['object'], $conditional['object'] ) ) {
 							$show = true;
 						}
 					}
