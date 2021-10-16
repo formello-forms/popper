@@ -19,7 +19,7 @@ const ScrollSpeed = (function(settings){
       lastPos = newPos;
       clearTimeout(timer);
       timer = setTimeout(clear, delay);
-      return delta;
+      return Number(delta);
     };
 })();
 

@@ -162,11 +162,12 @@ class Popup {
 		// The speed check starts after 10 seconds.
 		setTimeout(() => {
 			window.onscroll = () => {
-				if( ScrollSpeed() > 50 ){
+				let isOpen = ScrollSpeed() > 50;
+				if( isOpen ){
 					this.openModal()
 				}
 			}
-		}, 10000);
+		}, 5000);
 	}
 
 	bindTarget() {
