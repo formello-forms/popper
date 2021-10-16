@@ -16,6 +16,14 @@ Popper helps you create a variety of popups for any circumstances. You can displ
 With Popper popup builder you can create high converting, promotional and informative popups, increase conversion rates and boost sales while reaching your marketing goals.
 You can use all available blocks to build your own popup content. If you want collect leads, you can use [Formello](https://formello.net).
 
+== FEATURES ==
+
+* Open on exit intent
+* Open on anchor click
+* Open on scroll percent
+* Open after time amount
+* Open on target visibility
+
 **DOCUMENTATION**
 
 Here you can find [documentation](https://docs.formello.net/addons/popper).

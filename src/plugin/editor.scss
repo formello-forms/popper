@@ -1,6 +1,9 @@
 .popper-modal-rule {
 	min-width: 600px;
 	margin-bottom: 1em;
+	p {
+		margin-bottom: 0;
+	}
 }
 
 .popper-modal-button {
