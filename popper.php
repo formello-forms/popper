@@ -160,8 +160,8 @@ function popper_matcher() {
 			$matched = false;
 		}
 	}
-
-	return $popups;
+	// phpcs:ignore
+	echo $popups;
 
 }
-add_action( 'the_content', 'popper_matcher' );
+add_action( 'wp_footer', 'popper_matcher' );

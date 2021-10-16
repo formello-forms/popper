@@ -53,7 +53,7 @@ export function Select ( props ) {
 				<BaseControl label={ __( 'Where', 'popper' ) } help={ 'Choose where this pop up will be displayed' }>
 					<select onChange={ (val) => { props.onChange( 'rule', val.target.value, props.index ) } } value={ props.rule.rule } className='components-select-control__input'>
 			            <option value="">
-			                { __( 'Select one...', 'formello' ) }
+			                { __( 'Select one...', 'popper' ) }
 			            </option>
 						{
 							Object.keys(options).map( (key, i) => {
