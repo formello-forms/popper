@@ -1,6 +1,6 @@
-=== Popper - Popup with exit intent, scroll triggered and anchor click for opt-ins, lead gen, & more ===
+=== Popper - Popup with exit intent, scroll triggered and anchor click for opt-ins, lead gen & more ===
 Contributors:      Formello
-Tags:              popup, pop up, exit intent, popup maker, exit popup, popup builder, wordpress popup plugin
+Tags:              popup, pop up, exit intent, popup maker, exit popup, popup builder, wordpress popup block
 Requires at least: 5.6.0
 Tested up to:      5.8.1
 Stable tag:        0.1.4
