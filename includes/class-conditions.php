@@ -41,18 +41,18 @@ class Popper_Conditions {
 	public static function get_conditions() {
 		$types = array(
 			'general' => array(
-				'label' => esc_attr__( 'General', 'formello' ),
+				'label' => esc_attr__( 'General', 'popper' ),
 				'locations' => array(
-					'general:site'       => esc_attr__( 'Entire Site', 'formello' ),
-					'general:front_page' => esc_attr__( 'Front Page', 'formello' ),
-					'general:blog'       => esc_attr__( 'Blog', 'formello' ),
-					'general:singular'   => esc_attr__( 'All Singular', 'formello' ),
-					'general:archive'    => esc_attr__( 'All Archives', 'formello' ),
-					'general:author'     => esc_attr__( 'Author Archives', 'formello' ),
-					'general:date'       => esc_attr__( 'Date Archives', 'formello' ),
-					'general:search'     => esc_attr__( 'Search Results', 'formello' ),
-					'general:no_results' => esc_attr__( 'No Search Results', 'formello' ),
-					'general:404'        => esc_attr__( '404 Template', 'formello' ),
+					'general:site'       => esc_attr__( 'Entire Site', 'popper' ),
+					'general:front_page' => esc_attr__( 'Front Page', 'popper' ),
+					'general:blog'       => esc_attr__( 'Blog', 'popper' ),
+					'general:singular'   => esc_attr__( 'All Singular', 'popper' ),
+					'general:archive'    => esc_attr__( 'All Archives', 'popper' ),
+					'general:author'     => esc_attr__( 'Author Archives', 'popper' ),
+					'general:date'       => esc_attr__( 'Date Archives', 'popper' ),
+					'general:search'     => esc_attr__( 'Search Results', 'popper' ),
+					'general:no_results' => esc_attr__( 'No Search Results', 'popper' ),
+					'general:404'        => esc_attr__( '404 Template', 'popper' ),
 				),
 			),
 		);
@@ -87,10 +87,10 @@ class Popper_Conditions {
 			if ( 'post' === $post_type_slug || ! empty( $post_type_object->has_archive ) ) {
 				$types[ $post_type_slug . '_archive' ] = array(
 					/* translators: post type name */
-					'label' => sprintf( esc_html_x( '%s Archives', '%s is a singular post type name', 'formello' ), $post_type->labels->singular_name ),
+					'label' => sprintf( esc_html_x( '%s Archives', '%s is a singular post type name', 'popper' ), $post_type->labels->singular_name ),
 					'locations' => array(
 						/* translators: post type name */
-						'archive:' . $post_type_slug => sprintf( esc_html_x( '%s Archive', '%s is a singular post type name', 'formello' ), $post_type->labels->singular_name ),
+						'archive:' . $post_type_slug => sprintf( esc_html_x( '%s Archive', '%s is a singular post type name', 'popper' ), $post_type->labels->singular_name ),
 					),
 				);
 			}
@@ -119,7 +119,7 @@ class Popper_Conditions {
 
 				if ( isset( $types[ $post_type_slug . '_archive' ]['locations'] ) ) {
 					/* translators: '%1$s is post type label. %2$s is taxonomy label. */
-					$types[ $post_type_slug . '_archive' ]['locations'][ 'taxonomy:' . $taxonomy_slug ] = sprintf( esc_html_x( '%1$s %2$s Archive', '%1$s is post type label. %2$s is taxonomy label.', 'formello' ), $post_type->labels->singular_name, $label );
+					$types[ $post_type_slug . '_archive' ]['locations'][ 'taxonomy:' . $taxonomy_slug ] = sprintf( esc_html_x( '%1$s %2$s Archive', '%1$s is post type label. %2$s is taxonomy label.', 'popper' ), $post_type->labels->singular_name, $label );
 				}
 
 				if ( isset( $types[ $post_type_slug ]['locations'] ) ) {
@@ -141,15 +141,15 @@ class Popper_Conditions {
 	public static function get_user_conditions() {
 		$rules = array(
 			'general' => array(
-				'label' => esc_attr__( 'General', 'formello' ),
+				'label' => esc_attr__( 'General', 'popper' ),
 				'rules' => array(
-					'general:all'        => esc_attr__( 'All Users', 'formello' ),
-					'general:logged_in'  => esc_attr__( 'Logged In', 'formello' ),
-					'general:logged_out' => esc_attr__( 'Logged Out', 'formello' ),
+					'general:all'        => esc_attr__( 'All Users', 'popper' ),
+					'general:logged_in'  => esc_attr__( 'Logged In', 'popper' ),
+					'general:logged_out' => esc_attr__( 'Logged Out', 'popper' ),
 				),
 			),
 			'role' => array(
-				'label' => esc_attr__( 'Roles', 'formello' ),
+				'label' => esc_attr__( 'Roles', 'popper' ),
 				'rules' => array(),
 			),
 		);

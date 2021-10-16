@@ -22,6 +22,7 @@
  */
 
 require __DIR__ . '/includes/class-conditions.php';
+require __DIR__ . '/includes/rest.php';
 
 load_plugin_textdomain( 'popper', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 

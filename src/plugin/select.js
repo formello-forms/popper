@@ -32,7 +32,7 @@ import Rules from "./conditions";
 export function Select ( props ) {
 
 	const [ options, setOptions ] = useState( [] )
-	const supported = ['post_tag', 'category', 'post', 'page']
+	const supported = ['post', 'taxonomy']
 	const { index, onDelete } = props;
 	
 	useEffect(
@@ -43,33 +43,38 @@ export function Select ( props ) {
 	)
 
 	const getType = () => {
-		let splitted = props.rule.rule.split(/[:]+/).pop()
-		return splitted
+		let splitted = props.rule.rule.substr( 0, props.rule.rule.indexOf( ':' ) )
+		let locationType = '';
+		if ( props.rule.rule.indexOf( ':taxonomy:' ) > 0 ) {
+			locationType = 'taxonomy';
+		} else {
+			locationType = props.rule.rule.substr( 0, props.rule.rule.indexOf( ':' ) );
+		}
+		return locationType
 	}
 
 	return (
-		<Flex justify='start' className='popper-modal'>
+		<Flex align='start' justify='start' className='popper-modal-rule'>
 			<FlexItem>
-				<BaseControl label={ __( 'Where', 'popper' ) } help={ 'Choose where this pop up will be displayed' }>
-					<select onChange={ (val) => { props.onChange( 'rule', val.target.value, props.index ) } } value={ props.rule.rule } className='components-select-control__input'>
-			            <option value="">
-			                { __( 'Select one...', 'popper' ) }
-			            </option>
-						{
-							Object.keys(options).map( (key, i) => {
-								return (
-									<optgroup label={ options[key].label } key={ i }>
-									{
-										Object.keys( options[key].locations ).map( (opt,i) => {
-											return <option value={ opt } key={ opt }>{ options[key].locations[opt] }</option>
-										})
-									}
-									</optgroup>					
-								)
-							} )
-						}
-					</select>
-				</BaseControl>
+				<label className='components-form-token-field__label'>{ __( 'Where', 'popper' ) }</label>
+				<select onChange={ (val) => { props.onChange( 'rule', val.target.value, props.index ) } } value={ props.rule.rule } className='components-select-control__input'>
+		            <option value="">
+		                { __( 'Select one...', 'popper' ) }
+		            </option>
+					{
+						Object.keys(options).map( (key, i) => {
+							return (
+								<optgroup label={ options[key].label } key={ i }>
+								{
+									Object.keys( options[key].locations ).map( (opt,i) => {
+										return <option value={ opt } key={ opt }>{ options[key].locations[opt] }</option>
+									})
+								}
+								</optgroup>					
+							)
+						} )
+					}
+				</select>
 			</FlexItem>
 			{
 				supported.includes( getType() ) &&
@@ -78,13 +83,14 @@ export function Select ( props ) {
 						onChange={ props.onChange }
 						selectedCategories={ [] }
 						type={ getType() }
+						id={ props.rule.rule.substr( props.rule.rule.lastIndexOf( ':' ) + 1 ) }
 						rule={ props.rule }
 						index={ props.index }
 					/>
 				</FlexItem>
 			}
-			<FlexItem>
-				<Button icon='no' onClick={ (val) => { props.onDelete( props.index ) } } ></Button>
+			<FlexItem align='center'>
+				<Button className='popper-modal-button' icon='no' onClick={ (val) => { props.onDelete( props.index ) } } ></Button>
 			</FlexItem>
 		</Flex>
 	);

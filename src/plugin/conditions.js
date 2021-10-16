@@ -1,9 +1,8 @@
 import {
 	FormTokenField
 } from '@wordpress/components';
-const {
-	apiFetch,
-} = wp;
+import apiFetch from '@wordpress/api-fetch';
+
 import { useState, useEffect } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
@@ -11,21 +10,16 @@ import { __ } from '@wordpress/i18n';
 export default function Rules( props ) {
 
 	const [ objects, setObjects ] = useState([]);
-
-	const mapper = {
-		post_tag: 'tags',
-		category: 'categories',
-		post: 'posts',
-		page: 'pages'
-	}
+	const [ objectLabel, setObjectLabel ] = useState([]);
 
 	useEffect(
 		() => {
 			apiFetch( {
-				path: '/wp/v2/' + mapper[props.type],
+				path: '/popper/' + props.type + '/' + props.id,
 				method: 'GET'
 			} ).then( ( result ) => {
-				setObjects( result )
+				setObjects( result[props.id].objects )
+				setObjectLabel( result[props.id].label )
 			} );	
 		},
 		[props.type]
@@ -34,9 +28,6 @@ export default function Rules( props ) {
 	let selectedObjects = props.rule.object;
 
 	let postNames = objects.map( ( post ) => { 
-		if( 'post' === post.type ){
-			return post.title.rendered;
-		}
 		return post.name
 	} );
 
@@ -49,16 +40,13 @@ export default function Rules( props ) {
 		if ( wantedPost === undefined || ! wantedPost ) {
 			return false;
 		}
-		if( 'post' === props.type ){
-			return wantedPost.title.rendered;
-		}
 		return wantedPost.name;
 
 	} );
 
 	return (
 		<FormTokenField 
-			label={ __( 'Selected ' + mapper[props.type], 'popper' ) }
+			label={ __( 'Selected ' + objectLabel, 'popper' ) }
 			value={ objectsFieldValue }
 			suggestions={ postNames } 
 			onChange={ ( selectedObjects ) => { 
@@ -67,9 +55,6 @@ export default function Rules( props ) {
 				selectedObjects.map(
 					( postName ) => {
 						const matchingPost = objects.find( ( post ) => {
-							if( 'post' === props.type ){
-								return post.title.rendered === postName
-							}
 							return post.name === postName;
 						} );
 						if ( matchingPost !== undefined ) {

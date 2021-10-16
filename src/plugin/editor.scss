@@ -1,20 +1,8 @@
-.popper-modal {
-	p {
-		margin-top: 8px;
-	}
-	.components-base-control__label {
-		margin-bottom: 4px;
-	}
-	.components-form-token-field__label{
-		margin-bottom: 0;
-	}
-	.components-form-token-field__help{
-		margin-top: 5px;
-	}
-	button.components-button {
-		margin-bottom: 18px;
-	}
-	button.components-form-token-field__remove-token {
-		margin-bottom: 0;
-	}
+.popper-modal-rule {
+	min-width: 600px;
+	margin-bottom: 1em;
+}
+
+.popper-modal-button {
+	margin-top: 18px;
 }

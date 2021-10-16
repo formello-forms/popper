@@ -17,9 +17,15 @@ import {
 	createBlock
 } from '@wordpress/blocks';
 
+import {
+	ToolbarGroup,
+	ToolbarButton
+} from '@wordpress/components';
+
 import Appearance from './settings/appearance';
 import OpenBehaviour from './settings/open-behaviour';
 import CloseBehaviour from './settings/close-behaviour';
+import { RulesModal } from "./plugin/modal";
 import './editor.scss';
 
 
@@ -27,13 +33,16 @@ function Edit( props ) {
 
 	const { attributes, setAttributes, className } = props;
 
-    const post_id = useSelect(select =>
-        select("core/editor").getCurrentPostId()
-    );
+	const post_id = useSelect(select =>
+		select("core/editor").getCurrentPostId()
+	);
 
-    useEffect( () => {
-    	setAttributes( { uuid: post_id } )
-    }, [] )
+	const [ isModalOpen, setModalOpen ] = useState( false );
+	const closeModal = () => setModalOpen( false );
+
+	useEffect( () => {
+		setAttributes( { uuid: post_id } )
+	}, [] )
 
 	const {
 		width,
@@ -75,6 +84,17 @@ function Edit( props ) {
 				<CloseBehaviour { ...props } />
 				<Appearance { ...props } />
 			</InspectorControls>
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarButton
+						label={ __( 'Display Rules', 'popper' ) }
+						icon={ 'admin-generic' }
+						onClick={ () => {
+							setModalOpen( true )
+						} }
+					/>
+				</ToolbarGroup>
+			</BlockControls>
 			<div tabIndex="-1">
 
 				<div role="dialog" aria-modal="true">
@@ -90,6 +110,9 @@ function Edit( props ) {
 
 				</div>
 			</div>
+			{ isModalOpen && (
+				<RulesModal onRequestClose={ closeModal } />
+			)}
 		</div>
 	);
 }

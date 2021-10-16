@@ -28,35 +28,14 @@ registerPlugin('popper-display', {
 			return false
 		}
 
-		const postTitle = useSelect(
-			( select ) => select( 'core/editor' ).getPostEdits().title,
-			[]
-		);
-
 		const [ meta, setMeta ] = useEntityProp(
 			'postType',
 			postType,
 			'meta'
 		);
 
-		const metaFieldValue = meta['popper_rules'];
-		const [ rule, setRule ] = useState( metaFieldValue );
 		const [ isModalOpen, setModalOpen ] = useState( false );
 	    const closeModal = () => setModalOpen( false );
-
-		function updateMetaValue( newValue ) {
-			setMeta( { ...meta, 'popper_rules': newValue } );
-		}
-
-		const handleChange = ( val, prop, index ) => {
-			// 1. Make a shallow copy of the items
-			let item = {...rule};
-			// 2. Make a shallow copy of the item you want to mutate
-			item[prop] = val;
-			// 3. Set the state to our new copy
-			setRule( item );
-			updateMetaValue( item );
-		}
 
 		return (
 			<PluginDocumentSettingPanel
@@ -76,7 +55,7 @@ registerPlugin('popper-display', {
 				{
 					meta['popper_rules']['location'].map((r,i)=>{
 						return (
-							<li key={ i }>{ r.rule.split(/[:]+/).pop().replace(/_/g, ' ') }</li>
+							<li key={ i }>{ r.rule.replace(/:/g, ' > ') }</li>
 						)
 					})				
 				}
