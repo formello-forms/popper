@@ -157,7 +157,7 @@ function popper_matcher() {
 
 		if ( $matched ) {
 			$popper  = get_post( $popper_id );
-			$popups .= do_blocks( $popper->post_content );
+			$popups .= apply_filters( 'the_content', do_blocks( $popper->post_content ) );
 			$matched = false;
 		}
 	}

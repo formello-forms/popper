@@ -88,23 +88,31 @@
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     
-    .popper__container {
-      width: 90% !important;
-      min-width: 90% !important;
-    }
-    
-    @supports (display: flex) {
-    
-        .popper__container {
-            width: 90% !important;
-            min-width: 90% !important;
-            max-height: 85vh;
-        }
-        
-    }
+  .popper__container {
+    width: 90% !important;
+    min-width: 90% !important;
+  }
+  
+  @supports (display: flex) {
+  
+      .popper__container {
+          width: 90% !important;
+          min-width: 90% !important;
+          max-height: 85vh;
+      }
+      
+  }
   
   .popper__content {
     -webkit-overflow-scrolling: touch;
   }
   
+}
+
+/**************************
+  Reset some default rules of core block
+**************************/
+
+.wp-block-image, .wp-block-embed {
+  margin: 0;
 }
