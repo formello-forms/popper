@@ -140,7 +140,15 @@ function popper_matcher() {
 	$popups = '';
 
 	$rules = $wpdb->get_results(
-		$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key=%s", 'popper_rules' )
+		$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}posts 
+			LEFT JOIN {$wpdb->prefix}postmeta 
+			ON {$wpdb->prefix}posts.ID = {$wpdb->prefix}postmeta.post_id 
+			WHERE {$wpdb->prefix}posts.post_type = %s 
+			AND {$wpdb->prefix}postmeta.meta_key = %s 
+			AND {$wpdb->prefix}posts.post_status = %s 
+			ORDER BY {$wpdb->prefix}posts.ID;",
+			'popper', 'popper_rules', 'publish' 
+		)
 	);
 
 	$matched   = false;

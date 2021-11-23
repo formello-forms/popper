@@ -1,1 +1,148 @@
-.popper{font-family:-apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,arial,sans-serif}.popper{display:none}.popper.is-open{display:block}.popper__overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:flex;justify-content:center;align-items:center;z-index:100}.popper__container{background-color:#fff;padding:0px;max-width:740px;border-radius:0px;overflow:hidden;box-sizing:border-box;position:relative;z-index:1000}.popper__content{overflow-y:auto;overflow-x:hidden;max-height:75vh;min-height:50px}.popper__close{position:absolute;top:5px;right:20px;background:transparent;border:0;cursor:pointer;margin:0px;padding:0px;z-index:1000;font-size:1em;line-height:1em;outline:none;cursor:pointer !important;background-color:transparent !important}.popper__close:hover,.popper__close:focus{background-color:transparent;outline:none}.popper__close:before{content:"✕"}@media only screen and (min-device-width: 320px)and (max-device-width: 480px){.popper__container{width:90% !important;min-width:90% !important}@supports(display: flex){.popper__container{width:90% !important;min-width:90% !important;max-height:85vh}}.popper__content{-webkit-overflow-scrolling:touch}}
+@charset "UTF-8";
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.popper {
+  /* Box Shadow Color */
+  --box-shadow-color: 0,0,0;
+  /* Border Radius */
+  --border-radius-sm:2px;
+  --border-radius-md:4px;
+  --border-radius-lg:8px;
+  --border-radius-xl:24px;
+  --border-radius-2xl:9999px;
+  /* Box Shadow */
+  --box-shadow-sm: 0 1px 3px 0 rgba( var( --box-shadow-color ), 0.1), 0 1px 2px 0 rgba( var( --box-shadow-color ), 0.06);
+  --box-shadow-md:0 4px 6px -1px rgba( var( --box-shadow-color ), 0.1), 0 2px 4px -1px rgba( var( --box-shadow-color ), 0.06);
+  --box-shadow-lg:0 10px 15px -3px rgba( var( --box-shadow-color ), 0.1), 0 4px 6px -2px rgba( var( --box-shadow-color ), 0.05);
+  --box-shadow-xl:0 20px 25px -5px rgba( var( --box-shadow-color ), 0.1), 0 10px 10px -5px rgba( var( --box-shadow-color ), 0.04);
+  --box-shadow-2xl:0 25px 50px -12px rgba( var( --box-shadow-color ), 0.25);
+}
+
+/**************************
+  Basic Modal Styles
+**************************/
+.popper {
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+}
+
+.popper {
+  display: none;
+}
+
+.popper.is-open {
+  display: block;
+}
+
+.popper__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.popper__container {
+  background-color: white;
+  padding: 0px;
+  max-width: 740px;
+  border-radius: 0px;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1000;
+}
+
+.popper__content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 75vh;
+  min-height: 50px;
+}
+
+.popper__close {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  margin: 0px;
+  padding: 0px;
+  z-index: 1000;
+  font-size: 1em;
+  line-height: 1em;
+  outline: none;
+  cursor: pointer !important;
+  background-color: transparent !important;
+}
+
+.popper__close:hover, .popper__close:focus {
+  background-color: transparent;
+  outline: none;
+}
+
+.popper__close:before {
+  content: "✕";
+}
+
+.shadow {
+  box-shadow: var(--box-shadow-sm);
+}
+
+.shadow-none {
+  box-shadow: none;
+}
+
+.shadow-md {
+  box-shadow: var(--box-shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--box-shadow-lg);
+}
+
+.shadow-xl {
+  box-shadow: var(--box-shadow-xl);
+}
+
+/**************************
+  Mobile custom styles for individual modals
+**************************/
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .popper__container {
+    width: 90% !important;
+    min-width: 90% !important;
+  }
+
+  @supports (display: flex) {
+    .popper__container {
+      width: 90% !important;
+      min-width: 90% !important;
+      max-height: 85vh;
+    }
+  }
+  .popper__content {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+/**************************
+  Reset some default rules of core block
+**************************/
+.wp-block-image, .wp-block-embed {
+  margin: 0;
+}
+
+/*!
+  Common Plugin/Block Styles
+*/
+
+/*# sourceMappingURL=style-index.css.map*/

@@ -65,6 +65,10 @@
 	      "type": "number",
 	      "default": 3
 	    },
+	    "boxShadow": {
+	      "type": "string",
+	      "default": "shadow-none"
+	    },
 	    "closeOnClickOutside": {
 	      "type": "boolean",
 	      "default": true

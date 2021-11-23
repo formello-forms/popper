@@ -27,6 +27,7 @@ import OpenBehaviour from './settings/open-behaviour';
 import CloseBehaviour from './settings/close-behaviour';
 import { RulesModal } from "./plugin/modal";
 import './editor.scss';
+import Controls from './controls';
 
 
 function Edit( props ) {
@@ -94,6 +95,11 @@ function Edit( props ) {
 						} }
 					/>
 				</ToolbarGroup>
+					<Controls
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						style={ style }
+					/>
 			</BlockControls>
 			<div tabIndex="-1">
 
@@ -103,8 +109,8 @@ function Edit( props ) {
 
 					<div>
 						<InnerBlocks
-						templateLock={ false }
-						renderAppender={ () => <InnerBlocks.ButtonBlockAppender /> }
+							templateLock={ false }
+							renderAppender={ () => <InnerBlocks.ButtonBlockAppender /> }
 						/>
 					</div>
 

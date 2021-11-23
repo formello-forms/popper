@@ -12,6 +12,7 @@ import { __ } from '@wordpress/i18n';
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
 import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import classnames from 'classnames';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -36,6 +37,7 @@ export default function save( props ) {
         closeButtonColor,
         closeButtonSize,
         borderRadius,
+        boxShadow,
         overlayColor,
         overlayOpacity,
         closeAnchor,
@@ -63,6 +65,8 @@ export default function save( props ) {
         fontSize: closeButtonSize
     };
 
+    const containerClass = classnames( 'popper__container', boxShadow );
+
 	return (
         <div 
             data-open={ openBehaviour }
@@ -82,7 +86,7 @@ export default function save( props ) {
                 tabindex="-1" 
                 style={ { backgroundColor: 'rgba(0,0,0,' + overlayOpacity/100 + ')' } }
             >
-                <div className="popper__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title" style={ modalStyle }>
+                <div className={ containerClass } role="dialog" aria-modal="true" aria-labelledby="modal-1-title" style={ modalStyle }>
                     <button className="popper__close" aria-label="Close modal" style={ closeButtonStyle }></button>
                     <main className="popper__content">
                         <InnerBlocks.Content />
