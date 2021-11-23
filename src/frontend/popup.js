@@ -1,4 +1,4 @@
-import ScrollSpeed from './exitIntentMobile';
+import ScrollSpeed from './scrollSpeed';
 
 /*global localStorage*/
 class Popup {
@@ -6,7 +6,7 @@ class Popup {
 		this.element = element;
 		this.happened = false;
 		this.storageKey = 'popper-dismiss';
-
+		this.oldScroll = null;
 		const { dismiss } = element.dataset;
 
 		if ( this.isItemDismissed() && dismiss ) {
@@ -159,15 +159,16 @@ class Popup {
 		if( !this.isMobile ){
 			return false;
 		}
-		// The speed check starts after 10 seconds.
-		setTimeout(() => {
-			window.onscroll = () => {
-				let isOpen = ScrollSpeed() > 50;
-				if( isOpen ){
+		// The speed check starts after 5 seconds.
+		window.onscroll = () => {
+			setTimeout(() => {
+				let isOpen = ScrollSpeed()*-1 > 50;
+				if( isOpen && this.isScrollingUp() ){
 					this.openModal()
 				}
-			}
-		}, 5000);
+				this.oldScroll = window.scrollY
+			}, 5000);
+		}
 	}
 
 	bindTarget() {
@@ -259,6 +260,10 @@ class Popup {
 				( ( height[ sh ] || body[ sh ] ) - height.clientHeight ) ) *
 			100
 		);
+	}
+
+	isScrollingUp() {
+		return this.oldScroll > window.scrollY;
 	}
 
 }

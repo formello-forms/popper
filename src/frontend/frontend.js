@@ -1,7 +1,6 @@
 import {Popup} from './popup';
 
-
-console.log('popper')
+console.log('popper is loaded')
 
 document.addEventListener("DOMContentLoaded", function() {
 	const popups = document.querySelectorAll( '.popper' );
