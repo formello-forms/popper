@@ -516,7 +516,7 @@ var Popup = /*#__PURE__*/function () {
     value: function bindExitIntent() {
       var _this4 = this;
 
-      document.addEventListener('mouseleave', function (e) {
+      document.addEventListener('mouseout', function (e) {
         if (_this4.happened) {
           return false;
         }

@@ -144,7 +144,7 @@ class Popup {
 	}
 
 	bindExitIntent() {
-		document.addEventListener( 'mouseleave', ( e ) => {
+		document.addEventListener( 'mouseout', ( e ) => {
 			if ( this.happened ) {
 				return false;
 			}
