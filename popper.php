@@ -3,7 +3,7 @@
  * Plugin Name:     Popper
  * Plugin URI: 		https://formello.net/
  * Description:     Popup builder with exit-intent powered by Gutenberg.
- * Version:         0.1.7
+ * Version:         0.1.8
  * Author:          Formello
  * Author URI: 		https://formello.net
  * License:         GPL-2.0-or-later
@@ -11,14 +11,6 @@
  * Text Domain:     popper
  *
  * @package         create-block
- */
-
-/**
- * Registers the block using the metadata loaded from the `block.json` file.
- * Behind the scenes, it registers also all assets so they can be enqueued
- * through the block editor in the corresponding context.
- *
- * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/writing-your-first-block-type/
  */
 
 require __DIR__ . '/includes/class-conditions.php';
