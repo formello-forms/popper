@@ -114,7 +114,6 @@ class Popup {
 		const buttons = document.querySelectorAll( `#${ anchor }` );
 		buttons.forEach( ( button ) => {
 			button.addEventListener( 'click', ( e ) => {
-				console.log('Buttons')
 				e.preventDefault();
 				this.openModal();
 			} );

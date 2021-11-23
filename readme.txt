@@ -23,6 +23,8 @@ You can use all available blocks to build your own popup content. If you want co
 * Open on scroll percent
 * Open after time amount
 * Open on target visibility
+* Customizable border radius and box shadow
+* Display rules based on page/post/taxonomy or user roles
 
 **DOCUMENTATION**
 

@@ -91,6 +91,7 @@ function popper_register() {
 			'default' => array(
 				'location' => array(),
 				'exclude' => array(),
+				'user' => array(),
 			),
 			'show_in_rest'  => array(
 				'schema' => array(
@@ -100,6 +101,9 @@ function popper_register() {
 							'type' => 'array',
 						),
 						'exclude'    => array(
+							'type' => 'array',
+						),
+						'user'    => array(
 							'type' => 'array',
 						),
 					),
@@ -116,12 +120,14 @@ add_action( 'init', 'popper_register' );
  */
 function popper_positions() {
 	$positions = Popper_Conditions::get_conditions();
+	$users = Popper_Conditions::get_user_conditions();
 
 	wp_localize_script(
 		'wp-block-directory',
 		'popper',
 		array(
 			'positions' => $positions,
+			'users' => $users,
 		)
 	);
 

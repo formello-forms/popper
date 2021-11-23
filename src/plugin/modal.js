@@ -34,6 +34,7 @@ import {
 	Modal,
 } from '@wordpress/components';
 import { Select } from './select';
+import { UserSelect } from './user-select';
 
 export function RulesModal ( props ) {
 
@@ -117,6 +118,14 @@ export function RulesModal ( props ) {
 							</span>
 						),
 					},
+					{
+						name: 'user',
+						title: (
+							<span>
+								{ __( 'Users', 'popper' ) }
+							</span>
+						),
+					},
 				] }
 			>
 				{
@@ -127,12 +136,15 @@ export function RulesModal ( props ) {
 								<Fragment>
 									{
 										rules[activeTab].map( ( r, i ) => {
-											return <Select onChange={ onChange } onDelete={ onDelete } rule={ r } index={ i } key={ i } />
+											const Component = 'user' === tabData.name
+												? UserSelect
+												: Select;
+											return <Component onChange={ onChange } onDelete={ onDelete } rule={ r } index={ i } key={ i } />
 										} )
 									}
 								</Fragment>
 								<Button isPrimary={ true } onClick={ addRule }>
-									{ __( 'Add rule', 'formello-position' ) }
+									{ __( 'Add rule', 'popper' ) }
 								</Button>
 							</Fragment>
 						);
