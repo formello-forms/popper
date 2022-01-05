@@ -134,18 +134,22 @@ function popper_matcher() {
 		return false;
 	}
 	global $wpdb;
+	remove_filter( 'the_content', 'wpautop' );
 
 	$popups = '';
 
 	$rules = $wpdb->get_results(
-		$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}posts 
+		$wpdb->prepare(
+			"SELECT * FROM {$wpdb->prefix}posts 
 			LEFT JOIN {$wpdb->prefix}postmeta 
 			ON {$wpdb->prefix}posts.ID = {$wpdb->prefix}postmeta.post_id 
 			WHERE {$wpdb->prefix}posts.post_type = %s 
 			AND {$wpdb->prefix}postmeta.meta_key = %s 
 			AND {$wpdb->prefix}posts.post_status = %s 
 			ORDER BY {$wpdb->prefix}posts.ID;",
-			'popper', 'popper_rules', 'publish' 
+			'popper',
+			'popper_rules',
+			'publish',
 		)
 	);
 
@@ -159,7 +163,7 @@ function popper_matcher() {
 		// Get the rules.
 		$rule = maybe_unserialize( $rule->meta_value );
 
-		$matched = Popper_Conditions::show_data( $rule['location'], $rule['exclude'], array() );
+		$matched = Popper_Conditions::show_data( $rule['location'], $rule['exclude'], $rule['user'] );
 
 		if ( $matched ) {
 			$popper  = get_post( $popper_id );
@@ -169,6 +173,7 @@ function popper_matcher() {
 	}
 	// phpcs:ignore
 	echo $popups;
+	add_filter( 'the_content', 'wpautop' );
 
 }
 add_action( 'wp_footer', 'popper_matcher' );

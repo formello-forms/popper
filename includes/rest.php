@@ -1,6 +1,12 @@
 <?php
 
 add_action( 'rest_api_init', function () {
+	register_rest_route( 'popper', '/list/', array(
+		'methods' => 'GET',
+		'callback' => 'popper_get_saved',
+		'permission_callback' => 'popper_rest_permission_callback',
+		'args' => array(),
+	) );
 	register_rest_route( 'popper', '/post/(?P<id>[a-zA-Z0-9-_]+)', array(
 		'methods' => 'GET',
 		'callback' => 'popper_get_post_type_posts',
@@ -26,6 +32,28 @@ add_action( 'rest_api_init', function () {
 		),
 	) );
 } );
+
+/**
+ * Get taxonomy terms for a specific taxonomy.
+ *
+ * @param WP_REST_Request $request Full details about the request.
+ *
+ * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+ */
+function popper_get_saved( $request ) {
+
+	$args = array(
+		'post_type'     => 'popper',
+		'fields'        => '',
+		'no_found_rows' => true,
+		'post_status'   => 'publish',
+		'numberposts'   => 500, // phpcs:ignore
+	);
+
+	$data = get_posts( $args );
+
+	return rest_ensure_response( $data );
+}
 
 /**
  * Get taxonomy terms for a specific taxonomy.

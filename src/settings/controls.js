@@ -8,8 +8,13 @@
 import { __ } from '@wordpress/i18n';
 import { BaseControl, Button, ButtonGroup, Dropdown, DropdownMenu, FocalPointPicker, MenuGroup, MenuItem, PanelBody, PanelRow, RangeControl, SelectControl, ToggleControl, Toolbar, ToolbarButton, ToolbarGroup, Tooltip } from '@wordpress/components';
 import { BlockControls, ColorPalette, InspectorControls, MediaUpload } from '@wordpress/block-editor';
-import { Fragment } from '@wordpress/element';
-import icons from './icons';
+import { Fragment, useState } from '@wordpress/element';
+import icons from '../icons';
+import {
+	justifyLeft,
+	justifyCenter,
+	justifyRight,
+} from '@wordpress/icons';
 
 export default function Controls( props ) {
 	const {
@@ -20,14 +25,44 @@ export default function Controls( props ) {
 		style,
 		attributes: {
 			borderRadius,
-			boxShadow
+			boxShadow,
+			type
 		},
 	} = props;
+
+	const [ icon, setIcon ] = useState( 'external' );
 
 	return (
 		<Fragment>
 			<BlockControls>
 				<ToolbarGroup>
+				    <DropdownMenu
+				        icon={ icon }
+				        label={ __( 'Type', 'popper' ) }
+				        controls={ [
+				            {
+								label: __( 'PopUp', 'popper' ),
+								title: 'Pop Up',
+				                icon: icons.boxShadowNone,
+				                isActive: attributes.type === 'popup' ? true : false,
+				                onClick: () => setAttributes( { type: 'popup' } ),
+				            },
+				            {
+								label: __( 'Slide in Left', 'popper' ),
+								title: 'Slide In left',
+				                icon: justifyLeft,
+				                isActive: attributes.type === 'slideIn' ? true : false,
+				                onClick: () => setAttributes( { type: 'slideIn' } ),
+				            },
+				            {
+								label: __( 'Slide In Right', 'popper' ),
+								title: 'Slide In Right',
+				                icon: justifyRight,
+				                isActive: attributes.type === 'slideInRight' ? true : false,
+				                onClick: () => setAttributes( { type: 'slideInRight' } ),
+				            },
+				        ] }
+				    />
 				    <DropdownMenu
 				        icon={ icons.boxShadow }
 				        label={ __( 'Box shadow', 'popper' ) }

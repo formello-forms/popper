@@ -43,7 +43,7 @@ export function UserSelect ( props ) {
 		<Flex align='start' justify='start' className='popper-modal-rule'>
 			<FlexItem>
 				<label className='components-form-token-field__label'>{ __( 'Where', 'popper' ) }</label>
-				<select onChange={ (val) => { props.onChange( 'rule', val.target.value, props.index ) } } value={ props.rule.rule } className='components-select-control__input'>
+				<select onChange={ (val) => { props.onChange( undefined, val.target.value, props.index ) } } value={ props.rule } className='components-select-control__input'>
 		            <option value="">
 		                { __( 'Select one...', 'popper' ) }
 		            </option>

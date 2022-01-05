@@ -1,11 +1,7 @@
-/**
- * The following styles get applied both on the front of your site
- * and in the editor.
- *
- * Replace them with your own styles or remove the file completely.
- */
+@import 'animations';
 
-.popper {
+
+.wp-block-formello-popper, .popper {
 
   /* Box Shadow Color */
   --box-shadow-color: 0,0,0;
@@ -19,14 +15,28 @@
 
   /* Box Shadow */
   --box-shadow-sm: 0 1px 3px 0 rgba( var( --box-shadow-color ), 0.1), 0 1px 2px 0 rgba( var( --box-shadow-color ), 0.06);
-  --box-shadow-md:0 4px 6px -1px rgba( var( --box-shadow-color ), 0.1), 0 2px 4px -1px rgba( var( --box-shadow-color ), 0.06);
-  --box-shadow-lg:0 10px 15px -3px rgba( var( --box-shadow-color ), 0.1), 0 4px 6px -2px rgba( var( --box-shadow-color ), 0.05);
-  --box-shadow-xl:0 20px 25px -5px rgba( var( --box-shadow-color ), 0.1), 0 10px 10px -5px rgba( var( --box-shadow-color ), 0.04);
-  --box-shadow-2xl:0 25px 50px -12px rgba( var( --box-shadow-color ), 0.25);
+  --box-shadow-md: 0 4px 6px rgba( var( --box-shadow-color ), 0.1), 0 2px 4px -1px rgba( var( --box-shadow-color ), 0.06);
+  --box-shadow-lg: 0 10px 15px rgba( var( --box-shadow-color ), 0.1), 0 4px 6px -2px rgba( var( --box-shadow-color ), 0.05);
+  --box-shadow-xl: 0 20px 25px rgba( var( --box-shadow-color ), 0.1), 0 10px 10px -5px rgba( var( --box-shadow-color ), 0.04);
+  --box-shadow-2xl: 0 25px 50px rgba( var( --box-shadow-color ), 0.25);
 }
 
-.wp-block-tropicalista-popper {
 
+/**************************
+  Reset some default rules of core block
+**************************/
+
+.wp-block-formello-popper, .popper {
+  /*p {
+    margin-bottom: 0;
+  }*/
+  p:empty {
+    display: none;
+  }
+  .wp-block-image, .wp-block-embed {
+    margin: 0;
+    line-height: 0;
+  }
 }
 
 /**************************
@@ -35,15 +45,20 @@
 
 .popper {
   font-family: -apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,arial,sans-serif;
-}
-
-
-.popper {
   display: none;
 }
 
 .popper.is-open {
   display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index:101;
 }
 
 .popper__overlay {
@@ -52,7 +67,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,11 +77,21 @@
   background-color: white;
   padding: 0px;
   max-width: 740px;
+  min-width: 400px;
   border-radius: 0px;
-  overflow: hidden;
   box-sizing: border-box;
   position: relative;
   z-index: 1000;
+  &.popper__slide {
+    bottom: 15px;
+    left: 15px;
+    position: absolute;
+    align-self: flex-end;
+    &.popper__slide-right {
+      right: 15px;
+      left: auto;
+    }
+  }
 }
 
 .popper__content {
@@ -75,6 +99,17 @@
   overflow-x: hidden;
   max-height: 75vh;
   min-height: 50px;
+  scrollbar-width: thin;
+}
+
+/* Works on Chrome, Edge, and Safari */
+.popper__content::-webkit-scrollbar {
+  width: 12px;
+}
+
+.popper__content::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  border: 1px solid gray;
 }
 
 .popper__close {
@@ -94,30 +129,44 @@
   background-color: transparent !important;
 }
 
+.popper__close-top {
+  top: -25px;
+  right: 0;
+}
+
+.popper__close-right {
+  right: -20px;
+  top: 0;
+}
+
 .popper__close:hover, .popper__close:focus {
   background-color: transparent;
   outline: none;
 }
 
-.popper__close:before { content: "\2715"; }
+.popper__close:before { 
+  content: "\2715"; 
+  width:100%;
+  height: 100%
+}
 
-.shadow {
+.popper__shadow {
   box-shadow: var( --box-shadow-sm );
 }
 
-.shadow-none {
+.popper__shadow-none {
   box-shadow: none;
 }
 
-.shadow-md {
+.popper__shadow-md {
   box-shadow: var( --box-shadow-md );
 }
 
-.shadow-lg {
+.popper__shadow-lg {
   box-shadow: var( --box-shadow-lg );
 }
 
-.shadow-xl {
+.popper__shadow-xl {
   box-shadow: var( --box-shadow-xl );
 }
 
@@ -146,17 +195,11 @@
   .popper__content {
     -webkit-overflow-scrolling: touch;
   }
-  
+
 }
 
-/**************************
-  Reset some default rules of core block
-**************************/
-
-.wp-block-image, .wp-block-embed {
-  margin: 0;
+.popper__slide-in-top {
+  -webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+          animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
-/*!
-  Common Plugin/Block Styles
-*/

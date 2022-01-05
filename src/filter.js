@@ -30,15 +30,33 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
         const [ options, setOptions ] = useState( [] )
         const [ popups, setPopups ] = useState( [] )
 
+        const findById = (val) => {
+            return popups.find((element) => {
+                return element.ID == val;
+            })            
+        }
+
+        const setAnchor = (val) => {
+            let elm = findById(val);
+            if( ! elm ){
+                return
+            }
+            elm = parse( elm.post_content )
+            var attrs = elm[0].attrs
+            if( 'anchor' === attrs.openBehaviour ){
+                setAttributes( { anchor: attrs.anchor } )
+            }       
+        }
+
         useEffect(
             () => {
                 apiFetch( {
-                    path: '/wp/v2/popper',
+                    path: '/popper/list',
                     method: 'GET',
                 } ).then( ( result ) => {
                     let opts = [{ value: null, label: __( 'Select a popup', 'popper' ) }]
                     result.map( (i) => {
-                        opts.push({ value: i.id, label: i.title.rendered })
+                        opts.push({ value: i.ID, label: i.post_title })
                     } )
                     setPopups(result)
                     setOptions(opts)
@@ -63,14 +81,14 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
                 { isSelected &&
                     <InspectorAdvancedControls>
                         <SelectControl
-                            label={ __( 'Mobile Devices Visibity' ) }
+                            label={ __( 'Open popup' ) }
                             value={ popper }
                             options={ options }
                             onChange={ (val) => {
                                 setAttributes( { popper: val } )
-                                console.log(parse(popups[0].content.rendered))
+                                setAnchor(val)
                             } }
-                            help={ __( 'Open a popup', 'popper' ) }
+                            help={ __( 'Open a popup on anchor click', 'popper' ) }
                         />
                     </InspectorAdvancedControls>
                 }

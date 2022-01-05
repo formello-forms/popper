@@ -52,13 +52,6 @@ registerPlugin('popper-display', {
 						{ __( 'Conditions', 'popper' ) }
 					</Button>
 				</BaseControl>
-				{
-					meta['popper_rules']['location'].map((r,i)=>{
-						return (
-							<li key={ i }>{ r.rule.replace(/:/g, ' > ') }</li>
-						)
-					})				
-				}
 	            { isModalOpen && (
 	                <RulesModal onRequestClose={ closeModal } />
 	            ) }

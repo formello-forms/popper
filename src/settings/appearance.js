@@ -39,46 +39,64 @@ const Appearance = ( props ) => {
 								gradientBackground: val || false,
 							} );
 						} }
+						enableAlpha
 						onColorChange={ ( val ) => {
 							setAttributes( { backgroundColor: val || false } );
 						} }
 					/>
 				</PanelRow>
+				<PanelRow>
+					<ColorGradientControl
+						label={ __( 'Overlay Color', 'popper' ) }
+						colorValue={ overlayColor }
+						enableAlpha
+						onColorChange={ ( val ) => {
+							setAttributes( { overlayColor: val || false } );
+						} }
+					/>
+				</PanelRow>
+				<RangeControl
+					value={ overlayOpacity }
+					label={ __( 'Overlay Opacity', 'popper' ) }
+					onChange={ ( val ) => {
+						setAttributes( { overlayOpacity: val } );
+					} }
+					allowReset
+					min={ 0 }
+					max={ 100 }
+				/>
 			</PanelBody>
 			<PanelBody title={ __( 'Modal Appearance', 'popper' ) } initialOpen={ false }>
-				<PanelRow>
-					<RangeControl
-						value={ overlayOpacity }
-						label={ __( 'Overlay Opacity', 'abs-popup' ) }
-						onChange={ ( val ) => {
-							setAttributes( { overlayOpacity: val } );
-						} }
-						min={ 0 }
-						max={ 100 }
-					/>
-				</PanelRow>
-				<PanelRow>
-					<RangeControl
-						value={ borderRadius }
-						label={ __( 'Popup Border Radius', 'popper' ) }
-						onChange={ ( val ) => {
-							setAttributes( { borderRadius: val } );
-						} }
-						min={ 0 }
-						max={ 100 }
-					/>
-				</PanelRow>
-				<PanelRow>
-					<RangeControl
-						value={ closeButtonSize }
-						label={ __( 'Close Icon Size', 'popper' ) }
-						onChange={ ( val ) => {
-							setAttributes( { closeButtonSize: val } );
-						} }
-						min={ 12 }
-						max={ 40 }
-					/>
-				</PanelRow>
+				<RangeControl
+					value={ borderRadius }
+					label={ __( 'Popup Border Radius', 'popper' ) }
+					onChange={ ( val ) => {
+						setAttributes( { borderRadius: val } );
+					} }
+					allowReset
+					min={ 0 }
+					max={ 100 }
+				/>
+				<RangeControl
+					value={ width }
+					label={ __( 'Popup Width', 'popper' ) }
+					onChange={ ( val ) => {
+						setAttributes( { width: val } );
+					} }
+					allowReset
+					min={ 400 }
+					max={ 700 }
+				/>
+				<RangeControl
+					value={ closeButtonSize }
+					label={ __( 'Close Icon Size', 'popper' ) }
+					onChange={ ( val ) => {
+						setAttributes( { closeButtonSize: val } );
+					} }
+					allowReset
+					min={ 12 }
+					max={ 40 }
+				/>
 			</PanelBody>
 		</>
 	);

@@ -6,6 +6,7 @@ import save from './save';
 import deprecated from './deprecated';
 import metadata from '../block.json';
 import variations from './variations';
+import filter from './filter';
 
 const { name, attributes, supports } = metadata;
 

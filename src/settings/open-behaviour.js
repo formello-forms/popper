@@ -9,7 +9,7 @@ import {
 
 const OpenBehaviour = ( props ) => {
 	const { attributes, setAttributes } = props;
-	const { openBehaviour, anchor, waitTime, offset, target } = attributes;
+	const { openBehaviour, anchor, waitTime, offset, target, pageviews } = attributes;
 
 	const handleChangeOpenBehaviour = ( value ) => {
 		setAttributes( { openBehaviour: value } );
@@ -31,11 +31,16 @@ const OpenBehaviour = ( props ) => {
 		setAttributes( { offset: val } );
 	};
 
+	const updatePageViews = ( val ) => {
+		setAttributes( { pageviews: val } );
+	};
+
 	const options = [
 		{ label: __( 'Timer', 'popper' ), value: 'load' },
 		{ label: __( 'On Anchor Click', 'popper' ), value: 'anchor' },
 		{ label: __( 'On Target Visibility', 'popper' ), value: 'target' },
 		{ label: __( 'On Scroll', 'popper' ), value: 'scroll' },
+		{ label: __( 'On Page Views', 'popper' ), value: 'pageviews' },
 		{ label: __( 'On Exit Intent', 'popper' ), value: 'exit' },
 	];
 
@@ -98,6 +103,26 @@ const OpenBehaviour = ( props ) => {
 						beforeIcon="image-flip-vertical"
 						value={ offset }
 						onChange={ updateScrollOffset }
+						min={ 0 }
+						max={ 100 }
+					/>
+				) }
+				{ openBehaviour === 'pageviews' && (
+					<RangeControl
+						label={ __(
+							'Number of pages',
+							'popper'
+						) }
+						help={
+							<small>
+								{ __(
+									'Show the popup when this number of pages has been visited.'
+								) }
+							</small>
+						}
+						beforeIcon="visibility"
+						value={ pageviews }
+						onChange={ updatePageViews }
 						min={ 0 }
 						max={ 100 }
 					/>

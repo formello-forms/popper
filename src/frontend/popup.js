@@ -1,4 +1,5 @@
 import ScrollSpeed from './scrollSpeed';
+import StoreFactory from './pageCounter';
 
 /*global localStorage*/
 class Popup {
@@ -28,6 +29,10 @@ class Popup {
 
 	closeModal() {
 		this.element.classList.remove( 'is-open' );
+		var frames = document.getElementsByTagName("iframe");
+		for (let item of frames) {
+		    item.setAttribute( 'src', item.src )
+		}
 		this.dismissModal();
 	}
 
@@ -87,6 +92,9 @@ class Popup {
 		switch ( open ) {
 			case 'anchor':
 				this.bindAnchors();
+				break;
+			case 'pageviews':
+				this.bindPageViews();
 				break;
 			case 'target':
 				this.bindTarget();
@@ -173,6 +181,11 @@ class Popup {
 	bindTarget() {
 		const { target } = this.element.dataset;
 		window.onscroll = () => this.isScrolledIntoView( target )
+	}
+
+	bindPageViews() {
+		const { target } = this.element.dataset;
+		document.addEventListener( 'DOMContentLoaded', this.hitcounter() );
 	}
 
 	bindClose() {
@@ -263,6 +276,23 @@ class Popup {
 
 	isScrollingUp() {
 		return this.oldScroll > window.scrollY;
+	}
+
+	hitcounter() {
+
+	    let oStore = new StoreFactory( 'urls', 'sessionStorage' );
+	        oStore.create();
+
+	    let data=oStore.get();
+	        data[ location.href ]=data.hasOwnProperty( location.href ) ? parseInt( data[ location.href ] ) + 1 : 1;
+	        data.total=data.hasOwnProperty('total') ? parseInt( data.total ) + 1 : 1;
+
+		const { pagenum } = this.element.dataset;
+	    if( data.total >= pagenum ) {
+	    	this.openModal()
+	    }
+
+	    oStore.set( data );
 	}
 
 }

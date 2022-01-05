@@ -60,8 +60,13 @@ export function RulesModal ( props ) {
 	const [ activeTab, setActiveTab ] = useState( 'location' )
 	
 	const addRule = () => {
-		var joined = rules[activeTab].concat( { rule: '', object: [] } );
+		if( 'user' === activeTab ){
+			var joined = rules[activeTab].concat( '' );
+		}else{
+			var joined = rules[activeTab].concat( { rule: '', object: [] } );			
+		}
 		setRules( { ...rules, [activeTab]: joined } )
+
 	}
 
 	const onChange = ( prop, val, index ) => {
@@ -70,7 +75,25 @@ export function RulesModal ( props ) {
 		// 2. Make a shallow copy of the item you want to mutate
 		let item = {...rules[activeTab][index]};
 		// 3. Replace the property you're intested in
-		item[prop] = val;
+		if( !prop ){
+			item = val;
+		}else{
+			item[prop] = val;
+		}
+		// 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
+		items[index] = item;
+		// 5. Set the state to our new copy
+		setRules( { ...rules, [activeTab]: items } )
+		setMeta( { ...meta, 'popper_rules': rules } );
+	}
+
+	const onChangeUser = ( val, index ) => {
+		// 1. Make a shallow copy of the items
+		let items = [ ...rules[activeTab] ];
+		// 2. Make a shallow copy of the item you want to mutate
+		let item = {...rules[activeTab][index]};
+		// 3. Replace the property you're intested in
+		item = val;
 		// 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
 		items[index] = item;
 		// 5. Set the state to our new copy
@@ -136,6 +159,7 @@ export function RulesModal ( props ) {
 								<Fragment>
 									{
 										rules[activeTab].map( ( r, i ) => {
+											console.log(r)
 											const Component = 'user' === tabData.name
 												? UserSelect
 												: Select;

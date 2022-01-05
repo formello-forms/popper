@@ -21,6 +21,10 @@
 		}
 	},
 	"attributes": {
+	    "type": {
+	      "type": "string",
+	      "default": "popup"
+	    },
 	    "width": {
 	      "type": "number",
 	      "default": 400
@@ -67,7 +71,7 @@
 	    },
 	    "boxShadow": {
 	      "type": "string",
-	      "default": "shadow-none"
+	      "default": "shadow-md"
 	    },
 	    "closeOnClickOutside": {
 	      "type": "boolean",
@@ -101,6 +105,10 @@
 	    "dismissPeriod": {
 	      "type": "number",
 	      "default": 20
+	    },
+	    "pageviews": {
+	      "type": "number",
+	      "default": 3
 	    },
 	    "uuid": {
 	      "type": "number",

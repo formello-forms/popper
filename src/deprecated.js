@@ -13,7 +13,93 @@ import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 const deprecated = [
 	// v1 of button block.
 	{
-		attributes: metadata.attributes,
+		attributes: {
+		    width: {
+		      type: 'number',
+		      default: ''
+		    },
+		    waitTime: {
+		      type: 'number',
+		      default: 1
+		    },
+		    offset: {
+		      type: 'number',
+		      default: 20
+		    },
+		    openBehaviour: {
+		      type: 'string',
+		      default: 'load'
+		    },
+		    showCloseButton: {
+		      type: 'boolean',
+		      default: true
+		    },
+		    closeButtonAlignment: {
+		      type: 'string',
+		      default: 'right'
+		    },
+		    closeButtonColor: {
+		      type: 'string',
+		      default: '#000000'
+		    },
+		    overlayColor: {
+		      type: 'string',
+		      default: '#000000'
+		    },
+		    overlayOpacity: {
+		      type: 'number',
+		      default: 75
+		    },
+		    closeButtonSize: {
+		      type: 'number',
+		      default: 20
+		    },
+		    borderRadius: {
+		      type: 'number',
+		      default: 3
+		    },
+		    boxShadow: {
+		      type: 'string',
+		      default: 'shadow-md'
+		    },
+		    closeOnClickOutside: {
+		      type: 'boolean',
+		      default: true
+		    },
+		    closeOnAnchorClick: {
+		      type: 'boolean',
+		      default: false
+		    },
+		    closeAnchor: {
+		      type: 'string'
+		    },
+		    anchor: {
+		      type: 'string',
+		      default: ''
+		    },
+		    target: {
+		      type: 'string',
+		      default: ''
+		    },
+		    backgroundColor: {
+		      type: 'string'
+		    },
+		    gradientBackground: {
+		      type: 'string'
+		    },
+		    dismissForVisitors: {
+		      type: 'boolean',
+		      default: true
+		    },
+		    dismissPeriod: {
+		      type: 'number',
+		      default: 20
+		    },
+		    uuid: {
+		      type: 'number',
+		      default: null
+		    }
+		},
 		save( { attributes } ) {
 
 		    const {

@@ -23,9 +23,10 @@ import classnames from 'classnames';
  *
  * @return {WPElement} Element to render.
  */
-export default function save( props ) {
-    const { attributes } = props;
+export default function save( { attributes, className } ) {
+
     const {
+        type,
         width,
         anchor,
         target,
@@ -45,6 +46,8 @@ export default function save( props ) {
         closeOnAnchorClick,
         dismissForVisitors,
         dismissPeriod,
+        showCloseButton,
+        pageviews,
         uuid
     } = attributes;
 
@@ -65,7 +68,13 @@ export default function save( props ) {
         fontSize: closeButtonSize
     };
 
-    const containerClass = classnames( 'popper__container', boxShadow );
+    const containerClass = classnames( 'popper__container', boxShadow, {
+        'popper__slide': 'slideIn' === type || 'slideInRight' === type ,
+        'popper__slide-right': 'slideInRight' === type,
+    } );
+    const popperClass = classnames( 'popper', className );
+
+    const overlay = overlayOpacity ? overlayOpacity/100 : '.75';
 
 	return (
         <div 
@@ -76,22 +85,28 @@ export default function save( props ) {
             data-time={ openBehaviour === 'load' ? waitTime : '' }
             data-dismiss={ dismissForVisitors ? dismissPeriod : '' }
             data-offset={ openBehaviour === 'scroll' ? offset : '' }
+            data-pagenum={ openBehaviour === 'pageviews' ? pageviews : '' }
             data-outside={ closeOnClickOutside }
             data-created={ uuid }
-            className="popper" 
             id={ 'modal-' + uuid }
-            aria-hidden="true">
+            aria-hidden="true"
+            { ...useBlockProps.save({
+                className: popperClass
+            }) }
+        >
             <div 
                 className="popper__overlay" 
                 tabindex="-1" 
-                style={ { backgroundColor: 'rgba(0,0,0,' + overlayOpacity/100 + ')' } }
-            >
-                <div className={ containerClass } role="dialog" aria-modal="true" aria-labelledby="modal-1-title" style={ modalStyle }>
+                style={ { backgroundColor: overlayColor } }
+            ></div>
+            <div className={ containerClass } role="dialog" aria-modal="true" aria-labelledby="modal-title" style={ modalStyle }>
+                {
+                    showCloseButton && 
                     <button className="popper__close" aria-label="Close modal" style={ closeButtonStyle }></button>
-                    <main className="popper__content">
-                        <InnerBlocks.Content />
-                    </main>
-                </div>
+                }
+                <main className="popper__content">
+                    <InnerBlocks.Content />
+                </main>
             </div>
         </div>
 	);

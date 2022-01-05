@@ -8,6 +8,7 @@ import {
 	InnerBlocks,
 	RichText,
 	useBlockProps,
+	store as blockEditorStore,
 	__experimentalBlockVariationPicker
 } from '@wordpress/block-editor';
 
@@ -27,15 +28,29 @@ import OpenBehaviour from './settings/open-behaviour';
 import CloseBehaviour from './settings/close-behaviour';
 import { RulesModal } from "./plugin/modal";
 import './editor.scss';
-import Controls from './controls';
+import Controls from './settings/controls';
+import html2canvas from 'html2canvas';
+import classnames from 'classnames';
+import icons from './icons';
 
 
 function Edit( props ) {
 
-	const { attributes, setAttributes, className } = props;
+	const { attributes, setAttributes, className, clientId } = props;
 
 	const post_id = useSelect(select =>
 		select("core/editor").getCurrentPostId()
+	);
+
+	const { hasInnerBlocks } = useSelect(
+		( select ) => {
+			const { getBlock, getSettings } = select( blockEditorStore );
+			const block = getBlock( clientId );
+			return {
+				hasInnerBlocks: !! ( block && block.innerBlocks.length )
+			};
+		},
+		[ clientId ]
 	);
 
 	const [ isModalOpen, setModalOpen ] = useState( false );
@@ -43,6 +58,10 @@ function Edit( props ) {
 
 	useEffect( () => {
 		setAttributes( { uuid: post_id } )
+			var elm = document.getElementById('block-'+clientId)
+			html2canvas(document.getElementById('block-'+clientId)).then(function(canvas) {
+			    document.body.appendChild(canvas);
+			});
 	}, [] )
 
 	const {
@@ -53,6 +72,7 @@ function Edit( props ) {
 		closeButtonColor,
 		closeButtonSize,
 		borderRadius,
+		boxShadow,
 		overlayColor,
 		overlayOpacity,
 	} = attributes;
@@ -75,7 +95,23 @@ function Edit( props ) {
 	if ( closeButtonColor ) {
 		closeButtonStyle.color = closeButtonColor;
 		closeButtonStyle.fontSize = closeButtonSize;
+		closeButtonStyle.width = closeButtonSize;
+		closeButtonStyle.height = closeButtonSize;
 	}
+
+    const containerClass = classnames( 'popper__container', boxShadow );
+
+    const modalStyle = {
+        minWidth: width,
+        borderRadius,
+    };
+
+    if ( backgroundColor ) {
+        modalStyle.backgroundColor = backgroundColor;
+    }
+    if ( gradientBackground ) {
+        modalStyle.background = gradientBackground;
+    }
 
 	return (
 		<div { ...useBlockProps() } aria-hidden="true" style={ style }>
@@ -107,10 +143,10 @@ function Edit( props ) {
 
 					<button className="popper__close" style={ closeButtonStyle }></button>
 
-					<div>
+					<div className={ containerClass } style={ modalStyle }>
 						<InnerBlocks
 							templateLock={ false }
-							renderAppender={ () => <InnerBlocks.ButtonBlockAppender /> }
+							renderAppender={ hasInnerBlocks ? undefined : <InnerBlocks.ButtonBlockAppender /> }
 						/>
 					</div>
 
@@ -162,8 +198,7 @@ function Placeholder ( props ) {
 							clientId,
 							createBlocksFromInnerBlocksTemplate(
 								nextVariation.innerBlocks
-							),
-							true
+							)
 						);
 					}
 				} }
