@@ -11,7 +11,6 @@ const CloseBehaviour = ( props ) => {
 	const { attributes, setAttributes } = props;
 	const {
 		showCloseButton,
-		closeButtonAlignment,
 		closeOnClickOutside,
 		closeOnAnchorClick,
 		closeAnchor,

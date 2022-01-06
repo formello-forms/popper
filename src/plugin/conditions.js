@@ -12,8 +12,6 @@ export default function Rules( props ) {
 	const [ objects, setObjects ] = useState([]);
 	const [ objectLabel, setObjectLabel ] = useState([]);
 
-	console.log(props)
-
 	useEffect(
 		() => {
 			apiFetch( {

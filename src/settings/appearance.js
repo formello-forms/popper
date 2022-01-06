@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { RangeControl, PanelBody, PanelRow, SelectControl } from '@wordpress/components';
+import { RangeControl, PanelBody, PanelRow, SelectControl, RadioControl } from '@wordpress/components';
 import { __experimentalColorGradientControl as ColorGradientControl } from '@wordpress/block-editor';
 
 const Appearance = ( props ) => {
@@ -10,11 +10,17 @@ const Appearance = ( props ) => {
 		gradientBackground,
 		closeButtonColor,
 		closeButtonSize,
+		closeButtonAlignment,
 		borderRadius,
 		overlayColor,
 		overlayOpacity,
 		animation
 	} = attributes;
+
+	const options = [
+		{ label: __( 'Inside', 'popper' ), value: 'inside' },
+		{ label: __( 'Outside', 'popper' ), value: 'outside' },
+	];
 
 	return (
 		<>
@@ -98,6 +104,12 @@ const Appearance = ( props ) => {
 					min={ 12 }
 					max={ 40 }
 				/>
+				<RadioControl
+					label={ __( 'Button position', 'popper' ) }
+					onChange={ ( val ) => setAttributes( { closeButtonAlignment: val } ) }
+					selected={ closeButtonAlignment }
+					options={ options }
+				/>
 		        <SelectControl
 		            label={ __( 'Animation', 'popper' ) }
 		            value={ animation }
@@ -105,7 +117,6 @@ const Appearance = ( props ) => {
 		                { label: __( 'None', 'popper' ), value: '' },
 		                { label: __( 'Slide in Top', 'popper' ), value: 'popper__animate-slide-in-top' },
 		                { label: __( 'Slide in Bottom', 'popper' ), value: 'popper__animate-slide-in-bottom' },
-		                { label: __( 'Slide In Back', 'popper' ), value: 'popper__animate-slide-in-back' },
 		                { label: __( 'Unfold In', 'popper' ), value: 'popper__animate-unfoldIn' },
 		            ] }
 		            onChange={ ( val ) => setAttributes( { animation: val } ) }

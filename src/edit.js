@@ -63,6 +63,7 @@ function Edit( props ) {
 		showCloseButton,
 		closeButtonColor,
 		closeButtonSize,
+		closeButtonAlignment,
 		borderRadius,
 		boxShadow,
 		overlayColor,
@@ -89,6 +90,11 @@ function Edit( props ) {
 		closeButtonStyle.fontSize = closeButtonSize;
 		closeButtonStyle.width = closeButtonSize;
 		closeButtonStyle.height = closeButtonSize;
+	}
+
+	if( 'outside' === closeButtonAlignment ) {
+		closeButtonStyle.top = ( closeButtonSize + 4 ) *-1;
+		closeButtonStyle.right= 0;
 	}
 
     const containerClass = classnames( 'popper__container', boxShadow );
@@ -167,7 +173,7 @@ function Placeholder ( props ) {
 		( select ) => {
 			const { getBlock } = select( 'core/block-editor' );
 			const block = getBlock( clientId );
-			console.log(getDefaultBlockVariation( props.name ))
+
 			return {
 				defaultVariation: typeof getDefaultBlockVariation === 'undefined' ? null : getDefaultBlockVariation( props.name ),
 				variations: typeof getBlockVariations === 'undefined' ? null : getBlockVariations( props.name ),

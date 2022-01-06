@@ -47,7 +47,7 @@
 	    },
 	    "closeButtonAlignment": {
 	      "type": "string",
-	      "default": "right"
+	      "default": "inside"
 	    },
 	    "closeButtonColor": {
 	      "type": "string",

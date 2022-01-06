@@ -150,7 +150,6 @@ export function RulesModal ( props ) {
 								<Fragment>
 									{
 										rules[activeTab].map( ( r, i ) => {
-											console.log(r)
 											const Component = 'user' === tabData.name
 												? UserSelect
 												: Select;

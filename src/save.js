@@ -37,6 +37,7 @@ export default function save( { attributes, className } ) {
         gradientBackground,
         closeButtonColor,
         closeButtonSize,
+        closeButtonAlignment,
         borderRadius,
         boxShadow,
         overlayColor,
@@ -66,8 +67,16 @@ export default function save( { attributes, className } ) {
 
     const closeButtonStyle = {
         color: closeButtonColor,
-        fontSize: closeButtonSize
-    };
+        fontSize: closeButtonSize,
+        width: closeButtonSize,
+        height: closeButtonSize
+    }
+
+    if( 'outside' === closeButtonAlignment ) {
+        closeButtonStyle.top = ( closeButtonSize + 4 ) *-1;
+        closeButtonStyle.right= 0;
+    }
+
 
     const popperClass = classnames( 'popper', className );
     const containerClass = classnames( 'popper__container', boxShadow, animation, {
