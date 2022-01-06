@@ -14,11 +14,11 @@
   --border-radius-2xl:9999px;
 
   /* Box Shadow */
-  --box-shadow-sm: 0 1px 3px 0 rgba( var( --box-shadow-color ), 0.1), 0 1px 2px 0 rgba( var( --box-shadow-color ), 0.06);
-  --box-shadow-md: 0 4px 6px rgba( var( --box-shadow-color ), 0.1), 0 2px 4px -1px rgba( var( --box-shadow-color ), 0.06);
-  --box-shadow-lg: 0 10px 15px rgba( var( --box-shadow-color ), 0.1), 0 4px 6px -2px rgba( var( --box-shadow-color ), 0.05);
-  --box-shadow-xl: 0 20px 25px rgba( var( --box-shadow-color ), 0.1), 0 10px 10px -5px rgba( var( --box-shadow-color ), 0.04);
-  --box-shadow-2xl: 0 25px 50px rgba( var( --box-shadow-color ), 0.25);
+  --box-shadow-sm: 0px 0px 5px 0px rgba( var( --box-shadow-color ), 0.6 );
+  --box-shadow-md: 0px 0px 10px 0px rgba( var( --box-shadow-color ), 0.6 );
+  --box-shadow-lg: 0px 0px 15px 0px rgba( var( --box-shadow-color ), 0.6 );
+  --box-shadow-xl: 0px 0px 25px 0px rgba( var( --box-shadow-color ), 0.6 );
+  --box-shadow-2xl: 0px 0px 35px 0px rgba( var( --box-shadow-color ), 0.6 );
 }
 
 
@@ -48,7 +48,7 @@
   display: none;
 }
 
-.popper.is-open {
+.popper-is-open {
   display: block;
   position: fixed;
   top: 0;
@@ -62,14 +62,11 @@
 }
 
 .popper__overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index:100;
 }
 
@@ -86,7 +83,7 @@
     bottom: 15px;
     left: 15px;
     position: absolute;
-    align-self: flex-end;
+
     &.popper__slide-right {
       right: 15px;
       left: auto;
@@ -94,17 +91,33 @@
   }
 }
 
+
+.popper__animate-slide-in-top {
+  -webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+          animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.popper__animate-slide-in-bottom {
+  -webkit-animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+          animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.popper__animate-unfoldIn {
+  -webkit-animation: unfoldIn 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+          animation: unfoldIn 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
 .popper__content {
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 75vh;
   min-height: 50px;
-  scrollbar-width: thin;
+  scrollbar-width: 8px;
 }
 
 /* Works on Chrome, Edge, and Safari */
 .popper__content::-webkit-scrollbar {
-  width: 12px;
+  width: 8px;
 }
 
 .popper__content::-webkit-scrollbar-thumb {
@@ -114,8 +127,8 @@
 
 .popper__close {
   position: absolute;
-  top: 5px;
-  right: 20px;
+  top: 8px;
+  right: 14px;
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -123,6 +136,7 @@
   padding: 0px;
   z-index: 1000;
   font-size: 1em;
+  font-weight: bold;
   line-height: 1em;
   outline: none;
   cursor: pointer !important;
@@ -197,9 +211,3 @@
   }
 
 }
-
-.popper__slide-in-top {
-  -webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-          animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-

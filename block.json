@@ -55,7 +55,7 @@
 	    },
 	    "overlayColor": {
 	      "type": "string",
-	      "default": "#000000"
+	      "default": "#000000bf"
 	    },
 	    "overlayOpacity": {
 	      "type": "number",
@@ -65,13 +65,16 @@
 	      "type": "number",
 	      "default": 20
 	    },
+	    "animation": {
+	      "type": "string"
+	    },
 	    "borderRadius": {
 	      "type": "number",
 	      "default": 3
 	    },
 	    "boxShadow": {
 	      "type": "string",
-	      "default": "shadow-md"
+	      "default": "popper__shadow-md"
 	    },
 	    "closeOnClickOutside": {
 	      "type": "boolean",

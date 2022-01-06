@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import './editor.scss';
 
 /**
  * WordPress dependencies
@@ -54,7 +53,7 @@ export function Select ( props ) {
 	}
 
 	return (
-		<Flex align='start' justify='start' className='popper-modal-rule'>
+		<Flex align='start' justify='start'>
 			<FlexItem>
 				<label className='components-form-token-field__label'>{ __( 'Where', 'popper' ) }</label>
 				<select onChange={ (val) => { props.onChange( 'rule', val.target.value, props.index ) } } value={ props.rule.rule } className='components-select-control__input'>
@@ -78,7 +77,7 @@ export function Select ( props ) {
 			</FlexItem>
 			{
 				supported.includes( getType() ) &&
-				<FlexItem>
+				<FlexItem isBlock={ true }>
 					<Rules 
 						onChange={ props.onChange }
 						selectedCategories={ [] }
@@ -89,7 +88,7 @@ export function Select ( props ) {
 					/>
 				</FlexItem>
 			}
-			<FlexItem align='center'>
+			<FlexItem>
 				<Button className='popper-modal-button' icon='no' onClick={ (val) => { props.onDelete( props.index ) } } ></Button>
 			</FlexItem>
 		</Flex>

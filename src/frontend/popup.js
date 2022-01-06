@@ -23,12 +23,12 @@ class Popup {
 	}
 
 	openModal() {
-		this.element.classList.add( 'is-open' );
+		this.element.classList.add( 'popper-is-open' );
 		this.happened = true;
 	}
 
 	closeModal() {
-		this.element.classList.remove( 'is-open' );
+		this.element.classList.remove( 'popper-is-open' );
 		var frames = document.getElementsByTagName("iframe");
 		for (let item of frames) {
 		    item.setAttribute( 'src', item.src )

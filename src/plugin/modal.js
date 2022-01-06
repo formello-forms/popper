@@ -87,20 +87,6 @@ export function RulesModal ( props ) {
 		setMeta( { ...meta, 'popper_rules': rules } );
 	}
 
-	const onChangeUser = ( val, index ) => {
-		// 1. Make a shallow copy of the items
-		let items = [ ...rules[activeTab] ];
-		// 2. Make a shallow copy of the item you want to mutate
-		let item = {...rules[activeTab][index]};
-		// 3. Replace the property you're intested in
-		item = val;
-		// 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
-		items[index] = item;
-		// 5. Set the state to our new copy
-		setRules( { ...rules, [activeTab]: items } )
-		setMeta( { ...meta, 'popper_rules': rules } );
-	}
-
 	const updateMetaValue = ( newValue ) => {
 		setMeta( { ...meta, 'popper_rules': rules } );
 		onRequestClose()
@@ -121,6 +107,7 @@ export function RulesModal ( props ) {
 		<Modal
 			title={ __( 'Rules', 'popper' ) }
 			onRequestClose={ updateMetaValue }
+			className={ 'popper-modal-rule' }
 		>
 			<TabPanel
 				onSelect={ onSelect }
@@ -132,6 +119,7 @@ export function RulesModal ( props ) {
 								{ __( 'Location', 'popper' ) }
 							</span>
 						),
+						description: <p>{ __( 'Choose where you want display this popup.', 'popper' ) }</p>
 					},
 					{
 						name: 'exclude',
@@ -140,6 +128,7 @@ export function RulesModal ( props ) {
 								{ __( 'Exclude', 'popper' ) }
 							</span>
 						),
+						description: <p>{ __( 'Choose where you don\'t want display this popup.', 'popper' ) }</p>
 					},
 					{
 						name: 'user',
@@ -148,6 +137,7 @@ export function RulesModal ( props ) {
 								{ __( 'Users', 'popper' ) }
 							</span>
 						),
+						description: <p>{ __( 'Choose which user will see this popup.', 'popper' ) }</p>
 					},
 				] }
 			>
@@ -156,6 +146,7 @@ export function RulesModal ( props ) {
 						return (
 							<Fragment>
 								<h2>{ tabData.title }</h2>
+								{ tabData.description }
 								<Fragment>
 									{
 										rules[activeTab].map( ( r, i ) => {
@@ -167,7 +158,7 @@ export function RulesModal ( props ) {
 										} )
 									}
 								</Fragment>
-								<Button isPrimary={ true } onClick={ addRule }>
+								<Button isPrimary={ true } onClick={ addRule } className={ 'popper-modal-button' }>
 									{ __( 'Add rule', 'popper' ) }
 								</Button>
 							</Fragment>

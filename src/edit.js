@@ -29,7 +29,7 @@ import CloseBehaviour from './settings/close-behaviour';
 import { RulesModal } from "./plugin/modal";
 import './editor.scss';
 import Controls from './settings/controls';
-import html2canvas from 'html2canvas';
+
 import classnames from 'classnames';
 import icons from './icons';
 
@@ -55,14 +55,6 @@ function Edit( props ) {
 
 	const [ isModalOpen, setModalOpen ] = useState( false );
 	const closeModal = () => setModalOpen( false );
-
-	useEffect( () => {
-		setAttributes( { uuid: post_id } )
-			var elm = document.getElementById('block-'+clientId)
-			html2canvas(document.getElementById('block-'+clientId)).then(function(canvas) {
-			    document.body.appendChild(canvas);
-			});
-	}, [] )
 
 	const {
 		width,
@@ -140,8 +132,10 @@ function Edit( props ) {
 			<div tabIndex="-1">
 
 				<div role="dialog" aria-modal="true">
-
-					<button className="popper__close" style={ closeButtonStyle }></button>
+					{
+						showCloseButton &&
+						<button className="popper__close" style={ closeButtonStyle }></button>
+					}
 
 					<div className={ containerClass } style={ modalStyle }>
 						<InnerBlocks
@@ -161,7 +155,7 @@ function Edit( props ) {
 
 function Placeholder ( props ) {
 
-	const { clientId } = props;
+	const { clientId, setAttributes } = props;
 	const { getBlockType, getBlockVariations, getDefaultBlockVariation } = select( 'core/blocks' );
 
 	const {
@@ -173,6 +167,7 @@ function Placeholder ( props ) {
 		( select ) => {
 			const { getBlock } = select( 'core/block-editor' );
 			const block = getBlock( clientId );
+			console.log(getDefaultBlockVariation( props.name ))
 			return {
 				defaultVariation: typeof getDefaultBlockVariation === 'undefined' ? null : getDefaultBlockVariation( props.name ),
 				variations: typeof getBlockVariations === 'undefined' ? null : getBlockVariations( props.name ),

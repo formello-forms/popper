@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import './editor.scss';
 
 /**
  * WordPress dependencies
@@ -42,7 +41,7 @@ export function UserSelect ( props ) {
 	return (
 		<Flex align='start' justify='start' className='popper-modal-rule'>
 			<FlexItem>
-				<label className='components-form-token-field__label'>{ __( 'Where', 'popper' ) }</label>
+				<label className='components-form-token-field__label'>{ __( 'User', 'popper' ) }</label>
 				<select onChange={ (val) => { props.onChange( undefined, val.target.value, props.index ) } } value={ props.rule } className='components-select-control__input'>
 		            <option value="">
 		                { __( 'Select one...', 'popper' ) }

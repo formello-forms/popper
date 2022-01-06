@@ -65,6 +65,11 @@ No. No external library is required. We mantain a clean fast code without depend
 
 == Changelog ==
 
+= 0.1.9 =
+* Added animations
+* Added bottom slide
+* Fixed users rules
+
 = 0.1.7 =
 * Fixed exit intent
 * Fixed content display

@@ -48,6 +48,7 @@ export default function save( { attributes, className } ) {
         dismissPeriod,
         showCloseButton,
         pageviews,
+        animation,
         uuid
     } = attributes;
 
@@ -68,11 +69,11 @@ export default function save( { attributes, className } ) {
         fontSize: closeButtonSize
     };
 
-    const containerClass = classnames( 'popper__container', boxShadow, {
+    const popperClass = classnames( 'popper', className );
+    const containerClass = classnames( 'popper__container', boxShadow, animation, {
         'popper__slide': 'slideIn' === type || 'slideInRight' === type ,
         'popper__slide-right': 'slideInRight' === type,
     } );
-    const popperClass = classnames( 'popper', className );
 
     const overlay = overlayOpacity ? overlayOpacity/100 : '.75';
 
@@ -94,11 +95,13 @@ export default function save( { attributes, className } ) {
                 className: popperClass
             }) }
         >
-            <div 
-                className="popper__overlay" 
-                tabindex="-1" 
-                style={ { backgroundColor: overlayColor } }
-            ></div>
+            {   'popup' === type &&
+                <div 
+                    className="popper__overlay" 
+                    tabindex="-1" 
+                    style={ { backgroundColor: overlayColor } }
+                ></div>
+            }
             <div className={ containerClass } role="dialog" aria-modal="true" aria-labelledby="modal-title" style={ modalStyle }>
                 {
                     showCloseButton && 

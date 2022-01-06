@@ -176,4 +176,5 @@ function popper_matcher() {
 	add_filter( 'the_content', 'wpautop' );
 
 }
-add_action( 'wp_footer', 'popper_matcher' );
+//add_action( 'wp_footer', 'popper_matcher' );
+add_action( 'wp_head', 'popper_matcher' );

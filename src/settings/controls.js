@@ -30,20 +30,26 @@ export default function Controls( props ) {
 		},
 	} = props;
 
-	const [ icon, setIcon ] = useState( 'external' );
+	const [ icon, setIcon ] = useState( justifyCenter );
+
+	const types = {
+		popup: justifyCenter,
+		slideIn: justifyLeft,
+		slideInRight: justifyRight
+	}
 
 	return (
 		<Fragment>
 			<BlockControls>
 				<ToolbarGroup>
 				    <DropdownMenu
-				        icon={ icon }
+				        icon={ types[attributes.type] }
 				        label={ __( 'Type', 'popper' ) }
 				        controls={ [
 				            {
 								label: __( 'PopUp', 'popper' ),
 								title: 'Pop Up',
-				                icon: icons.boxShadowNone,
+				                icon: justifyCenter,
 				                isActive: attributes.type === 'popup' ? true : false,
 				                onClick: () => setAttributes( { type: 'popup' } ),
 				            },
@@ -71,36 +77,36 @@ export default function Controls( props ) {
 								label: __( 'None', 'popper' ),
 								title: 'None',
 				                icon: icons.boxShadowNone,
-				                isActive: attributes.boxShadow === 'shadow-none' ? true : false,
-				                onClick: () => setAttributes( { boxShadow: 'shadow-none' } ),
+				                isActive: attributes.boxShadow === 'popper__shadow-none' ? true : false,
+				                onClick: () => setAttributes( { boxShadow: 'popper__shadow-none' } ),
 				            },
 				            {
 								label: __( 'Small', 'popper' ),
 								title: 'Small',
 				                icon: icons.boxShadowSmall,
-				                isActive: attributes.boxShadow === 'shadow-sm' ? true : false,
-				                onClick: () => setAttributes( { boxShadow: 'shadow-sm' } ),
+				                isActive: attributes.boxShadow === 'popper__shadow-sm' ? true : false,
+				                onClick: () => setAttributes( { boxShadow: 'popper__shadow-sm' } ),
 				            },
 				            {
 								label: __( 'Medium', 'popper' ),
 								title: 'Medium',
 				                icon: icons.boxShadowMedium,
-				                isActive: attributes.boxShadow === 'shadow-md' ? true : false,
-				                onClick: () => setAttributes( { boxShadow: 'shadow-md' } ),
+				                isActive: attributes.boxShadow === 'popper__shadow-md' ? true : false,
+				                onClick: () => setAttributes( { boxShadow: 'popper__shadow-md' } ),
 				            },
 				            {
 								label: __( 'Large', 'popper' ),
 								title: 'Large',
 				                icon: icons.boxShadowLarge,
-				                isActive: attributes.boxShadow === 'shadow-lg' ? true : false,
-				                onClick: () => setAttributes( { boxShadow: 'shadow-lg' } ),
+				                isActive: attributes.boxShadow === 'popper__shadow-lg' ? true : false,
+				                onClick: () => setAttributes( { boxShadow: 'popper__shadow-lg' } ),
 				            },
 				            {
 								label: __( 'X-Large', 'popper' ),
 								title: 'X-Large',
 				                icon: icons.boxShadowXLarge,
-				                isActive: attributes.boxShadow === 'shadow-xl' ? true : false,
-				                onClick: () => setAttributes( { boxShadow: 'shadow-xl' } ),
+				                isActive: attributes.boxShadow === 'popper__shadow-xl' ? true : false,
+				                onClick: () => setAttributes( { boxShadow: 'popper__shadow-xl' } ),
 				            }
 				        ] }
 				    />

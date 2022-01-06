@@ -15,7 +15,7 @@ add_action( 'rest_api_init', function () {
 			'id' => array(
 				'validate_callback' => function($param, $request, $key) {
 					return sanitize_text_field( $param );
-				}
+				},
 			),
 		),
 	) );
@@ -27,7 +27,7 @@ add_action( 'rest_api_init', function () {
 			'id' => array(
 				'validate_callback' => function($param, $request, $key) {
 					return sanitize_text_field( $param );
-				}
+				},
 			),
 		),
 	) );
