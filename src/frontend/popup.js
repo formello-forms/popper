@@ -23,12 +23,12 @@ class Popup {
 	}
 
 	openModal() {
-		this.element.classList.add( 'popper-is-open' );
+		this.element.classList.add( 'wp-block-popper-is-open' );
 		this.happened = true;
 	}
 
 	closeModal() {
-		this.element.classList.remove( 'popper-is-open' );
+		this.element.classList.remove( 'wp-block-popper-is-open' );
 		var frames = document.getElementsByTagName("iframe");
 		for (let item of frames) {
 		    item.setAttribute( 'src', item.src )
@@ -193,6 +193,7 @@ class Popup {
 		this.bindAnchorClose();
 		this.bindOverlayClosing();
 		this.bindFormClosing();
+		this.bindEscClosing();
 	}
 
 	bindAnchorClose() {
@@ -213,7 +214,7 @@ class Popup {
 
 	bindCloseButtons() {
 		const modal = this.element;
-		const closes = modal.querySelectorAll( '.popper__close' );
+		const closes = modal.querySelectorAll( '.wp-block-popper__close' );
 
 		closes.forEach( ( close ) => {
 			close.addEventListener( 'click', () => {
@@ -227,9 +228,18 @@ class Popup {
 		if ( 'false' === outside ) {
 			return false;
 		}
-		const overlay = this.element.querySelector( '.popper__overlay' );
+		const overlay = this.element.querySelector( '.wp-block-popper__overlay' );
 		overlay.addEventListener( 'click', (e) => {
 			if (e.target == overlay) {
+				this.closeModal();
+			}
+		} );
+	}
+
+	bindEscClosing() {
+		window.addEventListener( 'keydown', (e) => {
+			console.log(e)
+			if ( e.keyCode == 27 ) { 
 				this.closeModal();
 			}
 		} );

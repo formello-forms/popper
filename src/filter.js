@@ -27,8 +27,7 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
             return <BlockEdit {...props} />;
         }
 
-        const [ options, setOptions ] = useState( [] )
-        const [ popups, setPopups ] = useState( [] )
+        const opts = [{ value: null, label: __( 'Select a popup', 'popper' ) }]
 
         const findById = (val) => {
             return popups.find((element) => {
@@ -48,22 +47,15 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
             }       
         }
 
-        useEffect(
-            () => {
-                apiFetch( {
-                    path: '/popper/list',
-                    method: 'GET',
-                } ).then( ( result ) => {
-                    let opts = [{ value: null, label: __( 'Select a popup', 'popper' ) }]
-                    result.map( (i) => {
-                        opts.push({ value: i.ID, label: i.post_title })
-                    } )
-                    setPopups(result)
-                    setOptions(opts)
-                } );
-            },
-          []
-        );
+        const popups = useSelect( (select) => {
+            return select( 'core' ).getEntityRecords( 'postType', 'popper', { per_page: -1 } )
+        } )
+
+        if( popups !== null ){
+            popups.map( (post) => {
+                opts.push({ value: post.id, label: post.title.raw })
+            } )
+        }
 
         const {
             attributes,
@@ -83,7 +75,7 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
                         <SelectControl
                             label={ __( 'Open popup' ) }
                             value={ popper }
-                            options={ options }
+                            options={ opts }
                             onChange={ (val) => {
                                 setAttributes( { popper: val } )
                                 setAnchor(val)

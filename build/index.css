@@ -1,1 +1,1 @@
-.wp-block-tropicalista-popper{border:1px dotted red}.popper__container{max-width:100%;z-index:0}.popper__close{z-index:1}.popper__close:before{content:"✕"}.popper-modal-rule{min-width:600px}.popper-modal-button{margin-top:18px}
+.wp-block-popper{display:block}.wp-block-popper__container{max-width:100%;z-index:0}.wp-block-popper__close{z-index:1}.wp-block-popper__close:before{content:"✕"}.popper-modal-rule{min-width:600px}.popper-modal-button{margin-top:18px}

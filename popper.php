@@ -1,25 +1,25 @@
 <?php
 /**
- * Plugin Name:     Popper
- * Plugin URI: 		https://formello.net/
- * Description:     Popup builder with exit-intent powered by Gutenberg.
- * Version:         0.1.9
- * Author:          Formello
- * Author URI: 		https://formello.net
- * License:         GPL-2.0-or-later
- * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:     popper
+ * Plugin Name: Popper
+ * Plugin URI:  https://formello.net/
+ * Description: Popup builder with exit-intent powered by Gutenberg.
+ * Version:     0.1.9
+ * Author:      Formello
+ * Author URI:  https://formello.net
+ * License:     GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: popper
  *
- * @package         create-block
+ * @package     Popper
  */
 
 require __DIR__ . '/includes/class-conditions.php';
-require __DIR__ . '/includes/rest.php';
+//require __DIR__ . '/includes/rest.php';
 
 load_plugin_textdomain( 'popper', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 /**
- * Register Popper block
+ * Init hook
  */
 function popper_block_init() {
 	register_block_type_from_metadata(
@@ -176,5 +176,5 @@ function popper_matcher() {
 	add_filter( 'the_content', 'wpautop' );
 
 }
-add_action( 'wp_footer', 'popper_matcher' );
-//add_action( 'wp_head', 'popper_matcher' );
+//add_action( 'wp_footer', 'popper_matcher' );
+add_action( 'wp_head', 'popper_matcher' );

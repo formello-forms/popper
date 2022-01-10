@@ -68,6 +68,7 @@ function Edit( props ) {
 		boxShadow,
 		overlayColor,
 		overlayOpacity,
+		type
 	} = attributes;
 
 	const style = {
@@ -97,7 +98,7 @@ function Edit( props ) {
 		closeButtonStyle.right= 0;
 	}
 
-    const containerClass = classnames( 'popper__container', boxShadow );
+    const containerClass = classnames( 'wp-block-popper__container', boxShadow );
 
     const modalStyle = {
         minWidth: width,
@@ -109,6 +110,10 @@ function Edit( props ) {
     }
     if ( gradientBackground ) {
         modalStyle.background = gradientBackground;
+    }
+
+    if( 'popup' !== type ) {
+    	setAttributes( { closeOnClickOutside: false } )
     }
 
 	return (
@@ -140,7 +145,7 @@ function Edit( props ) {
 				<div role="dialog" aria-modal="true">
 					{
 						showCloseButton &&
-						<button className="popper__close" style={ closeButtonStyle }></button>
+						<button className="wp-block-popper__close" style={ closeButtonStyle }></button>
 					}
 
 					<div className={ containerClass } style={ modalStyle }>

@@ -26,8 +26,8 @@ You can use all available blocks to build your own popup content. If you want co
 * Customizable border radius and box shadow
 * Display rules based on page/post/taxonomy or user roles
 
-> Block validation error
-> After an update you can see that sometimes a Popper block is not validating. To solve this, please edit the title of the block, save and reload. The block now is correctly displayed. 
+> **Block validation error**
+> After an update you can see that sometimes a Popper block is not validating. To solve this, please edit the title of the popper custom post type, save and reload. The block now is correctly displayed. 
 
 **DOCUMENTATION**
 
@@ -67,6 +67,10 @@ No. No external library is required. We mantain a clean fast code without depend
 6. Popper display settings
 
 == Changelog ==
+
+= 0.2.0 =
+* Code improvements
+* Code reduction
 
 = 0.1.9 =
 * Added animations

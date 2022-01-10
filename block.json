@@ -21,9 +21,13 @@
 		}
 	},
 	"attributes": {
+	    "align": {
+	      "type": "string",
+	      "default": "center"
+	    },
 	    "type": {
 	      "type": "string",
-	      "default": "popup"
+	      "default": "center"
 	    },
 	    "width": {
 	      "type": "number",
@@ -121,5 +125,5 @@
 	"editorScript": "file:./build/index.js",
 	"editorStyle": "file:./build/index.css",
 	"style": "file:./build/style-index.css",
-	"script": "file:./build/frontend.js"
+	"viewScript": "file:./build/frontend.js"
 }

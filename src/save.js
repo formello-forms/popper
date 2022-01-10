@@ -50,6 +50,7 @@ export default function save( { attributes, className } ) {
         showCloseButton,
         pageviews,
         animation,
+        align,
         uuid
     } = attributes;
 
@@ -77,12 +78,19 @@ export default function save( { attributes, className } ) {
         closeButtonStyle.right= 0;
     }
 
-
-    const popperClass = classnames( 'popper', className );
-    const containerClass = classnames( 'popper__container', boxShadow, animation, {
-        'popper__slide': 'slideIn' === type || 'slideInRight' === type ,
-        'popper__slide-right': 'slideInRight' === type,
+    const popperClass = classnames( 'wp-block-popper', className, {
+        'wp-block-popper--right': align.includes( 'right' ),
+        'wp-block-popper--left': align.includes( 'left' ),
+        'wp-block-popper--top': align.includes( 'top' ),
+        'wp-block-popper--bottom': align.includes( 'bottom' )
     } );
+    const containerClass = classnames( 'wp-block-popper__container', boxShadow, {
+        'wp-block-popper__animate': !!animation,
+    } );
+
+    if( animation ) {
+        modalStyle['--popper-animation'] = animation
+    }
 
     const overlay = overlayOpacity ? overlayOpacity/100 : '.75';
 
@@ -104,9 +112,9 @@ export default function save( { attributes, className } ) {
                 className: popperClass
             }) }
         >
-            {   'popup' === type &&
+            {   'center' !== align &&
                 <div 
-                    className="popper__overlay" 
+                    className="wp-block-popper__overlay" 
                     tabindex="-1" 
                     style={ { backgroundColor: overlayColor } }
                 ></div>
@@ -114,9 +122,9 @@ export default function save( { attributes, className } ) {
             <div className={ containerClass } role="dialog" aria-modal="true" aria-labelledby="modal-title" style={ modalStyle }>
                 {
                     showCloseButton && 
-                    <button className="popper__close" aria-label="Close modal" style={ closeButtonStyle }></button>
+                    <button className="wp-block-popper__close" aria-label="Close modal" style={ closeButtonStyle }></button>
                 }
-                <main className="popper__content">
+                <main className="wp-block-popper__content">
                     <InnerBlocks.Content />
                 </main>
             </div>

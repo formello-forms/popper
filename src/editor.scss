@@ -4,20 +4,20 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-tropicalista-popper {
-	border: 1px dotted #f00;
+.wp-block-popper {
+  display: block;
 }
 
-.popper__container {
+.wp-block-popper__container {
   max-width: 100%;
   z-index: 0;
 }
 
-.popper__close {
+.wp-block-popper__close {
   z-index: 1;
 }
 
-.popper__close:before { content: "\2715"; }
+.wp-block-popper__close:before { content: "\2715"; }
 
 .block-editor-block-list__layout{
   .wp-block {

@@ -115,9 +115,11 @@ const Appearance = ( props ) => {
 		            value={ animation }
 		            options={ [
 		                { label: __( 'None', 'popper' ), value: '' },
-		                { label: __( 'Slide in Top', 'popper' ), value: 'popper__animate-slide-in-top' },
-		                { label: __( 'Slide in Bottom', 'popper' ), value: 'popper__animate-slide-in-bottom' },
-		                { label: __( 'Unfold In', 'popper' ), value: 'popper__animate-unfoldIn' },
+		                { label: __( 'Slide in Top', 'popper' ), value: 'slide-in-top' },
+		                { label: __( 'Slide in Bottom', 'popper' ), value: 'slide-in-bottom' },
+		                { label: __( 'Slide in Right', 'popper' ), value: 'slide-in-right' },
+		                { label: __( 'Slide in Left', 'popper' ), value: 'slide-in-left' },
+		                { label: __( 'Unfold In', 'popper' ), value: 'unfoldIn' },
 		            ] }
 		            onChange={ ( val ) => setAttributes( { animation: val } ) }
 		        />

@@ -49,6 +49,7 @@ export function Select ( props ) {
 		} else {
 			locationType = props.rule.rule.substr( 0, props.rule.rule.indexOf( ':' ) );
 		}
+		console.log(locationType)
 		return locationType
 	}
 
@@ -81,8 +82,7 @@ export function Select ( props ) {
 					<Rules 
 						onChange={ props.onChange }
 						selectedCategories={ [] }
-						type={ getType() }
-						id={ props.rule.rule.substr( props.rule.rule.lastIndexOf( ':' ) + 1 ) }
+						type={ props.rule.rule.substr( props.rule.rule.lastIndexOf( ':' ) + 1 ) }
 						rule={ props.rule }
 						index={ props.index }
 					/>
