@@ -1,6 +1,6 @@
 import includes from "lodash/includes";
 
-import { useSelect, select } from '@wordpress/data';
+import { useSelect, select, dispatch } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 import { useEntityProp } from '@wordpress/core-data';
@@ -17,7 +17,7 @@ import { useState } from '@wordpress/element';
 import { RulesModal } from "./modal";
 import { __ } from '@wordpress/i18n';
 
-registerPlugin('popper-display', {
+registerPlugin( 'popper-display', {
  	render() {
 		const postType = useSelect(
 			( select ) => select( 'core/editor' ).getCurrentPostType(),
@@ -33,7 +33,7 @@ registerPlugin('popper-display', {
 			postType,
 			'meta'
 		);
-
+		
 		const [ isModalOpen, setModalOpen ] = useState( false );
 	    const closeModal = () => setModalOpen( false );
 
@@ -42,6 +42,7 @@ registerPlugin('popper-display', {
 				title={ __( 'Display Rules', 'popper' ) }
 				icon={ () => '' }
 				opened={ true }
+				name="popper-display"
 			>
 					<BaseControl>
 					<Button

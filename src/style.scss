@@ -1,6 +1,6 @@
 @import './animations';
 
-.wp-block-popper-is-open, .popper {
+.wp-block-popper-is-open, .wp-block-popper__container, .popper {
 
   /* Box Shadow Color */
   --box-shadow-color: 0,0,0;
@@ -97,8 +97,8 @@
 
 
 .wp-block-popper__animate {
-  -webkit-animation: var( --popper-animation ) 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-          animation: var( --popper-animation ) 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: var( --popper-animation ) 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+          animation: var( --popper-animation ) 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .wp-block-popper__content {

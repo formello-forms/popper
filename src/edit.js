@@ -90,8 +90,7 @@ function Edit( props ) {
 
 	const style = {
 		minWidth: width,
-		width: width,
-		borderRadius,
+		width: width
 	};
 
 	const closeButtonStyle = {};
@@ -132,7 +131,7 @@ function Edit( props ) {
     }
 
 	return (
-		<div aria-hidden="true" style={ style }>
+		<div { ...useBlockProps() } style={ style }>
 
 			<InspectorControls>
 				<OpenBehaviour { ...props } />
@@ -158,12 +157,12 @@ function Edit( props ) {
 			<div>
 
 				<Fragment>
+					{
+						showCloseButton &&
+						<button className="wp-block-popper__close" style={ closeButtonStyle }></button>
+					}
 
 					<div { ...useBlockProps() } className={ containerClass } style={ modalStyle }>
-						{
-							showCloseButton &&
-							<button className="wp-block-popper__close" style={ closeButtonStyle }></button>
-						}
 						<InnerBlocks
 							templateLock={ false }
 							renderAppender={ hasInnerBlocks ? undefined : <InnerBlocks.ButtonBlockAppender /> }
