@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
-import { useSelect, dispatch, select } from '@wordpress/data';
+import { useSelect, dispatch, select, subscribe } from '@wordpress/data';
 import { useState, useEffect, Fragment } from '@wordpress/element';
+import { useEntityProp } from '@wordpress/core-data';
 
 import {
 	BlockControls,
@@ -38,6 +39,22 @@ function Edit( props ) {
 
 	const { attributes, setAttributes, className, clientId } = props;
 
+	useEffect( () => {
+
+		  const postTitle = select( 'core/editor' ).getEditedPostAttribute('meta');
+
+			if ( ! postTitle.popper_rules.location.length ) {
+
+				dispatch( 'core/notices' ).createNotice(
+					'warning',
+					'Please enter a title',
+					{ id: 'popper', isDismissible: true }
+				);
+
+			}
+
+	}, [] )
+
 	const post_id = useSelect(select =>
 		select("core/editor").getCurrentPostId()
 	);
@@ -73,13 +90,14 @@ function Edit( props ) {
 
 	const style = {
 		minWidth: width,
+		width: width,
 		borderRadius,
 	};
 
 	const closeButtonStyle = {};
 	
 	if ( backgroundColor ) {
-		style.backgroundColor = backgroundColor;
+		//style.backgroundColor = backgroundColor;
 	}
 
 	if ( gradientBackground ) {
@@ -102,6 +120,7 @@ function Edit( props ) {
 
     const modalStyle = {
         minWidth: width,
+        width: width,
         borderRadius,
     };
 
@@ -112,12 +131,8 @@ function Edit( props ) {
         modalStyle.background = gradientBackground;
     }
 
-    if( 'popup' !== type ) {
-    	setAttributes( { closeOnClickOutside: false } )
-    }
-
 	return (
-		<div { ...useBlockProps() } aria-hidden="true" style={ style }>
+		<div aria-hidden="true" style={ style }>
 
 			<InspectorControls>
 				<OpenBehaviour { ...props } />
@@ -140,22 +155,22 @@ function Edit( props ) {
 						style={ style }
 					/>
 			</BlockControls>
-			<div tabIndex="-1">
+			<div>
 
-				<div role="dialog" aria-modal="true">
-					{
-						showCloseButton &&
-						<button className="wp-block-popper__close" style={ closeButtonStyle }></button>
-					}
+				<Fragment>
 
-					<div className={ containerClass } style={ modalStyle }>
+					<div { ...useBlockProps() } className={ containerClass } style={ modalStyle }>
+						{
+							showCloseButton &&
+							<button className="wp-block-popper__close" style={ closeButtonStyle }></button>
+						}
 						<InnerBlocks
 							templateLock={ false }
 							renderAppender={ hasInnerBlocks ? undefined : <InnerBlocks.ButtonBlockAppender /> }
 						/>
 					</div>
 
-				</div>
+				</Fragment>
 			</div>
 			{ isModalOpen && (
 				<RulesModal onRequestClose={ closeModal } />

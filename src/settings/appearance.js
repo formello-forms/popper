@@ -25,52 +25,36 @@ const Appearance = ( props ) => {
 	return (
 		<>
 			<PanelBody title={ __( 'Colors', 'popper' ) } initialOpen={ false }>
-				<PanelRow>
-					<ColorGradientControl
-						label={ __( 'Close Button Color', 'popper' ) }
-						colorValue={ closeButtonColor }
-						onColorChange={ ( val ) => {
-							setAttributes( {
-								closeButtonColor: val || '#000000',
-							} );
-						} }
-					/>
-				</PanelRow>
-				<PanelRow>
-					<ColorGradientControl
-						label={ __( 'Background Color', 'popper' ) }
-						colorValue={ backgroundColor }
-						gradientValue={ gradientBackground }
-						onGradientChange={ ( val ) => {
-							setAttributes( {
-								gradientBackground: val || false,
-							} );
-						} }
-						enableAlpha
-						onColorChange={ ( val ) => {
-							setAttributes( { backgroundColor: val || false } );
-						} }
-					/>
-				</PanelRow>
-				<PanelRow>
-					<ColorGradientControl
-						label={ __( 'Overlay Color', 'popper' ) }
-						colorValue={ overlayColor }
-						enableAlpha
-						onColorChange={ ( val ) => {
-							setAttributes( { overlayColor: val || false } );
-						} }
-					/>
-				</PanelRow>
-				<RangeControl
-					value={ overlayOpacity }
-					label={ __( 'Overlay Opacity', 'popper' ) }
-					onChange={ ( val ) => {
-						setAttributes( { overlayOpacity: val } );
+				<ColorGradientControl
+					label={ __( 'Close Button Color', 'popper' ) }
+					colorValue={ closeButtonColor }
+					onColorChange={ ( val ) => {
+						setAttributes( {
+							closeButtonColor: val || '#000000',
+						} );
 					} }
-					allowReset
-					min={ 0 }
-					max={ 100 }
+				/>
+				<ColorGradientControl
+					label={ __( 'Background Color', 'popper' ) }
+					colorValue={ backgroundColor }
+					gradientValue={ gradientBackground }
+					onGradientChange={ ( val ) => {
+						setAttributes( {
+							gradientBackground: val || false,
+						} );
+					} }
+					enableAlpha
+					onColorChange={ ( val ) => {
+						setAttributes( { backgroundColor: val || false } );
+					} }
+				/>
+				<ColorGradientControl
+					label={ __( 'Overlay Color', 'popper' ) }
+					colorValue={ overlayColor }
+					enableAlpha
+					onColorChange={ ( val ) => {
+						setAttributes( { overlayColor: val || false } );
+					} }
 				/>
 			</PanelBody>
 			<PanelBody title={ __( 'Modal Appearance', 'popper' ) } initialOpen={ false }>
@@ -120,6 +104,8 @@ const Appearance = ( props ) => {
 		                { label: __( 'Slide in Right', 'popper' ), value: 'slide-in-right' },
 		                { label: __( 'Slide in Left', 'popper' ), value: 'slide-in-left' },
 		                { label: __( 'Unfold In', 'popper' ), value: 'unfoldIn' },
+		                { label: __( 'Puff In', 'popper' ), value: 'puff-in' },
+		                { label: __( 'Puff In Back', 'popper' ), value: 'puff-in-back' },
 		            ] }
 		            onChange={ ( val ) => setAttributes( { animation: val } ) }
 		        />

@@ -112,7 +112,7 @@ export default function save( { attributes, className } ) {
                 className: popperClass
             }) }
         >
-            {   'center' !== align &&
+            {   'center center' === align &&
                 <div 
                     className="wp-block-popper__overlay" 
                     tabindex="-1" 

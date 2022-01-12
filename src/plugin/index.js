@@ -10,7 +10,7 @@ import {
 	BaseControl,
 	TextControl,
 	Modal,
-	FormTokenField,
+	PanelRow,
 	Button
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
@@ -39,10 +39,11 @@ registerPlugin('popper-display', {
 
 		return (
 			<PluginDocumentSettingPanel
-				title={ __( 'Display', 'popper' ) }
+				title={ __( 'Display Rules', 'popper' ) }
 				icon={ () => '' }
+				opened={ true }
 			>
-				<BaseControl>
+					<BaseControl>
 					<Button
 						isPrimary
 						onClick={ () => {
@@ -51,7 +52,19 @@ registerPlugin('popper-display', {
 					>
 						{ __( 'Conditions', 'popper' ) }
 					</Button>
-				</BaseControl>
+					</BaseControl>
+					<PanelRow>
+					<p>
+						{ __( 'To take full advantage of Popper and start collecting leads, we suggest using our Formello plugin.' ) }
+					</p>
+					</PanelRow>
+					<Button
+						isPrimary
+						href={ popper.installLink }
+					>
+						{ __( 'Install form', 'popper' ) }
+					</Button>
+
 	            { isModalOpen && (
 	                <RulesModal onRequestClose={ closeModal } />
 	            ) }

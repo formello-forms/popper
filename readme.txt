@@ -47,7 +47,7 @@ Popper is open source and you can [contribute here](https://github.com/formello-
 
 = Will this slow down my site? =
 
-No. Popper has no external dependencies and does not require jQuery. Only 2kb of js is loaded.
+No. Popper has no external dependencies and does not require jQuery. Only 2kb(gzipped) of js is loaded.
 
 = Is exit intent available? =
 
@@ -71,6 +71,9 @@ No. No external library is required. We mantain a clean fast code without depend
 = 0.2.0 =
 * Code improvements
 * Code reduction
+* Better controls
+* New animations
+* Added new positions
 
 = 0.1.9 =
 * Added animations

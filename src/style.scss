@@ -92,6 +92,7 @@
   box-sizing: border-box;
   position: relative;
   z-index: 1000;
+  overflow: auto;
 }
 
 
@@ -104,7 +105,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 75vh;
-  min-height: 50px;
+  min-height: auto;
   scrollbar-width: 8px;
 }
 

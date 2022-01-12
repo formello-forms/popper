@@ -17,8 +17,17 @@ const variations = [
 		title: __( 'Basic' ),
 		description: __( 'Basic popup' ),
 		icon: (
-			<SVG xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
-				<Path d='M19 6H6c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM6 17.5c-.3 0-.5-.2-.5-.5V8c0-.3.2-.5.5-.5h3v10H6zm13.5-.5c0 .3-.2.5-.5.5h-3v-10h3c.3 0 .5.2.5.5v9z' />
+			<SVG
+				width="48"
+				height="48"
+				viewBox="0 0 48 48"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<Path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="m39.0625 14h-30.0625v20.0938h30.0625zm-30.0625-2c-1.10457 0-2 .8954-2 2v20.0938c0 1.1045.89543 2 2 2h30.0625c1.1046 0 2-.8955 2-2v-20.0938c0-1.1046-.8954-2-2-2z"
+				/>
 			</SVG>
 		),
 		innerBlocks: [ 

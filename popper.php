@@ -120,6 +120,7 @@ function popper_positions() {
 		array(
 			'positions' => $positions,
 			'users' => $users,
+			'installLink' => wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=formello' ), 'install-plugin_generateblocks' ),
 		)
 	);
 
@@ -176,5 +177,5 @@ function popper_matcher() {
 	add_filter( 'the_content', 'wpautop' );
 
 }
-//add_action( 'wp_footer', 'popper_matcher' );
-add_action( 'wp_head', 'popper_matcher' );
+add_action( 'wp_footer', 'popper_matcher' );
+//add_action( 'wp_head', 'popper_matcher' );
