@@ -3,7 +3,7 @@ Contributors:      Formello
 Tags:              popup, pop up, exit intent, popup maker, exit popup, popup builder, wordpress popup block
 Requires at least: 5.6.0
 Tested up to:      5.8.1
-Stable tag:        0.1.9
+Stable tag:        0.2.0
 Requires PHP:      5.6.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
