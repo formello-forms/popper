@@ -83,7 +83,7 @@ export default function save({ attributes, className }) {
 	if (animation) {
 		modalStyle['--popper-animation'] = animation;
 	}
-console.log(overlayColor)
+
 	return (
 		<div
 			data-open={openBehaviour}

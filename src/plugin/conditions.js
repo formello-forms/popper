@@ -9,14 +9,12 @@ import { __ } from '@wordpress/i18n';
 export default function Rules(props) {
 	const { type, rule, index, onChange } = props;
 
-	console.log(type);
-
 	const posts = useSelect((select) => {
 		return select('core').getEntityRecords('postType', type, {
 			per_page: -1,
 		});
 	});
-console.log(posts)
+
 	let postNames = [];
 	let postsFieldValue = [];
 	let selectedObjects = rule.object;

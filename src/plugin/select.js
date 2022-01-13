@@ -40,7 +40,7 @@ export function Select(props) {
 				props.rule.rule.indexOf(':')
 			);
 		}
-		console.log(locationType);
+
 		return locationType;
 	};
 

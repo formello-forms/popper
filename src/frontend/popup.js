@@ -238,7 +238,6 @@ class Popup {
 
 	bindEscClosing() {
 		window.addEventListener('keydown', (e) => {
-			console.log(e);
 			if (e.keyCode == 27) {
 				this.closeModal();
 			}
