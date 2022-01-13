@@ -10,68 +10,29 @@ import {
 	RichText,
 	useBlockProps,
 	store as blockEditorStore,
-	__experimentalBlockVariationPicker
+	__experimentalBlockVariationPicker,
 } from '@wordpress/block-editor';
 
 import {
 	isReusableBlock,
 	createBlocksFromInnerBlocksTemplate,
-	createBlock
+	createBlock,
 } from '@wordpress/blocks';
 
-import {
-	ToolbarGroup,
-	ToolbarButton
-} from '@wordpress/components';
+import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 
 import Appearance from './settings/appearance';
 import OpenBehaviour from './settings/open-behaviour';
 import CloseBehaviour from './settings/close-behaviour';
-import { RulesModal } from "./plugin/modal";
+import { RulesModal } from './plugin/modal';
 import './editor.scss';
 import Controls from './settings/controls';
 
 import classnames from 'classnames';
 import icons from './icons';
 
-
-function Edit( props ) {
-
+function Edit(props) {
 	const { attributes, setAttributes, className, clientId } = props;
-
-	useEffect( () => {
-
-		  const postTitle = select( 'core/editor' ).getEditedPostAttribute('meta');
-
-			if ( ! postTitle.popper_rules.location.length ) {
-
-				dispatch( 'core/notices' ).createNotice(
-					'warning',
-					'Please enter a title',
-					{ id: 'popper', isDismissible: true }
-				);
-
-			}
-
-	}, [] )
-
-	const post_id = useSelect(select =>
-		select("core/editor").getCurrentPostId()
-	);
-
-	const { hasInnerBlocks } = useSelect(
-		( select ) => {
-			const { getBlock, getSettings } = select( blockEditorStore );
-			const block = getBlock( clientId );
-			return {
-				hasInnerBlocks: !! ( block && block.innerBlocks.length )
-			};
-		},
-		[ clientId ]
-	);
-
-	const [ isModalOpen, setModalOpen ] = useState( false );
-	const closeModal = () => setModalOpen( false );
 
 	const {
 		width,
@@ -85,135 +46,175 @@ function Edit( props ) {
 		boxShadow,
 		overlayColor,
 		overlayOpacity,
-		type
+		uuid,
 	} = attributes;
+
+	useEffect(() => {
+		const postTitle = select('core/editor').getEditedPostAttribute('meta');
+
+		setAttributes( { uuid: post_id } )
+
+		if (!postTitle.popper_rules.location.length) {
+			dispatch('core/notices').createNotice(
+				'warning',
+				'This popup has no rules assigned. PLease select at least one.',
+				{ id: 'popper', isDismissible: true }
+			);
+		}
+	}, []);
+
+	const post_id = useSelect((select) =>
+		select('core/editor').getCurrentPostId()
+	);
+
+	const { hasInnerBlocks } = useSelect(
+		(select) => {
+			const { getBlock, getSettings } = select(blockEditorStore);
+			const block = getBlock(clientId);
+			return {
+				hasInnerBlocks: !!(block && block.innerBlocks.length),
+			};
+		},
+		[clientId]
+	);
+
+	const [isModalOpen, setModalOpen] = useState(false);
+	const closeModal = () => setModalOpen(false);
 
 	const style = {
 		minWidth: width,
-		width: width
+		width: width,
 	};
 
 	const closeButtonStyle = {};
-	
-	if ( backgroundColor ) {
+
+	if (backgroundColor) {
 		//style.backgroundColor = backgroundColor;
 	}
 
-	if ( gradientBackground ) {
+	if (gradientBackground) {
 		style.background = gradientBackground;
 	}
 
-	if ( closeButtonColor ) {
+	if (closeButtonColor) {
 		closeButtonStyle.color = closeButtonColor;
 		closeButtonStyle.fontSize = closeButtonSize;
 		closeButtonStyle.width = closeButtonSize;
 		closeButtonStyle.height = closeButtonSize;
 	}
 
-	if( 'outside' === closeButtonAlignment ) {
-		closeButtonStyle.top = ( closeButtonSize + 4 ) *-1;
-		closeButtonStyle.right= 0;
+	if ('outside' === closeButtonAlignment) {
+		closeButtonStyle.top = (closeButtonSize + 4) * -1;
+		closeButtonStyle.right = 0;
 	}
 
-    const containerClass = classnames( 'wp-block-popper__container', boxShadow );
+	const containerClass = classnames('wp-block-popper__container', boxShadow);
 
-    const modalStyle = {
-        minWidth: width,
-        width: width,
-        borderRadius,
-    };
+	const modalStyle = {
+		minWidth: width,
+		width: width,
+		borderRadius,
+	};
 
-    if ( backgroundColor ) {
-        modalStyle.backgroundColor = backgroundColor;
-    }
-    if ( gradientBackground ) {
-        modalStyle.background = gradientBackground;
-    }
+	if (backgroundColor) {
+		modalStyle.backgroundColor = backgroundColor;
+	}
+	if (gradientBackground) {
+		modalStyle.background = gradientBackground;
+	}
 
 	return (
-		<div { ...useBlockProps() } style={ style }>
-
+		<div {...useBlockProps()} style={style}>
 			<InspectorControls>
-				<OpenBehaviour { ...props } />
-				<CloseBehaviour { ...props } />
-				<Appearance { ...props } />
+				<OpenBehaviour {...props} />
+				<CloseBehaviour {...props} />
+				<Appearance {...props} />
 			</InspectorControls>
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarButton
-						label={ __( 'Display Rules', 'popper' ) }
-						icon={ 'admin-generic' }
+						label={__('Display Rules', 'popper')}
+						icon={'admin-generic'}
 						onClick={ () => {
-							setModalOpen( true )
-						} }
+							setModalOpen(true);
+						}}
 					/>
 				</ToolbarGroup>
-					<Controls
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						style={ style }
-					/>
+				<Controls
+					attributes={attributes}
+					setAttributes={setAttributes}
+					style={style}
+				/>
 			</BlockControls>
 			<div>
-
 				<Fragment>
-					{
-						showCloseButton &&
-						<button className="wp-block-popper__close" style={ closeButtonStyle }></button>
-					}
+					{showCloseButton && (
+						<button
+							className="wp-block-popper__close"
+							style={closeButtonStyle}
+						></button>
+					)}
 
-					<div { ...useBlockProps() } className={ containerClass } style={ modalStyle }>
+					<div
+						{...useBlockProps()}
+						className={containerClass}
+						style={modalStyle}
+					>
 						<InnerBlocks
-							templateLock={ false }
-							renderAppender={ hasInnerBlocks ? undefined : <InnerBlocks.ButtonBlockAppender /> }
+							templateLock={false}
+							renderAppender={
+								hasInnerBlocks ? undefined : (
+									<InnerBlocks.ButtonBlockAppender />
+								)
+							}
 						/>
 					</div>
-
 				</Fragment>
 			</div>
-			{ isModalOpen && (
-				<RulesModal onRequestClose={ closeModal } />
-			)}
+			{isModalOpen && <RulesModal onRequestClose={closeModal} />}
 		</div>
 	);
 }
 
-function Placeholder ( props ) {
-
+function Placeholder(props) {
 	const { clientId, setAttributes } = props;
-	const { getBlockType, getBlockVariations, getDefaultBlockVariation } = select( 'core/blocks' );
+	const { getBlockType, getBlockVariations, getDefaultBlockVariation } =
+		select('core/blocks');
 
-	const {
-		insertBlock,
-		replaceInnerBlocks,
-	} = dispatch( 'core/block-editor' );
+	const { insertBlock, replaceInnerBlocks } = dispatch('core/block-editor');
 
 	const { variations, defaultVariation } = useSelect(
-		( select ) => {
-			const { getBlock } = select( 'core/block-editor' );
-			const block = getBlock( clientId );
+		(select) => {
+			const { getBlock } = select('core/block-editor');
+			const block = getBlock(clientId);
 
 			return {
-				defaultVariation: typeof getDefaultBlockVariation === 'undefined' ? null : getDefaultBlockVariation( props.name ),
-				variations: typeof getBlockVariations === 'undefined' ? null : getBlockVariations( props.name ),
-			}
+				defaultVariation:
+					typeof getDefaultBlockVariation === 'undefined'
+						? null
+						: getDefaultBlockVariation(props.name),
+				variations:
+					typeof getBlockVariations === 'undefined'
+						? null
+						: getBlockVariations(props.name),
+			};
 		},
-		[ clientId ]
+		[clientId]
 	);
 
 	return (
 		<div {...useBlockProps()}>
 			<__experimentalBlockVariationPicker
-				label={ 'Popup' }
-				instructions={ __( 'Select a popup to start with.', 'popper' ) }
-				variations={ variations }
-				clientId={ clientId }
+				label={'Popup'}
+				instructions={__('Select a popup to start with.', 'popper')}
+				variations={variations}
+				clientId={clientId}
 				allowSkip
-				onSelect={ ( nextVariation = defaultVariation ) => {
-					if ( nextVariation.attributes ) {
-						setAttributes( nextVariation.attributes );
+				onSelect={(nextVariation = defaultVariation) => {
+					if (nextVariation.attributes) {
+						setAttributes(nextVariation.attributes);
 					}
-					if ( nextVariation.innerBlocks ) {
+					if (nextVariation.innerBlocks) {
 						replaceInnerBlocks(
 							clientId,
 							createBlocksFromInnerBlocksTemplate(
@@ -221,27 +222,25 @@ function Placeholder ( props ) {
 							)
 						);
 					}
-				} }
+				}}
 			/>
 		</div>
 	);
 }
 
-const PopperEdit = ( props ) => {
+const PopperEdit = (props) => {
 	const { clientId } = props;
 	const hasInnerBlocks = useSelect(
-		( select ) => {
-			const { getBlock } = select( 'core/block-editor' );
-			const block = getBlock( clientId );
-			return !! ( block && block.innerBlocks.length );
+		(select) => {
+			const { getBlock } = select('core/block-editor');
+			const block = getBlock(clientId);
+			return !!(block && block.innerBlocks.length);
 		},
-		[ clientId ]
+		[clientId]
 	);
-	const Component = hasInnerBlocks
-		? Edit
-		: Placeholder;
+	const Component = hasInnerBlocks ? Edit : Placeholder;
 
-	return <Component { ...props } />;
+	return <Component {...props} />;
 };
 
 export default PopperEdit;

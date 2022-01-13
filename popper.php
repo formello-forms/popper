@@ -3,7 +3,7 @@
  * Plugin Name: Popper
  * Plugin URI:  https://formello.net/
  * Description: Popup builder with exit-intent powered by Gutenberg.
- * Version:     0.2.1
+ * Version:     0.2.2
  * Author:      Formello
  * Author URI:  https://formello.net
  * License:     GPL-2.0-or-later

@@ -1,4 +1,4 @@
-import includes from "lodash/includes";
+import includes from 'lodash/includes';
 
 import { useSelect, select, dispatch } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
@@ -11,65 +11,58 @@ import {
 	TextControl,
 	Modal,
 	PanelRow,
-	Button
+	Button,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-import { RulesModal } from "./modal";
+import { RulesModal } from './modal';
 import { __ } from '@wordpress/i18n';
 
-registerPlugin( 'popper-display', {
- 	render() {
+registerPlugin('popper-display', {
+	render() {
 		const postType = useSelect(
-			( select ) => select( 'core/editor' ).getCurrentPostType(),
+			(select) => select('core/editor').getCurrentPostType(),
 			[]
 		);
 
-		if( 'popper' !== postType ){
-			return false
+		if ('popper' !== postType) {
+			return false;
 		}
 
-		const [ meta, setMeta ] = useEntityProp(
-			'postType',
-			postType,
-			'meta'
-		);
-		
-		const [ isModalOpen, setModalOpen ] = useState( false );
-	    const closeModal = () => setModalOpen( false );
+		const [meta, setMeta] = useEntityProp('postType', postType, 'meta');
+
+		const [isModalOpen, setModalOpen] = useState(false);
+		const closeModal = () => setModalOpen(false);
 
 		return (
 			<PluginDocumentSettingPanel
-				title={ __( 'Display Rules', 'popper' ) }
-				icon={ () => '' }
-				opened={ true }
+				title={__('Display Rules', 'popper')}
+				icon={() => ''}
+				opened={true}
 				name="popper-display"
 			>
-					<BaseControl>
+				<BaseControl>
 					<Button
 						isPrimary
-						onClick={ () => {
-							setModalOpen( true );
-						} }
+						onClick={() => {
+							setModalOpen(true);
+						}}
 					>
-						{ __( 'Conditions', 'popper' ) }
+						{__('Conditions', 'popper')}
 					</Button>
-					</BaseControl>
-					<PanelRow>
+				</BaseControl>
+				<PanelRow>
 					<p>
-						{ __( 'To take full advantage of Popper and start collecting leads, we suggest using our Formello plugin.' ) }
+						{__(
+							'To take full advantage of Popper and start collecting leads, we suggest using our Formello plugin.'
+						)}
 					</p>
-					</PanelRow>
-					<Button
-						isPrimary
-						href={ popper.installLink }
-					>
-						{ __( 'Install form', 'popper' ) }
-					</Button>
+				</PanelRow>
+				<Button isPrimary href={popper.installLink}>
+					{__('Install form', 'popper')}
+				</Button>
 
-	            { isModalOpen && (
-	                <RulesModal onRequestClose={ closeModal } />
-	            ) }
+				{isModalOpen && <RulesModal onRequestClose={closeModal} />}
 			</PluginDocumentSettingPanel>
-	);
-  },
+		);
+	},
 });

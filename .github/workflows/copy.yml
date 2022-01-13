@@ -3,20 +3,20 @@ name: Push File
 on: push
 
 jobs:
-  copy-file:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+    copy-file:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
 
-    - name: Pushes readme file
-      uses: dmnemec/copy_file_to_another_repo_action@main
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-      with:
-        source_file: 'readme.txt'
-        destination_repo: 'formello-forms/assets'
-        destination_folder: 'formello-popper'
-        user_email: 'example@email.com'
-        user_name: 'dmnemec'
-        commit_message: 'A custom message for the commit'
+            - name: Pushes readme file
+              uses: dmnemec/copy_file_to_another_repo_action@main
+              env:
+                  API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+              with:
+                  source_file: 'readme.txt'
+                  destination_repo: 'formello-forms/assets'
+                  destination_folder: 'formello-popper'
+                  user_email: 'example@email.com'
+                  user_name: 'dmnemec'
+                  commit_message: 'A custom message for the commit'

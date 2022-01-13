@@ -81,6 +81,7 @@
   right: 0;
   bottom: 0;
   z-index:100;
+  background-color: #222222bf;
 }
 
 .wp-block-popper__container {
@@ -92,9 +93,25 @@
   box-sizing: border-box;
   position: relative;
   z-index: 1000;
-  overflow: auto;
 }
 
+.wp-block-popper__container.wide {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  .wp-block-popper__close {
+    position: absolute;
+    top: 40px !important;
+    right: 40px !important;
+  }
+}
 
 .wp-block-popper__animate {
   -webkit-animation: var( --popper-animation ) 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
@@ -107,6 +124,7 @@
   max-height: 75vh;
   min-height: auto;
   scrollbar-width: 8px;
+  border-radius: inherit;
 }
 
 /* Works on Chrome, Edge, and Safari */
@@ -150,6 +168,7 @@
 .wp-block-popper__close:hover, .wp-block-popper__close:focus {
   background-color: transparent;
   outline: none;
+  text-decoration: none;
 }
 
 .wp-block-popper__close:before { 
@@ -185,16 +204,22 @@
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     
   .wp-block-popper__container {
-    width: 90% !important;
-    min-width: 90% !important;
+    width: 90%;
+    min-width: 90%;
+    &.wide {
+      width: 100%;
+    }
   }
 
   @supports (display: flex) {
   
       .wp-block-popper__container {
-          width: 90% !important;
-          min-width: 90% !important;
+          width: 90%;
+          min-width: 90%;
           max-height: 85vh;
+          &.wide {
+            width: 100%;
+          }
       }
       
   }

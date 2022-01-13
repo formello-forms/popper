@@ -6,164 +6,158 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import {
-	Fragment,
-	RawHTML,
-	useState,
-	useEffect
-} from '@wordpress/element';
+import { Fragment, RawHTML, useState, useEffect } from '@wordpress/element';
 
-import {
-	__,
-	sprintf,
-} from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
-import {
-	compose,
-} from '@wordpress/compose';
+import { compose } from '@wordpress/compose';
 
-import {
-	useSelect,
-} from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 
 import { useEntityProp } from '@wordpress/core-data';
 
-import {
-	TabPanel,
-	Button,
-	Modal,
-} from '@wordpress/components';
+import { TabPanel, Button, Modal } from '@wordpress/components';
 import { Select } from './select';
 import { UserSelect } from './user-select';
 
-export function RulesModal ( props ) {
-
-	const {
-		onRequestClose,
-	} = props;
+export function RulesModal(props) {
+	const { onRequestClose } = props;
 
 	const postType = useSelect(
-		( select ) => select( 'core/editor' ).getCurrentPostType(),
+		(select) => select('core/editor').getCurrentPostType(),
 		[]
 	);
 
-	const [ meta, setMeta ] = useEntityProp(
-		'postType',
-		postType,
-		'meta'
-	);
+	const [meta, setMeta] = useEntityProp('postType', postType, 'meta');
 
 	const rulesMeta = meta['popper_rules'];
 
-	const [ rules, setRules ] = useState( rulesMeta )
+	const [rules, setRules] = useState(rulesMeta);
 
-	const [ activeTab, setActiveTab ] = useState( 'location' )
-	
+	const [activeTab, setActiveTab] = useState('location');
+
 	const addRule = () => {
-		if( 'user' === activeTab ){
-			var joined = rules[activeTab].concat( '' );
-		}else{
-			var joined = rules[activeTab].concat( { rule: '', object: [] } );			
+		if ('user' === activeTab) {
+			var joined = rules[activeTab].concat('');
+		} else {
+			var joined = rules[activeTab].concat({ rule: '', object: [] });
 		}
-		setRules( { ...rules, [activeTab]: joined } )
+		setRules({ ...rules, [activeTab]: joined });
+	};
 
-	}
-
-	const onChange = ( prop, val, index ) => {
+	const onChange = (prop, val, index) => {
 		// 1. Make a shallow copy of the items
-		let items = [ ...rules[activeTab] ];
+		let items = [...rules[activeTab]];
 		// 2. Make a shallow copy of the item you want to mutate
-		let item = {...rules[activeTab][index]};
+		let item = { ...rules[activeTab][index] };
 		// 3. Replace the property you're intested in
-		if( !prop ){
+		if (!prop) {
 			item = val;
-		}else{
+		} else {
 			item[prop] = val;
 		}
 		// 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
 		items[index] = item;
 		// 5. Set the state to our new copy
-		setRules( { ...rules, [activeTab]: items } )
-		setMeta( { ...meta, 'popper_rules': rules } );
-	}
+		setRules({ ...rules, [activeTab]: items });
+		setMeta({ ...meta, popper_rules: rules });
+	};
 
-	const updateMetaValue = ( newValue ) => {
-		setMeta( { ...meta, 'popper_rules': rules } );
-		onRequestClose()
-	}
+	const updateMetaValue = (newValue) => {
+		setMeta({ ...meta, popper_rules: rules });
+		onRequestClose();
+	};
 
-	const onSelect = ( tabName ) => {
-		setActiveTab(tabName)
-	}
+	const onSelect = (tabName) => {
+		setActiveTab(tabName);
+	};
 
-	const onDelete = ( index ) => {
-		let items = [ ...rules[activeTab] ];
+	const onDelete = (index) => {
+		let items = [...rules[activeTab]];
 		items.splice(index, 1);
-		setRules( { ...rules, [activeTab]: items } )
-		setMeta( { ...meta, 'popper_rules': rules } );
-	}
+		setRules({ ...rules, [activeTab]: items });
+		setMeta({ ...meta, popper_rules: rules });
+	};
 
 	return (
 		<Modal
-			title={ __( 'Rules', 'popper' ) }
-			onRequestClose={ updateMetaValue }
-			className={ 'popper-modal-rule' }
+			title={__('Rules', 'popper')}
+			onRequestClose={updateMetaValue}
+			className={'popper-modal-rule'}
 		>
 			<TabPanel
-				onSelect={ onSelect }
-				tabs={ [
+				onSelect={onSelect}
+				tabs={[
 					{
 						name: 'location',
-						title: (
-							<span>
-								{ __( 'Location', 'popper' ) }
-							</span>
+						title: <span>{__('Location', 'popper')}</span>,
+						description: (
+							<p>
+								{__(
+									'Choose where you want display this popup.',
+									'popper'
+								)}
+							</p>
 						),
-						description: <p>{ __( 'Choose where you want display this popup.', 'popper' ) }</p>
 					},
 					{
 						name: 'exclude',
-						title: (
-							<span>
-								{ __( 'Exclude', 'popper' ) }
-							</span>
+						title: <span>{__('Exclude', 'popper')}</span>,
+						description: (
+							<p>
+								{__(
+									"Choose where you don't want display this popup.",
+									'popper'
+								)}
+							</p>
 						),
-						description: <p>{ __( 'Choose where you don\'t want display this popup.', 'popper' ) }</p>
 					},
 					{
 						name: 'user',
-						title: (
-							<span>
-								{ __( 'Users', 'popper' ) }
-							</span>
+						title: <span>{__('Users', 'popper')}</span>,
+						description: (
+							<p>
+								{__(
+									'Choose which user will see this popup.',
+									'popper'
+								)}
+							</p>
 						),
-						description: <p>{ __( 'Choose which user will see this popup.', 'popper' ) }</p>
 					},
-				] }
+				]}
 			>
-				{
-					( tabData ) => {
-						return (
+				{(tabData) => {
+					return (
+						<Fragment>
+							<h2>{tabData.title}</h2>
+							{tabData.description}
 							<Fragment>
-								<h2>{ tabData.title }</h2>
-								{ tabData.description }
-								<Fragment>
-									{
-										rules[activeTab].map( ( r, i ) => {
-											const Component = 'user' === tabData.name
-												? UserSelect
-												: Select;
-											return <Component onChange={ onChange } onDelete={ onDelete } rule={ r } index={ i } key={ i } />
-										} )
-									}
-								</Fragment>
-								<Button isPrimary={ true } onClick={ addRule } className={ 'popper-modal-button' }>
-									{ __( 'Add rule', 'popper' ) }
-								</Button>
+								{rules[activeTab].map((r, i) => {
+									const Component =
+										'user' === tabData.name
+											? UserSelect
+											: Select;
+									return (
+										<Component
+											onChange={onChange}
+											onDelete={onDelete}
+											rule={r}
+											index={i}
+											key={i}
+										/>
+									);
+								})}
 							</Fragment>
-						);
-					}
-				}
+							<Button
+								isPrimary={true}
+								onClick={addRule}
+								className={'popper-modal-button'}
+							>
+								{__('Add rule', 'popper')}
+							</Button>
+						</Fragment>
+					);
+				}}
 			</TabPanel>
 		</Modal>
 	);

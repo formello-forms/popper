@@ -15,7 +15,7 @@ const { name, attributes, supports } = metadata;
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( name, {
+registerBlockType(name, {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
@@ -39,5 +39,5 @@ registerBlockType( name, {
 	 */
 	save,
 
-	deprecated
-} );
+	deprecated,
+});

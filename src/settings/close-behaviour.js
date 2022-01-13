@@ -7,7 +7,7 @@ import {
 	RangeControl,
 } from '@wordpress/components';
 
-const CloseBehaviour = ( props ) => {
+const CloseBehaviour = (props) => {
 	const { attributes, setAttributes } = props;
 	const {
 		showCloseButton,
@@ -18,89 +18,83 @@ const CloseBehaviour = ( props ) => {
 		dismissPeriod,
 	} = attributes;
 
-	const changeAttribute = ( slug, val ) => {
-		setAttributes( { [ slug ]: val } );
+	const changeAttribute = (slug, val) => {
+		setAttributes({ [slug]: val });
 	};
 
 	return (
-		<PanelBody
-			initialOpen={ false }
-			title={ __( 'Close Behaviour', 'popper' ) }
-		>
+		<PanelBody initialOpen={false} title={__('Close Behaviour', 'popper')}>
 			<PanelRow>
 				<CheckboxControl
-					label={ __( 'Show Close Button', 'popper' ) }
-					checked={ showCloseButton }
-					onChange={ ( value ) =>
-						changeAttribute( 'showCloseButton', value )
+					label={__('Show Close Button', 'popper')}
+					checked={showCloseButton}
+					onChange={(value) =>
+						changeAttribute('showCloseButton', value)
 					}
 				/>
 			</PanelRow>
 			<PanelRow>
 				<CheckboxControl
-					label={ __( 'Close On Click Outside', 'popper' ) }
-					checked={ closeOnClickOutside }
-					onChange={ ( value ) =>
-						changeAttribute( 'closeOnClickOutside', value )
+					label={__('Close On Click Outside', 'popper')}
+					checked={closeOnClickOutside}
+					onChange={(value) =>
+						changeAttribute('closeOnClickOutside', value)
 					}
 				/>
 			</PanelRow>
 			<PanelRow>
 				<CheckboxControl
-					label={ __( 'Close On Anchor Click', 'popper' ) }
-					checked={ closeOnAnchorClick }
-					onChange={ ( value ) =>
-						changeAttribute( 'closeOnAnchorClick', value )
+					label={__('Close On Anchor Click', 'popper')}
+					checked={closeOnAnchorClick}
+					onChange={(value) =>
+						changeAttribute('closeOnAnchorClick', value)
 					}
 				/>
 			</PanelRow>
-			{ closeOnAnchorClick && (
+			{closeOnAnchorClick && (
 				<PanelRow>
 					<TextControl
-						value={ closeAnchor }
-						label={ __( 'Anchor', 'popper' ) }
+						value={closeAnchor}
+						label={__('Anchor', 'popper')}
 						help={
 							<small>
-								{ __(
+								{__(
 									'You can add anchors to button blocks. Using the same anchor here will close the modal when you click the respective button.',
 									'popper'
-								) }
+								)}
 							</small>
 						}
-						onChange={ ( value ) =>
-							changeAttribute( 'closeAnchor', value )
+						onChange={(value) =>
+							changeAttribute('closeAnchor', value)
 						}
 					/>
 				</PanelRow>
-			) }
+			)}
 			<PanelRow>
 				<CheckboxControl
-					label={ __(
-						'Dismiss for Recurrent Visitors',
-						'popper'
-					) }
-					checked={ dismissForVisitors }
-					onChange={ ( value ) =>
-						changeAttribute( 'dismissForVisitors', value )
+					label={__('Dismiss for Recurrent Visitors', 'popper')}
+					checked={dismissForVisitors}
+					onChange={(value) =>
+						changeAttribute('dismissForVisitors', value)
 					}
 				/>
 			</PanelRow>
-			{ dismissForVisitors && (
+			{dismissForVisitors && (
 				<PanelRow>
 					<RangeControl
-						value={ dismissPeriod }
-						label={ __(
+						value={dismissPeriod}
+						label={__(
 							'Number of Days Until the Notice is Shown again',
 							'popper'
-						) }
-						onChange={ ( val ) => {
-							setAttributes( { dismissPeriod: val } );
-						} }
-						min={ 0 }
-						max={ 100 }
+						)}
+						onChange={(val) => {
+							setAttributes({ dismissPeriod: val });
+						}}
+						min={0}
+						max={100}
 					/>
 				</PanelRow>
-			) }
+			)}
 		</PanelBody>
 	);
 };

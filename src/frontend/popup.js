@@ -3,17 +3,19 @@ import StoreFactory from './pageCounter';
 
 /*global localStorage*/
 class Popup {
-	constructor( element ) {
+	constructor(element) {
 		this.element = element;
 		this.happened = false;
 		this.storageKey = 'popper-dismiss';
 		this.oldScroll = null;
 		const { dismiss } = element.dataset;
 
-		if ( this.isItemDismissed() && dismiss ) {
+		if (this.isItemDismissed() && dismiss) {
 			return false;
 		}
-		this.isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+		this.isMobile = window.matchMedia(
+			'only screen and (max-width: 760px)'
+		).matches;
 		this.init();
 	}
 
@@ -23,31 +25,30 @@ class Popup {
 	}
 
 	openModal() {
-		this.element.classList.add( 'wp-block-popper-is-open' );
+		this.element.classList.add('wp-block-popper-is-open');
 		this.happened = true;
 	}
 
 	closeModal() {
-		this.element.classList.remove( 'wp-block-popper-is-open' );
-		var frames = document.getElementsByTagName("iframe");
+		this.element.classList.remove('wp-block-popper-is-open');
+		var frames = document.getElementsByTagName('iframe');
 		for (let item of frames) {
-		    item.setAttribute( 'src', item.src )
+			item.setAttribute('src', item.src);
 		}
 		this.dismissModal();
 	}
 
 	dismissModal() {
 		const { dismiss, anchor, created } = this.element.dataset;
-		if ( ! dismiss || ! created || anchor ) {
+		if (!dismiss || !created || anchor) {
 			return false;
 		}
 
 		const now = new Date();
-		const cache =
-			JSON.parse( localStorage.getItem( this.storageKey ) ) || [];
-		const exists = cache.some( ( entry ) => entry.modalID === created );
+		const cache = JSON.parse(localStorage.getItem(this.storageKey)) || [];
+		const exists = cache.some((entry) => entry.modalID === created);
 
-		if ( exists ) {
+		if (exists) {
 			return false;
 		}
 
@@ -56,40 +57,36 @@ class Popup {
 			expiry: now.getTime() + ttl,
 			modalID: created,
 		};
-		localStorage.setItem(
-			this.storageKey,
-			JSON.stringify( [ ...cache, item ] )
-		);
+		localStorage.setItem(this.storageKey, JSON.stringify([...cache, item]));
 	}
 
 	isItemDismissed() {
 		const { created } = this.element.dataset;
-		const cache =
-			JSON.parse( localStorage.getItem( this.storageKey ) ) || [];
-		const inCache = cache.filter( ( entry ) => entry.modalID === created );
+		const cache = JSON.parse(localStorage.getItem(this.storageKey)) || [];
+		const inCache = cache.filter((entry) => entry.modalID === created);
 
-		if ( inCache.length === 0 ) {
+		if (inCache.length === 0) {
 			return false;
 		}
 
-		const item = inCache[ 0 ];
+		const item = inCache[0];
 
 		const now = new Date();
 
-		if ( item.expiry > now.getTime() ) {
+		if (item.expiry > now.getTime()) {
 			return true;
 		}
-		const newCache = cache.filter( ( i ) => {
-			return i !== inCache[ 0 ];
-		} );
-		localStorage.setItem( this.storageKey, JSON.stringify( newCache ) );
+		const newCache = cache.filter((i) => {
+			return i !== inCache[0];
+		});
+		localStorage.setItem(this.storageKey, JSON.stringify(newCache));
 
 		return false;
 	}
 
 	bindOpen() {
 		const { open } = this.element.dataset;
-		switch ( open ) {
+		switch (open) {
 			case 'anchor':
 				this.bindAnchors();
 				break;
@@ -115,77 +112,77 @@ class Popup {
 
 	bindAnchors() {
 		const { anchor } = this.element.dataset;
-		if ( ! anchor ) {
+		if (!anchor) {
 			return false;
 		}
 
-		const buttons = document.querySelectorAll( `#${ anchor }` );
-		buttons.forEach( ( button ) => {
-			button.addEventListener( 'click', ( e ) => {
+		const buttons = document.querySelectorAll(`#${anchor}`);
+		buttons.forEach((button) => {
+			button.addEventListener('click', (e) => {
 				e.preventDefault();
 				this.openModal();
-			} );
-		} );
+			});
+		});
 	}
 
 	bindOpenAfterScroll() {
-		document.addEventListener( 'scroll', () => {
-			if ( this.happened ) {
+		document.addEventListener('scroll', () => {
+			if (this.happened) {
 				return false;
 			}
 
 			const { offset } = this.element.dataset;
-			if ( Number(offset) >= this.getScrolledPercent() ) {
+			if (Number(offset) >= this.getScrolledPercent()) {
 				return false;
 			}
 
 			this.openModal();
-		} );
+		});
 	}
 
 	bindOnLoad() {
 		const { time } = this.element.dataset;
-		setTimeout( () => {
+		setTimeout(() => {
 			this.openModal();
-		}, time * 1000 );
+		}, time * 1000);
 	}
 
 	bindExitIntent() {
-		document.addEventListener( 'mouseout', ( e ) => {
-			if ( this.happened ) {
+		document.addEventListener('mouseout', (e) => {
+			if (this.happened) {
 				return false;
 			}
 
-			if ( e.clientY < 0 ) {
+			if (e.clientY < 0) {
 				this.openModal();
 			}
-		} );
+		});
 	}
 
 	bindExitIntentMobile() {
-		if( !this.isMobile ){
+		if (!this.isMobile) {
 			return false;
 		}
 		// The speed check starts after 5 seconds.
 		window.onscroll = () => {
 			setTimeout(() => {
-				let isOpen = ScrollSpeed()*-1 > 50;
-				if( isOpen && this.isScrollingUp() ){
-					this.openModal()
+				let isOpen = ScrollSpeed() * -1 > 50;
+				if (isOpen && this.isScrollingUp()) {
+					this.openModal();
 				}
-				this.oldScroll = window.scrollY
+				this.oldScroll = window.scrollY;
 			}, 5000);
-		}
+		};
 	}
 
 	bindTarget() {
 		const { target } = this.element.dataset;
-		window.onscroll = () => this.isScrolledIntoView( target )
+		window.onscroll = () => this.isScrolledIntoView(target);
 	}
 
 	bindPageViews() {
 		const { target } = this.element.dataset;
-		document.addEventListener( 'DOMContentLoaded', this.hitcounter() );
+		document.addEventListener('DOMContentLoaded', this.hitcounter());
 	}
 
 	bindClose() {
@@ -199,63 +196,66 @@ class Popup {
 	bindAnchorClose() {
 		const { anchorclose } = this.element.dataset;
 
-		if ( ! anchorclose ) {
+		if (!anchorclose) {
 			return false;
 		}
 
-		const buttons = document.querySelectorAll( `#${ anchorclose }` );
-		buttons.forEach( ( button ) => {
-			button.addEventListener( 'click', ( e ) => {
+		const buttons = document.querySelectorAll(`#${anchorclose}`);
+		buttons.forEach((button) => {
+			button.addEventListener('click', (e) => {
 				e.preventDefault();
 				this.closeModal();
-			} );
-		} );
+			});
+		});
 	}
 
 	bindCloseButtons() {
 		const modal = this.element;
-		const closes = modal.querySelectorAll( '.wp-block-popper__close' );
+		const closes = modal.querySelectorAll('.wp-block-popper__close');
 
-		closes.forEach( ( close ) => {
-			close.addEventListener( 'click', () => {
+		closes.forEach((close) => {
+			close.addEventListener('click', () => {
 				this.closeModal();
-			} );
-		} );
+			});
+		});
 	}
 
 	bindOverlayClosing() {
 		const { outside } = this.element.dataset;
-		if ( 'false' === outside ) {
+		if ('false' === outside) {
 			return false;
 		}
-		const overlay = this.element.querySelector( '.wp-block-popper__overlay' );
-		overlay.addEventListener( 'click', (e) => {
+		const overlay = this.element.querySelector('.wp-block-popper__overlay');
+		if (!overlay) {
+			return false;
+		}
+		overlay.addEventListener('click', (e) => {
 			if (e.target == overlay) {
 				this.closeModal();
 			}
-		} );
+		});
 	}
 
 	bindEscClosing() {
-		window.addEventListener( 'keydown', (e) => {
-			console.log(e)
-			if ( e.keyCode == 27 ) { 
+		window.addEventListener('keydown', (e) => {
+			console.log(e);
+			if (e.keyCode == 27) {
 				this.closeModal();
 			}
-		} );
+		});
 	}
 
 	bindFormClosing() {
-		window.addEventListener( 'formello-success', (e) => {
+		window.addEventListener('formello-success', (e) => {
 			setTimeout(() => {
 				this.closeModal();
 			}, 1000);
-		} );
+		});
 	}
 
 	isScrolledIntoView(el) {
-		var target = document.getElementById( el );
-		if( !target ){
+		var target = document.getElementById(el);
+		if (!target) {
 			return false;
 		}
 		var rect = target.getBoundingClientRect();
@@ -263,10 +263,10 @@ class Popup {
 		var elemBottom = rect.bottom;
 
 		// Only completely visible elements return true:
-		var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+		var isVisible = elemTop >= 0 && elemBottom <= window.innerHeight;
 		// Partially visible elements return true:
 		//isVisible = elemTop < window.innerHeight && elemBottom >= 0;
-		if( isVisible ){
+		if (isVisible) {
 			this.openModal();
 		}
 	}
@@ -278,8 +278,8 @@ class Popup {
 		const sh = 'scrollHeight';
 
 		return (
-			( ( height[ st ] || body[ st ] ) /
-				( ( height[ sh ] || body[ sh ] ) - height.clientHeight ) ) *
+			((height[st] || body[st]) /
+				((height[sh] || body[sh]) - height.clientHeight)) *
 			100
 		);
 	}
@@ -289,22 +289,24 @@ class Popup {
 	}
 
 	hitcounter() {
+		let oStore = new StoreFactory('urls', 'sessionStorage');
+		oStore.create();
 
-	    let oStore = new StoreFactory( 'urls', 'sessionStorage' );
-	        oStore.create();
-
-	    let data=oStore.get();
-	        data[ location.href ]=data.hasOwnProperty( location.href ) ? parseInt( data[ location.href ] ) + 1 : 1;
-	        data.total=data.hasOwnProperty('total') ? parseInt( data.total ) + 1 : 1;
+		let data = oStore.get();
+		data[location.href] = data.hasOwnProperty(location.href)
+			? parseInt(data[location.href]) + 1
+			: 1;
+		data.total = data.hasOwnProperty('total')
+			? parseInt(data.total) + 1
+			: 1;
 
 		const { pagenum } = this.element.dataset;
-	    if( data.total >= pagenum ) {
-	    	this.openModal()
-	    }
+		if (data.total >= pagenum) {
+			this.openModal();
+		}
 
-	    oStore.set( data );
+		oStore.set(data);
 	}
-
 }
 
 export { Popup };
