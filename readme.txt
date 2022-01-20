@@ -1,4 +1,4 @@
-=== Popper - Popup with exit intent, scroll triggered and anchor click for opt-ins, lead gen & more ===
+=== Popup with exit intent, scroll triggered and anchor click for opt-ins, lead gen & more ===
 Contributors:      Formello
 Tags:              popup, pop up, exit intent, popup maker, exit popup, popup builder, wordpress popup block
 Requires at least: 5.6.0
@@ -13,8 +13,10 @@ A popup builder to increase Sales, Lead Generation, Conversion rates and receive
 == Description ==
 
 Popper helps you create a variety of popups for any circumstances. You can display a popup everywhere, choose conditions where to display, add multiple popup. 
-With Popper popup builder you can create high converting, promotional and informative popups, increase conversion rates and boost sales while reaching your marketing goals.
-You can use all available blocks to build your own popup content. If you want collect leads, you can use [Formello](https://formello.net).
+With Popper **popup builder** you can create high converting, promotional and informative popups, increase conversion rates and boost sales while reaching your marketing goals.
+You can use all available Gutenberg blocks to build your own popup content. If you want a form to collect leads, you can use [Formello](https://formello.net).
+
+Popper has a nice set of animation ready to use and you can also choose different position on the screen. For some example please visit the [Popper page](https://formello.net/addons/popper).
 
 == FEATURES ==
 
@@ -23,7 +25,8 @@ You can use all available blocks to build your own popup content. If you want co
 * Open on scroll percent
 * Open after time amount
 * Open on target visibility
-* Customizable border radius and box shadow
+* Open after number of pages visits
+* Customizable border radius and box shadow with presets
 * Display rules based on page/post/taxonomy or user roles
 
 > **Block validation error**

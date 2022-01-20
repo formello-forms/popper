@@ -26,7 +26,10 @@ function popper_block_init() {
 		__DIR__,
 		array(
 			'render_callback' => function( $attrs, $content ) {
-				wp_enqueue_script( 'popper-block-frontend', plugins_url( 'build/frontend.js', __FILE__ ) );
+				wp_enqueue_script(
+					'popper-block-frontend',
+					plugins_url( 'build/frontend.js', __FILE__ ),
+				);
 				return $content;
 			},
 		)
@@ -183,5 +186,6 @@ function popper_matcher() {
 	add_filter( 'the_content', 'wpautop' );
 
 }
-add_action( 'wp_footer', 'popper_matcher' );
+//add_action( 'wp_footer', 'popper_matcher' );
+add_action( 'wp_body_open', 'popper_matcher' );
 //add_action( 'wp_head', 'popper_matcher' );
