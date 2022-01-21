@@ -36,14 +36,14 @@
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" value="formello"/>
+			<property name="text_domain" value="popper"/>
 		</properties>
 	</rule>
 
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="formello"/>
+				<element value="popper"/>
 			</property>
 		</properties>
 	</rule>

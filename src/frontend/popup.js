@@ -25,8 +25,16 @@ class Popup {
 	}
 
 	openModal() {
+		this.closeModals()
 		this.element.classList.add('wp-block-popper-is-open');
 		this.happened = true;
+	}
+
+	closeModals() {
+		var popups = document.querySelectorAll('.wp-block-popper-is-open');
+		for (let i = 0; i < popups.length; i++) {
+			popups[i].classList.toggle('wp-block-popper-is-open')
+		}
 	}
 
 	closeModal() {
