@@ -5,8 +5,12 @@ import {
 	PanelRow,
 	SelectControl,
 	RadioControl,
+	ColorPicker
 } from '@wordpress/components';
-import { __experimentalColorGradientControl as ColorGradientControl } from '@wordpress/block-editor';
+import { 
+	__experimentalColorGradientControl as ColorGradientControl,
+	PanelColorSettings
+} from '@wordpress/block-editor';
 
 const Appearance = (props) => {
 	const { attributes, setAttributes, showPreview } = props;
@@ -30,39 +34,27 @@ const Appearance = (props) => {
 
 	return (
 		<>
-			<PanelBody title={__('Colors', 'popper')} initialOpen={false}>
-				<ColorGradientControl
-					label={__('Close Button Color', 'popper')}
-					colorValue={closeButtonColor}
-					onColorChange={(val) => {
-						setAttributes({
-							closeButtonColor: val || '#000000',
-						});
-					}}
-				/>
-				<ColorGradientControl
-					label={__('Background Color', 'popper')}
-					colorValue={backgroundColor}
-					gradientValue={gradientBackground}
-					onGradientChange={(val) => {
-						setAttributes({
-							gradientBackground: val || false,
-						});
-					}}
-					enableAlpha
-					onColorChange={(val) => {
-						setAttributes({ backgroundColor: val || false });
-					}}
-				/>
-				<ColorGradientControl
-					label={__('Overlay Color', 'popper')}
-					colorValue={overlayColor}
-					enableAlpha
-					onColorChange={(val) => {
-						setAttributes({ overlayColor: val || false });
-					}}
-				/>
-			</PanelBody>
+			<PanelColorSettings
+				  title={ __( 'Color Settings', 'popper' ) }
+				  colorSettings={[
+					{
+						value: backgroundColor,
+						onChange: (color) => setAttributes({ backgroundColor: color }),
+						label: __( 'Background Color', 'popper' ),
+					},
+					{
+						value: overlayColor,
+						onChange: (color) => setAttributes({ overlayColor: color }),
+						label: __( 'Overlay Color', 'popper' ),
+						enableAlpha: true
+					},
+					{
+						value: closeButtonColor,
+						onChange: (color) => setAttributes({ closeButtonColor: color }),
+						label: __( 'Close Button Color', 'popper' ),
+					},
+				  ]}
+			/>
 			<PanelBody
 				title={__('Modal Appearance', 'popper')}
 				initialOpen={false}

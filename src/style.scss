@@ -60,18 +60,22 @@
 
 .wp-block-popper--left {
   justify-content: left;
+  pointer-events: none; 
 }
 
 .wp-block-popper--right {
   justify-content: right;
+  pointer-events: none; 
 }
 
 .wp-block-popper--top {
   align-items: start;
+  pointer-events: none; 
 }
 
 .wp-block-popper--bottom {
   align-items: end;
+  pointer-events: none; 
 }
 
 .wp-block-popper__overlay {
@@ -85,7 +89,7 @@
 }
 
 .wp-block-popper__container {
-  background-color: white;
+  pointer-events: auto; 
   padding: 0px;
   max-width: 740px;
   min-width: 400px;

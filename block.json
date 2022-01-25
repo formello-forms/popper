@@ -1,7 +1,7 @@
 {
 	"apiVersion": 2,
 	"name": "formello/popper",
-	"title": "Popper",
+	"title": "Pop up",
 	"category": "widgets",
 	"description": "A great popup block.",
 	"supports": {
@@ -15,8 +15,15 @@
 		}
 	},
 	"attributes": {
+		"lock": {
+		  "type": "object",
+		  "default": {
+			"move": true,
+			"remove": true
+		  }
+		},
 	    "align": {
-	      "type": "string",
+		  "type": "string",
 	      "default": "center center"
 	    },
 	    "fullPage": {
@@ -46,14 +53,6 @@
 	    "closeButtonAlignment": {
 	      "type": "string",
 	      "default": "inside"
-	    },
-	    "closeButtonColor": {
-	      "type": "string",
-	      "default": "#000000"
-	    },
-	    "overlayColor": {
-	      "type": "string",
-	      "default": "#000000bf"
 	    },
 	    "closeButtonSize": {
 	      "type": "number",
@@ -90,7 +89,16 @@
 	      "default": ""
 	    },
 	    "backgroundColor": {
-	      "type": "string"
+	      "type": "string",
+	      "default": "#ffffff"
+	    },
+	    "closeButtonColor": {
+	      "type": "string",
+	      "default": "#000000"
+	    },
+	    "overlayColor": {
+	      "type": "string",
+	      "default": "#000000bf"
 	    },
 	    "gradientBackground": {
 	      "type": "string"

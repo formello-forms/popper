@@ -10,7 +10,6 @@ import {
 	RichText,
 	useBlockProps,
 	store as blockEditorStore,
-	__experimentalBlockVariationPicker,
 } from '@wordpress/block-editor';
 
 import {
@@ -21,18 +20,22 @@ import {
 
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 
+import BlockVariationPicker from './placeholder';
 import Appearance from './settings/appearance';
 import OpenBehaviour from './settings/open-behaviour';
 import CloseBehaviour from './settings/close-behaviour';
 import { RulesModal } from './plugin/modal';
+import { TemplatesModal } from './library';
 import './editor.scss';
 import Controls from './settings/controls';
+import usePostSaved from './savedhook';
 
 import classnames from 'classnames';
 import icons from './icons';
 
 function Edit(props) {
 	const { attributes, setAttributes, className, clientId } = props;
+	const saved = usePostSaved();
 
 	const {
 		width,
@@ -49,18 +52,26 @@ function Edit(props) {
 		uuid,
 	} = attributes;
 
-	useEffect(() => {
-		const postTitle = select('core/editor').getEditedPostAttribute('meta');
+	const postTitle = select('core/editor').getEditedPostAttribute('meta');
 
-		setAttributes( { uuid: post_id } )
+	if( saved ) {
 
 		if (!postTitle.popper_rules.location.length) {
 			dispatch('core/notices').createNotice(
 				'warning',
-				'This popup has no rules assigned. PLease select at least one.',
-				{ id: 'popper', isDismissible: true }
+				'This popup has no rules assigned. Please select at least one option.',
+				{ 	
+					id: 'popper', 
+					isDismissible: true,
+				}
 			);
 		}
+	}
+
+	useEffect(() => {
+
+		setAttributes( { uuid: post_id } )
+
 	}, []);
 
 	const post_id = useSelect((select) =>
@@ -79,6 +90,7 @@ function Edit(props) {
 	);
 
 	const [isModalOpen, setModalOpen] = useState(false);
+	const [isModalTemplateOpen, setModalTemplateOpen] = useState(false);
 	const closeModal = () => setModalOpen(false);
 
 	const style = {
@@ -133,10 +145,19 @@ function Edit(props) {
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarButton
-						label={__('Display Rules', 'popper')}
-						icon={'admin-generic'}
+						label={ __( 'Template', 'popper' ) }
+						icon={ 'layout' }
 						onClick={ () => {
-							setModalOpen(true);
+							setModalOpen( 'templates' );
+						}}
+					/>
+				</ToolbarGroup>
+				<ToolbarGroup>
+					<ToolbarButton
+						label={ __( 'Display Rules', 'popper' ) }
+						icon={ 'visibility' }
+						onClick={ () => {
+							setModalOpen( 'options' );
 						}}
 					/>
 				</ToolbarGroup>
@@ -171,65 +192,65 @@ function Edit(props) {
 					</div>
 				</Fragment>
 			</div>
-			{isModalOpen && <RulesModal onRequestClose={closeModal} />}
+			{ 'templates' === isModalOpen &&
+				<TemplatesModal
+					type={ 'remote' }
+					onRequestClose={ () => setModalOpen( false ) }
+					clientId={ clientId }
+				/>
+			}
+			{ 'options' === isModalOpen && <RulesModal onRequestClose={ closeModal } />}
 		</div>
 	);
 }
 
-function Placeholder(props) {
-	const { clientId, setAttributes } = props;
-	const { getBlockType, getBlockVariations, getDefaultBlockVariation } =
-		select('core/blocks');
+function Placeholder ( props ) {
 
-	const { insertBlock, replaceInnerBlocks } = dispatch('core/block-editor');
-
-	const { variations, defaultVariation } = useSelect(
-		(select) => {
-			const { getBlock } = select('core/block-editor');
-			const block = getBlock(clientId);
-
-			return {
-				defaultVariation:
-					typeof getDefaultBlockVariation === 'undefined'
-						? null
-						: getDefaultBlockVariation(props.name),
-				variations:
-					typeof getBlockVariations === 'undefined'
-						? null
-						: getBlockVariations(props.name),
-			};
+	const { className, name, defaultVariation, hasInnerBlocks, clientId } = props;
+	const {
+		insertBlock,
+		replaceInnerBlocks,
+	} = dispatch( 'core/block-editor' );
+	
+	const variations = useSelect(
+		( select ) => {
+			const { getBlockType, getBlockVariations, getDefaultBlockVariation } = select( 'core/blocks' );
+			return getBlockVariations( name, 'block' );
 		},
-		[clientId]
+		[ name ]
 	);
 
 	return (
 		<div {...useBlockProps()}>
-			<__experimentalBlockVariationPicker
-				label={'Popup'}
-				instructions={__('Select a popup to start with.', 'popper')}
-				variations={variations}
-				clientId={clientId}
+			<BlockVariationPicker
+				icon={ 'external' }
+				label={ 'Popup' }
+				instructions={ __( 'Select a form to start with.', 'popper' ) }
+				variations={ variations }
+				clientId={ clientId }
 				allowSkip
-				onSelect={(nextVariation = defaultVariation) => {
-					if (nextVariation.attributes) {
-						setAttributes(nextVariation.attributes);
+				onSelect={ ( nextVariation = defaultVariation ) => {
+					if ( nextVariation.attributes ) {
+						setAttributes( nextVariation.attributes );
 					}
-					if (nextVariation.innerBlocks) {
+					if ( nextVariation.innerBlocks ) {
 						replaceInnerBlocks(
-							clientId,
+							props.clientId,
 							createBlocksFromInnerBlocksTemplate(
 								nextVariation.innerBlocks
-							)
+							),
+							true
 						);
 					}
-				}}
+				} }
 			/>
 		</div>
 	);
 }
 
 const PopperEdit = (props) => {
-	const { clientId } = props;
+
+	const { clientId, name } = props;
 	const hasInnerBlocks = useSelect(
 		(select) => {
 			const { getBlock } = select('core/block-editor');

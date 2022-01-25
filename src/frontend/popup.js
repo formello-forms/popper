@@ -171,6 +171,9 @@ class Popup {
 		if (!this.isMobile) {
 			return false;
 		}
+		if (this.happened) {
+			return false;
+		}
 		// The speed check starts after 5 seconds.
 		window.onscroll = () => {
 			setTimeout(() => {

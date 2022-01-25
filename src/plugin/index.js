@@ -4,6 +4,7 @@ import { useSelect, select, dispatch } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 import { useEntityProp } from '@wordpress/core-data';
+import { getBlockTypes } from '@wordpress/blocks';
 import {
 	ToggleControl,
 	RadioControl,
@@ -23,6 +24,8 @@ registerPlugin('popper-display', {
 			(select) => select('core/editor').getCurrentPostType(),
 			[]
 		);
+
+		const formelloInstalled = getBlockTypes().filter((block) => { return block.name.indexOf('formello/form') !== -1})
 
 		if ('popper' !== postType) {
 			return false;
@@ -50,16 +53,21 @@ registerPlugin('popper-display', {
 						{__('Conditions', 'popper')}
 					</Button>
 				</BaseControl>
-				<PanelRow>
-					<p>
-						{__(
-							'To take full advantage of Popper and start collecting leads, we suggest using our Formello plugin.'
-						)}
-					</p>
-				</PanelRow>
-				<Button isPrimary href={popper.installLink}>
-					{__('Install form', 'popper')}
-				</Button>
+				{
+					!formelloInstalled.length &&
+					<>
+						<PanelRow>
+							<p>
+								{__(
+									'To take full advantage of Popper and start collecting leads, we suggest using our Formello plugin.'
+								)}
+							</p>
+						</PanelRow>
+						<Button isPrimary href={popper.installLink}>
+							{__('Install form', 'popper')}
+						</Button>
+					</>
+				}
 
 				{isModalOpen && <RulesModal onRequestClose={closeModal} />}
 			</PluginDocumentSettingPanel>
