@@ -40,7 +40,8 @@ function BlockVariationPicker( {
 			instructions={ instructions }
 			className={ classes }
 		>
-			{ /*
+			{ 
+			/*
 			 * Disable reason: The `list` ARIA role is redundant but
 			 * Safari+VoiceOver won't announce the list otherwise.
 			 */

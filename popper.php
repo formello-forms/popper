@@ -3,7 +3,7 @@
  * Plugin Name: Popper
  * Plugin URI:  https://formello.net/
  * Description: Popup builder with exit-intent powered by Gutenberg.
- * Version:     0.2.4
+ * Version:     0.2.5
  * Author:      Formello
  * Author URI:  https://formello.net
  * License:     GPL-2.0-or-later
@@ -30,7 +30,7 @@ function popper_block_init() {
 					'popper-block-frontend',
 					plugins_url( 'build/frontend.js', __FILE__ ),
 					array(),
-					'0.2.3',
+					'0.2.5',
 					true
 				);
 				return $content;
@@ -132,7 +132,7 @@ function popper_positions() {
 		array(
 			'positions' => $positions,
 			'users' => $users,
-			'installLink' => wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=formello' ), 'install-plugin_generateblocks' ),
+			'installLink' => wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=formello' ), 'install-plugin_popper' ),
 		)
 	);
 

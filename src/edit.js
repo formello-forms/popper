@@ -206,15 +206,24 @@ function Edit(props) {
 
 function Placeholder ( props ) {
 
-	const { className, name, defaultVariation, hasInnerBlocks, clientId } = props;
+	const { className, name, hasInnerBlocks, clientId } = props;
+
 	const {
 		insertBlock,
 		replaceInnerBlocks,
 	} = dispatch( 'core/block-editor' );
-	
+
+	const { getBlockType, getBlockVariations, getDefaultBlockVariation } = select( 'core/blocks' );
+
+	const defaultVariation = useSelect(
+		( select ) => {
+			return typeof getDefaultBlockVariation === 'undefined' ? null : getDefaultBlockVariation( props.name );
+		},
+		[ name ]
+	);
+
 	const variations = useSelect(
 		( select ) => {
-			const { getBlockType, getBlockVariations, getDefaultBlockVariation } = select( 'core/blocks' );
 			return getBlockVariations( name, 'block' );
 		},
 		[ name ]

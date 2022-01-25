@@ -110,11 +110,11 @@ export default function save({ attributes, className }) {
 				></div>
 			)}
 			<div
-				className={containerClass}
+				className={ containerClass }
 				role="dialog"
 				aria-modal="true"
 				aria-labelledby="modal-title"
-				style={modalStyle}
+				style={ modalStyle }
 			>
 				{showCloseButton && (
 					<button
