@@ -3,7 +3,7 @@
  * Plugin Name: Popper
  * Plugin URI:  https://formello.net/
  * Description: Popup builder with exit-intent powered by Gutenberg.
- * Version:     0.2.5
+ * Version:     0.2.6
  * Author:      Formello
  * Author URI:  https://formello.net
  * License:     GPL-2.0-or-later
@@ -15,6 +15,7 @@
 
 require_once __DIR__ . '/includes/class-conditions.php';
 require_once __DIR__ . '/includes/class-rest.php';
+require_once __DIR__ . '/includes/class-frontend.php';
 
 load_plugin_textdomain( 'popper', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
@@ -23,19 +24,7 @@ load_plugin_textdomain( 'popper', false, dirname( plugin_basename( __FILE__ ) ) 
  */
 function popper_block_init() {
 	register_block_type_from_metadata(
-		__DIR__,
-		array(
-			'render_callback' => function( $attrs, $content ) {
-				wp_enqueue_script(
-					'popper-block-frontend',
-					plugins_url( 'build/frontend.js', __FILE__ ),
-					array(),
-					'0.2.5',
-					true
-				);
-				return $content;
-			},
-		)
+		__DIR__
 	);
 	wp_set_script_translations( 'formello-popper-editor-script', 'popper', plugin_dir_path( __FILE__ ) . '/languages/' );
 }
@@ -82,6 +71,7 @@ function popper_register() {
 			'title',
 			'editor',
 			'custom-fields',
+			'author',
 		),
 	);
 	register_post_type( 'popper', $args );
@@ -139,56 +129,43 @@ function popper_positions() {
 }
 add_filter( 'admin_enqueue_scripts', 'popper_positions', 10, 2 );
 
-/**
- * Saves box options and rules.
- */
-function popper_matcher() {
-	if ( is_admin() || wp_is_json_request() ) {
-		return false;
-	}
-	global $wpdb;
-	remove_filter( 'the_content', 'wpautop' );
+// Add the custom columns to the book post type:
+add_filter( 'manage_popper_posts_columns', 'set_custom_edit_popper_columns' );
+function set_custom_edit_popper_columns($columns) {
 
-	$popups = '';
+    unset($columns['date']);
+    unset($columns['author']);
 
-	$rules = $wpdb->get_results(
-		$wpdb->prepare(
-			"SELECT * FROM {$wpdb->prefix}posts 
-			LEFT JOIN {$wpdb->prefix}postmeta 
-			ON {$wpdb->prefix}posts.ID = {$wpdb->prefix}postmeta.post_id 
-			WHERE {$wpdb->prefix}posts.post_type = %s 
-			AND {$wpdb->prefix}postmeta.meta_key = %s 
-			AND {$wpdb->prefix}posts.post_status = %s 
-			ORDER BY {$wpdb->prefix}posts.ID;",
-			'popper',
-			'popper_rules',
-			'publish',
-		)
-	);
+    $columns['display'] = __( 'Display', 'popper' );
+    $columns['visibility'] = __( 'Visibility', 'popper' );
+    $columns['author'] = __( 'Author' );
+    $columns['date'] = __( 'Date' );
 
-	$matched   = false;
-	$popper_id = '';
-
-	// loop through all rules for all boxes.
-	foreach ( $rules as $rule ) {
-		$popper_id = $rule->post_id;
-
-		// Get the rules.
-		$rule = maybe_unserialize( $rule->meta_value );
-
-		$matched = Popper_Conditions::show_data( $rule['location'], $rule['exclude'], $rule['user'] );
-
-		if ( $matched ) {
-			$popper  = get_post( $popper_id );
-			$popups .= apply_filters( 'the_content', do_blocks( $popper->post_content ) );
-			$matched = false;
-		}
-	}
-	// phpcs:ignore
-	echo $popups;
-	add_filter( 'the_content', 'wpautop' );
-
+    return $columns;
 }
-//add_action( 'wp_footer', 'popper_matcher' );
-add_action( 'wp_body_open', 'popper_matcher' );
-//add_action( 'wp_head', 'popper_matcher' );
+
+// Add the data to the custom columns for the book post type:
+add_action( 'manage_popper_posts_custom_column' , 'custom_popper_column', 10, 2 );
+function custom_popper_column( $column, $post_id ) {
+    switch ( $column ) {
+
+        case 'display' :
+            $terms = get_post_meta( $post_id , 'popper_rules', true );
+
+            $locations = array();
+
+			foreach ( $terms['location'] as $value ) {
+				array_push( $locations, Popper_Conditions::get_saved_label( $value ) );
+			}
+
+            echo implode( '<br> ', $locations );
+            break;
+
+        case 'visibility' :
+
+            $data = get_post_meta( $post_id , 'popper_rules' , true ); 
+        	echo Popper_Conditions::get_user_label($data['user']);
+            break;
+
+    }
+}

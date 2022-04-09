@@ -49,16 +49,16 @@ const OpenBehaviour = (props) => {
 		<PanelBody initialOpen={true} title={__('Open Behaviour', 'popper')}>
 			<PanelRow>
 				<RadioControl
-					onChange={handleChangeOpenBehaviour}
-					selected={openBehaviour}
-					options={options}
+					onChange={ handleChangeOpenBehaviour }
+					selected={ openBehaviour }
+					options={ options }
 				/>
 			</PanelRow>
 			<PanelRow>
 				{openBehaviour === 'anchor' && (
 					<TextControl
-						value={anchor}
-						label={__('Anchor', 'popper')}
+						value={ anchor }
+						label={ __( 'Anchor', 'popper' ) }
 						help={
 							<small>
 								{__(
@@ -67,7 +67,7 @@ const OpenBehaviour = (props) => {
 								)}
 							</small>
 						}
-						onChange={updateAnchor}
+						onChange={ updateAnchor }
 					/>
 				)}
 				{openBehaviour === 'target' && (

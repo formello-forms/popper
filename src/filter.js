@@ -6,10 +6,11 @@ const { addFilter } = wp.hooks;
 const { InspectorAdvancedControls } = wp.editor;
 const { createHigherOrderComponent } = wp.compose;
 import { SelectControl } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
+import { useSelect, dispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { useEffect, useState, Fragment } from '@wordpress/element';
 import { parse } from '@wordpress/block-serialization-default-parser';
+import api from '@wordpress/api';
 
 /**
  * Add mobile visibility controls on Advanced Block Panel.
@@ -26,7 +27,7 @@ const withAdvancedControls = createHigherOrderComponent((BlockEdit) => {
 			return <BlockEdit {...props} />;
 		}
 
-		const opts = [{ value: null, label: __('Select a popup', 'popper') }];
+		const opts = [{ value: null, label: __( 'Select a popup', 'popper' ) }];
 
 		const findById = (val) => {
 			return popups.find((element) => {
@@ -46,8 +47,21 @@ const withAdvancedControls = createHigherOrderComponent((BlockEdit) => {
 			}
 		};
 
+		const addRule = (val) => {
+			console.log(popups)
+			var post = new wp.api.models.Popper( { id: val } );
+			post.fetch()
+				.done( (data) => {
+
+					post.setMeta('popper_rules', 'newValue');
+
+					post.save({id: val });
+				});
+
+		};
+
 		const popups = useSelect((select) => {
-			return select('core').getEntityRecords('postType', 'popper', {
+			return select('core').getEntityRecords( 'postType', 'popper', {
 				per_page: -1,
 			});
 		});
@@ -74,8 +88,9 @@ const withAdvancedControls = createHigherOrderComponent((BlockEdit) => {
 							onChange={(val) => {
 								setAttributes({ popper: val });
 								setAnchor(val);
+								addRule(val);
 							}}
-							help={__('Open a popup on anchor click', 'popper')}
+							help={ __( 'Open a popup on anchor click', 'popper' ) }
 						/>
 					</InspectorAdvancedControls>
 				)}

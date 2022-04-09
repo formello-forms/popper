@@ -25,6 +25,9 @@ class Popup {
 	}
 
 	openModal() {
+		if ( this.happened ) {
+			return false;
+		}
 		this.closeModals()
 		this.element.classList.add('wp-block-popper-is-open');
 		this.happened = true;

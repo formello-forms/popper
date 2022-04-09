@@ -66,7 +66,7 @@ export function TemplatesModal ( props ) {
         []
     );
 
-	const { replaceBlocks, replaceInnerBlocks, replaceBlock, insertBlocks } = useDispatch( 'core/block-editor' );
+	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
 	
 	const insertTemplate = ( content, clientId, cb ) => {
 		const parsedBlocks = parse( content );

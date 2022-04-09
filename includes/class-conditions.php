@@ -408,19 +408,47 @@ class Popper_Conditions {
 
 					$label .= ': ' . $term->name;
 				} elseif ( ( in_array( 'post', $object_types ) || in_array( 'page', $object_types ) ) && $object_id ) {
-					$post = get_post( $object_id );
-
-					if ( ! is_object( $post ) ) {
+					//$post = get_post( $object_id );
+					$posts = get_posts( array( 'include' => $object_id, 'post_type' => $object_types ) );
+					
+					if ( ! is_array( $posts ) ) {
 						return false;
 					}
 
-					$label .= ': ' . $post->post_title;
+					$label .= ': ' . implode( ', ', array_column($posts , 'post_title') );
 				}
 			}
 		}
 
 		return $label;
 	}
+
+	/**
+	 * Returns the label for a saved location.
+	 *
+	 * @since 1.7
+	 * @param string $saved_location The location.
+	 * @return string|bool
+	 */
+	public static function get_user_label( $saved_user ) {
+		$users = self::get_user_conditions();
+
+		$label = false;
+
+		foreach ( $saved_user as $data ) {
+
+			$object_types = explode( ':', $data );
+
+			if ( in_array( 'general', $object_types ) ) {
+				echo $users['general']['rules'][$data];
+			} else {
+				echo $users['role']['rules'][$data];
+			}
+			echo '<br>';
+		}
+
+	}
+
 }
 
 Popper_Conditions::get_instance();

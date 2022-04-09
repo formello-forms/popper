@@ -4,6 +4,7 @@
 	"title": "Pop up",
 	"category": "widgets",
 	"description": "A great popup block.",
+	"textdomain": "popper",
 	"supports": {
 		"html": false,
 		"multiple": false,
