@@ -5,7 +5,8 @@ import {
 	PanelRow,
 	SelectControl,
 	RadioControl,
-	ColorPicker
+	ColorPicker,
+	__experimentalBorderBoxControl as BorderBoxControl
 } from '@wordpress/components';
 import { 
 	__experimentalColorGradientControl as ColorGradientControl,
@@ -25,17 +26,21 @@ const Appearance = (props) => {
 		overlayColor,
 		overlayOpacity,
 		animation,
+		borders
 	} = attributes;
 
 	const options = [
 		{ label: __('Inside', 'popper'), value: 'inside' },
 		{ label: __('Outside', 'popper'), value: 'outside' },
+		{ label: __('Edge of screen', 'popper'), value: 'edge' },
 	];
 
 	return (
 		<>
+
 			<PanelColorSettings
 				  title={ __( 'Color Settings', 'popper' ) }
+				  initialOpen={ false }
 				  colorSettings={[
 					{
 						value: backgroundColor,
@@ -58,8 +63,8 @@ const Appearance = (props) => {
 			<PanelBody
 				title={__('Modal Appearance', 'popper')}
 				initialOpen={false}
-			>
-				<RangeControl
+			>			
+        		<RangeControl
 					value={borderRadius}
 					label={__('Popup Border Radius', 'popper')}
 					onChange={(val) => {
@@ -70,32 +75,14 @@ const Appearance = (props) => {
 					max={100}
 				/>
 				<RangeControl
-					value={width}
-					label={__('Popup Width', 'popper')}
+					value={ width}
+					label={__('Popup  Min Width', 'popper')}
 					onChange={(val) => {
-						setAttributes({ width: val });
+						setAttributes({  width: val });
 					}}
 					allowReset
-					min={400}
-					max={700}
-				/>
-				<RangeControl
-					value={closeButtonSize}
-					label={__('Close Icon Size', 'popper')}
-					onChange={(val) => {
-						setAttributes({ closeButtonSize: val });
-					}}
-					allowReset
-					min={12}
-					max={40}
-				/>
-				<RadioControl
-					label={__('Button position', 'popper')}
-					onChange={(val) =>
-						setAttributes({ closeButtonAlignment: val })
-					}
-					selected={closeButtonAlignment}
-					options={options}
+					min={50}
+					max={1000}
 				/>
 				<SelectControl
 					label={__('Animation', 'popper')}

@@ -26,7 +26,7 @@ class Popper_Rest extends WP_REST_Controller {
 	protected $namespace = 'popper/v1';
 
 	/**
-	 * Version.
+	 * Rest base.
 	 *
 	 * @var string
 	 */

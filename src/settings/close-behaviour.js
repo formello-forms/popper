@@ -12,6 +12,7 @@ const CloseBehaviour = (props) => {
 	const {
 		showCloseButton,
 		closeOnClickOutside,
+		closeOnFormSubmission,
 		closeOnAnchorClick,
 		closeAnchor,
 		dismissForVisitors,
@@ -39,6 +40,15 @@ const CloseBehaviour = (props) => {
 					checked={closeOnClickOutside}
 					onChange={(value) =>
 						changeAttribute('closeOnClickOutside', value)
+					}
+				/>
+			</PanelRow>
+			<PanelRow>
+				<CheckboxControl
+					label={__('Close after form submission', 'popper')}
+					checked={closeOnFormSubmission}
+					onChange={(value) =>
+						changeAttribute('closeOnFormSubmission', value)
 					}
 				/>
 			</PanelRow>

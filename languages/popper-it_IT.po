@@ -225,7 +225,7 @@ msgstr "Disabilita per visitatori ricorrenti"
 
 #: build/index.js:1 src/settings/close-behaviour.js:93
 msgid "Number of Days Until the Notice is Shown again"
-msgstr "NUmero di giorni fino a quando il Popup non verrà mostrato di nuovo"
+msgstr "Numero di giorni fino a quando il Popup non verrà mostrato di nuovo"
 
 #: build/index.js:1 src/edit.js:123
 msgid "Select a popup to start with."

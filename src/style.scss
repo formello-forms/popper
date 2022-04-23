@@ -85,14 +85,13 @@
   right: 0;
   bottom: 0;
   z-index:100;
-  background-color: #222222bf;
 }
 
 .wp-block-popper__container {
   pointer-events: auto; 
   padding: 0px;
-  max-width: 740px;
-  min-width: 400px;
+  //max-width: 95vw;
+  //min-width: 400px;
   border-radius: 0px;
   box-sizing: border-box;
   position: relative;
@@ -105,6 +104,7 @@
   right: 0;
   bottom: 0;
   position: absolute;
+  width: 100% !important;
   max-width: 100%;
   display: flex;
   align-items: center;
@@ -125,7 +125,7 @@
 .wp-block-popper__content {
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 75vh;
+  max-height: 90vh;
   min-height: auto;
   scrollbar-width: 8px;
   border-radius: inherit;
@@ -210,8 +210,10 @@
   .wp-block-popper__container {
     width: 90%;
     min-width: 90%;
+    max-width: 90%;
     &.wide {
       width: 100%;
+      max-height: 100vh;
     }
   }
 
@@ -219,10 +221,12 @@
   
       .wp-block-popper__container {
           width: 90%;
+          max-width: 90%;
           min-width: 90%;
           max-height: 85vh;
           &.wide {
             width: 100%;
+            max-height: 100vh;
           }
       }
       

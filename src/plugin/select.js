@@ -92,6 +92,7 @@ export function Select(props) {
 				<Button
 					className="popper-modal-button"
 					icon="no"
+					isSmall
 					onClick={(val) => {
 						props.onDelete(props.index);
 					}}

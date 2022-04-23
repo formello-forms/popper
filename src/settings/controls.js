@@ -11,6 +11,7 @@ import {
 	BlockControls,
 	ColorPalette,
 	__experimentalBlockAlignmentMatrixControl as BlockAlignmentMatrixControl,
+	__experimentalBlockFullHeightAligmentControl as FullHeightAlignmentControl,
 } from '@wordpress/block-editor';
 import { Fragment, useState } from '@wordpress/element';
 import icons from '../icons';
@@ -20,19 +21,17 @@ export default function Controls(props) {
 	const {
 		attributes,
 		setAttributes,
-		onSelectImage,
-		className,
-		style,
-		attributes: { borderRadius, boxShadow, type, align },
+		attributes: { borderRadius, boxShadow, type, align, fullPage },
 	} = props;
 
-	const [icon, setIcon] = useState(justifyCenter);
-
-	const types = {
-		popup: justifyCenter,
-		slideIn: justifyLeft,
-		slideInRight: justifyRight,
-	};
+	const setFullPage = () => {
+		console.log(fullPage)
+		setAttributes( { fullPage: !fullPage } )
+		if( !fullPage ){
+			setAttributes( { boxShadow: 'wp-block-popper__shadow-none' } )
+			setAttributes( { borderRadius: 0 } )
+		}
+	}
 
 	return (
 		<Fragment>
@@ -42,6 +41,10 @@ export default function Controls(props) {
 						value={attributes.align}
 						onChange={ ( val ) => setAttributes( { align: val } ) }
 						label={ __( 'Position', 'popper' ) }
+					/>
+					<FullHeightAlignmentControl
+						isActive={ fullPage }
+						onToggle={ setFullPage }
 					/>
 					<ToolbarDropdownMenu
 						icon={icons.boxShadow}

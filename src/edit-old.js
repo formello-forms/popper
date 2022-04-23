@@ -18,13 +18,9 @@ import {
 	createBlock,
 } from '@wordpress/blocks';
 
-import { 
-	ToolbarGroup, 
-	ToolbarButton
-} from '@wordpress/components';
+import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 
 import BlockVariationPicker from './placeholder';
-import Button from './settings/button';
 import Appearance from './settings/appearance';
 import OpenBehaviour from './settings/open-behaviour';
 import CloseBehaviour from './settings/close-behaviour';
@@ -49,13 +45,11 @@ function Edit(props) {
 		closeButtonColor,
 		closeButtonSize,
 		closeButtonAlignment,
+		borderRadius,
 		boxShadow,
 		overlayColor,
 		overlayOpacity,
 		uuid,
-		align,
-		fullPage,
-		borderRadius
 	} = attributes;
 
 	const postTitle = select('core/editor').getEditedPostAttribute('meta');
@@ -99,7 +93,20 @@ function Edit(props) {
 	const [isModalTemplateOpen, setModalTemplateOpen] = useState(false);
 	const closeModal = () => setModalOpen(false);
 
+	const style = {
+		minWidth: width,
+		width: width,
+	};
+
 	const closeButtonStyle = {};
+
+	if (backgroundColor) {
+		//style.backgroundColor = backgroundColor;
+	}
+
+	if (gradientBackground) {
+		style.background = gradientBackground;
+	}
 
 	if (closeButtonColor) {
 		closeButtonStyle.color = closeButtonColor;
@@ -113,68 +120,27 @@ function Edit(props) {
 		closeButtonStyle.right = 0;
 	}
 
+	const containerClass = classnames('wp-block-popper__container', boxShadow);
+
 	const modalStyle = {
+		minWidth: width,
 		width: width,
-		borderRadius
+		borderRadius,
 	};
 
-	const overlayStyle = {
-		backgroundColor: overlayColor
-	};
-
-	if ( overlayColor && !align.includes('center') ) {
-		overlayStyle.backgroundColor = undefined;
-	}
-
-	if ( backgroundColor ) {
+	if (backgroundColor) {
 		modalStyle.backgroundColor = backgroundColor;
 	}
-
-	const popperClass = classnames( 'wp-block-popper wp-block-popper-is-open', 'wp-block-formello-popper', {
-		'wp-block-popper--right': align.includes('right'),
-		'wp-block-popper--left': align.includes('left'),
-		'wp-block-popper--top': align.includes('top'),
-		'wp-block-popper--bottom': align.includes('bottom'),
-		'wp-block-formello-popper--nobg': !align.includes('center') || undefined === overlayColor
-	});
-
-	const containerClass = classnames(
-		'wp-block-popper__container', 
-		boxShadow, {
-			'wide': fullPage
-		}	
-	);
-
-	/**
-	 * Returns the current deviceType.
-	 */
-	const { deviceType } = useSelect( select => {
-	    const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
-
-	    return {
-	        deviceType: __experimentalGetPreviewDeviceType(),
-	    }
-	}, [] );
-
-	if( 'Mobile' === deviceType ){
-		modalStyle.width = undefined;
+	if (gradientBackground) {
+		modalStyle.background = gradientBackground;
 	}
 
-	const closeButton =	<button
-							className="wp-block-popper__close"
-							style={closeButtonStyle}
-						></button>
-
 	return (
-		<div className={ popperClass } style={ overlayStyle }>
-			{ showCloseButton && 'edge' === closeButtonAlignment && (
-				closeButton
-			)}
+		<div {...useBlockProps()} style={style}>
 			<InspectorControls>
 				<OpenBehaviour {...props} />
 				<CloseBehaviour {...props} />
 				<Appearance {...props} />
-				<Button {...props} />
 			</InspectorControls>
 			<BlockControls>
 				<ToolbarGroup>
@@ -198,28 +164,32 @@ function Edit(props) {
 				<Controls
 					attributes={attributes}
 					setAttributes={setAttributes}
+					style={style}
 				/>
 			</BlockControls>
-			<div {...useBlockProps({
-				className: containerClass,
-				style: modalStyle
-			})}>
+			<div>
 				<Fragment>
+					{showCloseButton && (
+						<button
+							className="wp-block-popper__close"
+							style={closeButtonStyle}
+						></button>
+					)}
 
-						{ showCloseButton && 'edge' !== closeButtonAlignment && (
-							closeButton
-						)}
-						<main className="wp-block-popper__content">
-							<InnerBlocks
-								templateLock={false}
-								renderAppender={
-									hasInnerBlocks ? undefined : (
-										<InnerBlocks.ButtonBlockAppender />
-									)
-								}
-							/>
-						</main>
-
+					<div
+						{...useBlockProps()}
+						className={containerClass}
+						style={modalStyle}
+					>
+						<InnerBlocks
+							templateLock={false}
+							renderAppender={
+								hasInnerBlocks ? undefined : (
+									<InnerBlocks.ButtonBlockAppender />
+								)
+							}
+						/>
+					</div>
 				</Fragment>
 			</div>
 			{ 'templates' === isModalOpen &&

@@ -4,20 +4,37 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-popper {
-  display: block;
+.post-type-popper .editor-styles-wrapper .block-editor-block-list__layout.is-root-container > :where(:not(.alignleft):not(.alignright)) {
+  max-width: 100%;
+  height: 80vh;
 }
 
 .wp-block-popper__container {
-  max-width: 100%;
-  z-index: 0;
+  width: fit-content;
 }
 
-.wp-block-popper__close {
-  z-index: 1;
+.wp-block-formello-popper, .wp-block-popper__container.wide {
+  width: 100%;
+  z-index: 5;
 }
 
-.wp-block-popper__close:before { content: "\2715"; }
+.wp-block-formello-popper--nobg {
+  background-image: linear-gradient(45deg, #f1f1f1 25%, transparent 0),linear-gradient(-45deg, #f1f1f1 25%, transparent 0),linear-gradient(45deg, transparent 75%, #f1f1f1 0),linear-gradient(-45deg, transparent 75%, #f1f1f1 0);
+  background-size: 30px 30px;
+  background-position: 0 0,0 15px,15px -15px,-15px 0;
+  background-color: #fff;
+  opacity: 1;
+}
+
+.wp-block-popper-is-open {
+  z-index: 9;
+  position: relative;
+  min-height: calc( 100vh - 225px );
+}
+
+.wp-block-popper--left, .wp-block-popper--right, .wp-block-popper--top, .wp-block-popper--bottom {
+  pointer-events: auto; 
+}
 
 .popper-templates-list {
   display: flex;
@@ -37,5 +54,5 @@
 }
 
 .popper-modal-button {
-  margin-top: 18px;
+  margin-top: 24px;
 }

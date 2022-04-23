@@ -3,7 +3,7 @@
  * Plugin Name: Popper
  * Plugin URI:  https://formello.net/
  * Description: Popup builder with exit-intent powered by Gutenberg.
- * Version:     0.2.6
+ * Version:     0.2.8
  * Author:      Formello
  * Author URI:  https://formello.net
  * License:     GPL-2.0-or-later
@@ -106,6 +106,18 @@ function popper_register() {
 			'object_subtype' => 'popper',
 		)
 	);
+
+	register_meta(
+		'post',
+		'popper_trigger',
+		array(
+			'single' => true,
+			'type' => 'string',
+			'default' => '',
+			'show_in_rest'  => true,
+			'object_subtype' => 'popper',
+		)
+	);
 }
 add_action( 'init', 'popper_register' );
 
@@ -129,43 +141,47 @@ function popper_positions() {
 }
 add_filter( 'admin_enqueue_scripts', 'popper_positions', 10, 2 );
 
-// Add the custom columns to the book post type:
+// Add the custom columns to the book post type.
 add_filter( 'manage_popper_posts_columns', 'set_custom_edit_popper_columns' );
-function set_custom_edit_popper_columns($columns) {
+function set_custom_edit_popper_columns( $columns ) {
 
-    unset($columns['date']);
-    unset($columns['author']);
+	$inserted = array();
 
-    $columns['display'] = __( 'Display', 'popper' );
-    $columns['visibility'] = __( 'Visibility', 'popper' );
-    $columns['author'] = __( 'Author' );
-    $columns['date'] = __( 'Date' );
+	$columns['display'] = __( 'Display Rules', 'popper' );
+	$columns['visibility'] = __( 'Visibility', 'popper' );
+	$columns['trigger'] = __( 'Trigger', 'popper' );
 
-    return $columns;
+	return $columns;
 }
 
-// Add the data to the custom columns for the book post type:
-add_action( 'manage_popper_posts_custom_column' , 'custom_popper_column', 10, 2 );
+add_action( 'manage_popper_posts_custom_column', 'custom_popper_column', 10, 2 );
 function custom_popper_column( $column, $post_id ) {
-    switch ( $column ) {
+	switch ( $column ) {
 
-        case 'display' :
-            $terms = get_post_meta( $post_id , 'popper_rules', true );
+		case 'display':
+			$popup = get_post_meta( $post_id, 'popper_rules', true );
 
-            $locations = array();
+			$locations = array();
+			$exclude = array();
 
-			foreach ( $terms['location'] as $value ) {
+			foreach ( $popup['location'] as $value ) {
 				array_push( $locations, Popper_Conditions::get_saved_label( $value ) );
 			}
+			foreach ( $popup['exclude'] as $value ) {
+				array_push( $exclude, Popper_Conditions::get_saved_label( $value ) );
+			}
 
-            echo implode( '<br> ', $locations );
-            break;
+			echo '<b>Show on:</b> ';
+			echo implode( '<br> ', $locations );
+			echo '<br><b>Exclude on:</b> ';
+			echo implode( '<br> ', $exclude );
+			break;
 
-        case 'visibility' :
+		case 'visibility':
 
-            $data = get_post_meta( $post_id , 'popper_rules' , true ); 
-        	echo Popper_Conditions::get_user_label($data['user']);
-            break;
+			$popup = get_post_meta( $post_id, 'popper_rules' , true );
+			echo Popper_Conditions::get_user_label( $popup['user'] );
+			break;
 
-    }
+	}
 }

@@ -25,9 +25,6 @@ class Popup {
 	}
 
 	openModal() {
-		if ( this.happened ) {
-			return false;
-		}
 		this.closeModals()
 		this.element.classList.add('wp-block-popper-is-open');
 		this.happened = true;
@@ -259,6 +256,10 @@ class Popup {
 	}
 
 	bindFormClosing() {
+		const { form } = this.element.dataset;
+		if ('false' === form) {
+			return false;
+		}
 		window.addEventListener('formello-success', (e) => {
 			setTimeout(() => {
 				this.closeModal();

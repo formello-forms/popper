@@ -8,10 +8,23 @@
 	"supports": {
 		"html": false,
 		"multiple": false,
-		"className": true,
+		"className": false,
 		"reusable": false,
 		"spacing": {
-			"padding": true
+			"padding": true,
+			"margin": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
 		}
 	},
 	"attributes": {
@@ -63,7 +76,7 @@
 	    },
 	    "borderRadius": {
 	      "type": "number",
-	      "default": 3
+	      "default": 4
 	    },
 	    "boxShadow": {
 	      "type": "string",
@@ -74,6 +87,10 @@
 	      "default": true
 	    },
 	    "closeOnAnchorClick": {
+	      "type": "boolean",
+	      "default": false
+	    },
+	    "closeOnFormSubmission": {
 	      "type": "boolean",
 	      "default": false
 	    },

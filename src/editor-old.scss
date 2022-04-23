@@ -1,0 +1,41 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-popper {
+  display: block;
+}
+
+.wp-block-popper__container {
+  max-width: 100%;
+  z-index: 0;
+}
+
+.wp-block-popper__close {
+  z-index: 1;
+}
+
+.wp-block-popper__close:before { content: "\2715"; }
+
+.popper-templates-list {
+  display: flex;
+  flex-wrap: wrap;
+  li {
+    min-width: 25%;
+    padding: 10px;
+    a {
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+}
+
+.popper-modal-rule {
+  min-width: 600px;
+}
+
+.popper-modal-button {
+  margin-top: 18px;
+}

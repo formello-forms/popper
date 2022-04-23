@@ -47,6 +47,7 @@ import {
 	Spinner,
 	SelectControl,
 	Modal,
+	Button
 } from '@wordpress/components';
 import { BlockPreview } from '@wordpress/block-editor';
 
@@ -65,6 +66,14 @@ export function TemplatesModal ( props ) {
         ( select ) => select( 'formello/popper-templates' ).getTemplates(),
         []
     );
+
+	const updateTransient = () => {
+		apiFetch( {
+			path: '/popper/v1/sync_template_library/',
+			method: 'POST',
+			data: {},
+		} )
+	}
 
 	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
 	
@@ -139,7 +148,9 @@ export function TemplatesModal ( props ) {
 						</RawHTML>
 					</div>
 				</div>
-
+				<div>
+					<Button isPrimary onClick={ updateTransient }>Sync template</Button>
+				</div>
 				{ allTemplates && ! allTemplates.length &&
 					<div>
 						{ 'local' === type ? (

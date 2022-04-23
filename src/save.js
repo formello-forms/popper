@@ -37,26 +37,22 @@ export default function save({ attributes, className }) {
 		closeAnchor,
 		closeOnClickOutside,
 		closeOnAnchorClick,
+		closeOnFormSubmission,
 		dismissForVisitors,
 		dismissPeriod,
 		showCloseButton,
 		pageviews,
 		animation,
 		align,
+		fullPage,
 		uuid,
 	} = attributes;
 
 	const modalStyle = {
-		width: width,
+		width,
 		borderRadius,
+		backgroundColor
 	};
-
-	if (backgroundColor) {
-		modalStyle.backgroundColor = backgroundColor;
-	}
-	if (gradientBackground) {
-		modalStyle.background = gradientBackground;
-	}
 
 	const closeButtonStyle = {
 		color: closeButtonColor,
@@ -78,11 +74,18 @@ export default function save({ attributes, className }) {
 	});
 	const containerClass = classnames('wp-block-popper__container', boxShadow, {
 		'wp-block-popper__animate': !!animation,
+		'wide': fullPage
 	});
 
 	if (animation) {
 		modalStyle['--popper-animation'] = animation;
 	}
+
+	const closeButton = <button
+						className="wp-block-popper__close"
+						aria-label="Close modal"
+						style={closeButtonStyle}
+					></button>
 
 	return (
 		<div
@@ -94,14 +97,18 @@ export default function save({ attributes, className }) {
 			data-dismiss={dismissForVisitors ? dismissPeriod : ''}
 			data-offset={openBehaviour === 'scroll' ? offset : ''}
 			data-pagenum={openBehaviour === 'pageviews' ? pageviews : ''}
-			data-outside={closeOnClickOutside}
+			data-outside={ closeOnClickOutside }
+			data-form={ closeOnFormSubmission }
 			data-created={ uuid }
 			id={ 'modal-' + uuid }
 			aria-hidden="true"
-			{...useBlockProps.save({
-				className: popperClass,
-			})}
+			className={popperClass}
 		>
+
+			{ showCloseButton && 'edge' === closeButtonAlignment && (
+				closeButton
+			)}
+
 			{'center center' === align && (
 				<div
 					className="wp-block-popper__overlay"
@@ -110,18 +117,16 @@ export default function save({ attributes, className }) {
 				></div>
 			)}
 			<div
-				className={ containerClass }
+				{...useBlockProps.save({
+					className: containerClass,
+					style: modalStyle
+				})}
 				role="dialog"
 				aria-modal="true"
 				aria-labelledby="modal-title"
-				style={ modalStyle }
 			>
-				{showCloseButton && (
-					<button
-						className="wp-block-popper__close"
-						aria-label="Close modal"
-						style={closeButtonStyle}
-					></button>
+				{ showCloseButton && 'edge' !== closeButtonAlignment && (
+					closeButton
 				)}
 				<main className="wp-block-popper__content">
 					<InnerBlocks.Content />
