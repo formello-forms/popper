@@ -1,12 +1,4 @@
-/**
- * External dependencies
- */
-import classnames from 'classnames';
-
-import { applyFilters } from '@wordpress/hooks';
-import metadata from '../block.json';
-
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import { InnerBlocks } from '@wordpress/block-editor';
 
 const deprecated = [
 	// v1 of button block.
@@ -98,7 +90,7 @@ const deprecated = [
 				default: null,
 			},
 		},
-		save({ attributes }) {
+		save( { attributes } ) {
 			const {
 				width,
 				anchor,
@@ -111,7 +103,6 @@ const deprecated = [
 				closeButtonColor,
 				closeButtonSize,
 				borderRadius,
-				overlayColor,
 				overlayOpacity,
 				closeAnchor,
 				closeOnClickOutside,
@@ -126,10 +117,10 @@ const deprecated = [
 				borderRadius,
 			};
 
-			if (backgroundColor) {
+			if ( backgroundColor ) {
 				modalStyle.backgroundColor = backgroundColor;
 			}
-			if (gradientBackground) {
+			if ( gradientBackground ) {
 				modalStyle.background = gradientBackground;
 			}
 
@@ -138,42 +129,40 @@ const deprecated = [
 				fontSize: closeButtonSize,
 			};
 
-			const containerClass = classnames('popper__container');
-
 			return (
 				<div
-					data-open={openBehaviour}
-					data-anchor={openBehaviour === 'anchor' ? anchor : ''}
-					data-target={openBehaviour === 'target' ? target : ''}
-					data-anchorclose={closeOnAnchorClick ? closeAnchor : ''}
-					data-time={openBehaviour === 'load' ? waitTime : ''}
-					data-dismiss={dismissForVisitors ? dismissPeriod : ''}
-					data-offset={openBehaviour === 'scroll' ? offset : ''}
-					data-outside={closeOnClickOutside}
-					data-created={uuid}
-					id={'modal-' + uuid}
+					data-open={ openBehaviour }
+					data-anchor={ openBehaviour === 'anchor' ? anchor : '' }
+					data-target={ openBehaviour === 'target' ? target : '' }
+					data-anchorclose={ closeOnAnchorClick ? closeAnchor : '' }
+					data-time={ openBehaviour === 'load' ? waitTime : '' }
+					data-dismiss={ dismissForVisitors ? dismissPeriod : '' }
+					data-offset={ openBehaviour === 'scroll' ? offset : '' }
+					data-outside={ closeOnClickOutside }
+					data-created={ uuid }
+					id={ 'modal-' + uuid }
 					aria-hidden="true"
 					className="popper"
 				>
 					<div
 						className="popper__overlay"
 						tabIndex="-1"
-						style={{
+						style={ {
 							backgroundColor:
-								'rgba(0,0,0,' + overlayOpacity / 100 + ')',
-						}}
+								'rgba(0,0,0,' + ( overlayOpacity / 100 ) + ')',
+						} }
 					>
 						<div
 							className="popper__container"
 							role="dialog"
 							aria-modal="true"
 							aria-labelledby="modal-1-title"
-							style={modalStyle}
+							style={ modalStyle }
 						>
 							<button
 								className="popper__close"
 								aria-label="Close modal"
-								style={closeButtonStyle}
+								style={ closeButtonStyle }
 							></button>
 							<main className="popper__content">
 								<InnerBlocks.Content />

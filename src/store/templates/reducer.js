@@ -1,4 +1,3 @@
-
 function reducer( state = { templates: false, templatesData: {} }, action ) {
 	switch ( action.type ) {
 		case 'SET_TEMPLATES':
@@ -7,11 +6,16 @@ function reducer( state = { templates: false, templatesData: {} }, action ) {
 			}
 			break;
 		case 'SET_TEMPLATE_DATA':
-			if ( action.templatesData && action.templatesData.id && ! state.templatesData[ action.templatesData.id ] ) {
-				state.templatesData[ action.templatesData.id ] = action.templatesData;
+			if (
+				action.templatesData &&
+				action.templatesData.id &&
+				! state.templatesData[ action.templatesData.id ]
+			) {
+				state.templatesData[ action.templatesData.id ] =
+					action.templatesData;
 			}
 			break;
-    // no default
+		// no default
 	}
 
 	return state;

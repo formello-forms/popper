@@ -1,21 +1,11 @@
-/**
- * WordPress dependencies
- */
 import { Path, SVG } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-/** @typedef {import('@wordpress/blocks').WPBlockVariation} WPBlockVariation */
-
-/**
- * Template option choices for predefined columns layouts.
- *
- * @type {WPBlockVariation[]}
- */
 const variations = [
 	{
 		name: 'simple',
-		title: __('Basic'),
-		description: __('Basic popup'),
+		title: __( 'Basic' ),
+		description: __( 'Basic popup' ),
 		icon: (
 			<SVG
 				width="48"
@@ -30,13 +20,13 @@ const variations = [
 				/>
 			</SVG>
 		),
-		innerBlocks: [['core/group', { backgroundColor: 'ffffff' }]],
-		scope: ['block'],
+		innerBlocks: [ [ 'core/heading', { content: 'My modal' } ] ],
+		scope: [ 'block' ],
 	},
 	{
 		name: 'With image',
-		title: __('Left Image'),
-		description: __('Image on the left'),
+		title: __( 'Left Image' ),
+		description: __( 'Image on the left' ),
 		icon: (
 			<SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 				<Path d="M3 18h8V6H3v12zM14 7.5V9h7V7.5h-7zm0 5.3h7v-1.5h-7v1.5zm0 3.7h7V15h-7v1.5z" />
@@ -73,7 +63,7 @@ const variations = [
 					],
 					[
 						'core/buttons',
-						{ contentJustification: 'center' },
+						{ layout: { type: 'flex', justifyContent: 'center' } },
 						[
 							[
 								'core/button',
@@ -87,12 +77,12 @@ const variations = [
 				],
 			],
 		],
-		scope: ['block'],
+		scope: [ 'block' ],
 	},
 	{
 		name: 'button',
-		title: __('With buttons'),
-		description: __('Popup with buttons and image'),
+		title: __( 'With buttons' ),
+		description: __( 'Popup with buttons and image' ),
 		icon: (
 			<SVG viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 				<Path d="M19 6.5H5c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7c0-1.1-.9-2-2-2zm.5 9c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-7c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v7zM8 12.8h8v-1.5H8v1.5z" />
@@ -133,8 +123,21 @@ const variations = [
 					],
 					[
 						'core/buttons',
-						{ contentJustification: 'center' },
+						{
+							layout: {
+								type: 'flex',
+								justifyContent: 'center',
+								orientation: 'vertical',
+							},
+						},
 						[
+							[
+								'core/button',
+								{
+									text: 'DOWNLOAD NOW',
+									style: { color: { background: '#28a7d9' } },
+								},
+							],
 							[
 								'core/button',
 								{
@@ -147,19 +150,12 @@ const variations = [
 									},
 								},
 							],
-							[
-								'core/button',
-								{
-									text: 'DOWNLOAD NOW',
-									style: { color: { background: '#28a7d9' } },
-								},
-							],
 						],
 					],
 				],
 			],
 		],
-		scope: ['block'],
+		scope: [ 'block' ],
 	},
 ];
 

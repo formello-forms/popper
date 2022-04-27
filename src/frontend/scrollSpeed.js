@@ -1,11 +1,8 @@
-const ScrollSpeed = (function (settings) {
+const ScrollSpeed = ( function( settings ) {
 	settings = settings || {};
 
-	var lastPos,
-		newPos,
-		timer,
-		delta,
-		delay = settings.delay || 50; // in "ms" (higher means lower fidelity )
+	let lastPos, newPos, timer, delta;
+	const delay = settings.delay || 50; // in "ms" (higher means lower fidelity )
 
 	function clear() {
 		lastPos = null;
@@ -14,17 +11,17 @@ const ScrollSpeed = (function (settings) {
 
 	clear();
 
-	return function () {
+	return function() {
 		newPos = window.scrollY;
-		if (lastPos != null) {
+		if ( lastPos !== null ) {
 			// && newPos < maxScroll
 			delta = newPos - lastPos;
 		}
 		lastPos = newPos;
-		clearTimeout(timer);
-		timer = setTimeout(clear, delay);
-		return Number(delta);
+		clearTimeout( timer );
+		timer = setTimeout( clear, delay );
+		return Number( delta );
 	};
-})();
+}() );
 
 export default ScrollSpeed;

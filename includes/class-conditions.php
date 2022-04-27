@@ -408,14 +408,17 @@ class Popper_Conditions {
 
 					$label .= ': ' . $term->name;
 				} elseif ( ( in_array( 'post', $object_types ) || in_array( 'page', $object_types ) ) && $object_id ) {
-					//$post = get_post( $object_id );
-					$posts = get_posts( array( 'include' => $object_id, 'post_type' => $object_types ) );
-					
+					$posts = get_posts(
+						array(
+							'include' => $object_id,
+							'post_type' => $object_types,
+						)
+					);
+
 					if ( ! is_array( $posts ) ) {
 						return false;
 					}
-
-					$label .= ': ' . implode( ', ', array_column($posts , 'post_title') );
+					$label .= ': ' . implode( ', ', array_column( $posts, 'post_title' ) );
 				}
 			}
 		}
@@ -427,7 +430,7 @@ class Popper_Conditions {
 	 * Returns the label for a saved location.
 	 *
 	 * @since 1.7
-	 * @param string $saved_location The location.
+	 * @param string $saved_user The users.
 	 * @return string|bool
 	 */
 	public static function get_user_label( $saved_user ) {
@@ -440,13 +443,13 @@ class Popper_Conditions {
 			$object_types = explode( ':', $data );
 
 			if ( in_array( 'general', $object_types ) ) {
-				echo $users['general']['rules'][$data];
+				$label .= $users['general']['rules'][ $data ];
 			} else {
-				echo $users['role']['rules'][$data];
+				$label .= $users['role']['rules'][ $data ];
 			}
-			echo '<br>';
+			$label .= '<br>';
 		}
-
+		return $label;
 	}
 
 }

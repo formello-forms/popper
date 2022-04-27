@@ -10,13 +10,7 @@ import { __ } from '@wordpress/i18n';
 import { Button, Placeholder } from '@wordpress/components';
 import { layout } from '@wordpress/icons';
 import { TemplatesModal } from './library';
-import {
-	useState,
-} from '@wordpress/element';
-import {
-	store as blockEditorStore,
-} from '@wordpress/block-editor';
-import { useSelect, dispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
 
 function BlockVariationPicker( {
 	icon = layout,
@@ -25,9 +19,9 @@ function BlockVariationPicker( {
 	variations,
 	onSelect,
 	allowSkip,
-	clientId
+	clientId,
+	setAttributes,
 } ) {
-
 	const classes = classnames( 'block-editor-block-variation-picker', {
 		'has-many-variations': variations.length > 4,
 	} );
@@ -40,8 +34,7 @@ function BlockVariationPicker( {
 			instructions={ instructions }
 			className={ classes }
 		>
-			{ 
-			/*
+			{ /*
 			 * Disable reason: The `list` ARIA role is redundant but
 			 * Safari+VoiceOver won't announce the list otherwise.
 			 */
@@ -89,13 +82,14 @@ function BlockVariationPicker( {
 				</div>
 			) }
 
-			{ 'templates' === isModalOpen &&
+			{ 'templates' === isModalOpen && (
 				<TemplatesModal
 					type={ 'remote' }
 					onRequestClose={ () => setModalOpen( false ) }
 					clientId={ clientId }
+					setAttributes={ setAttributes }
 				/>
-			}
+			) }
 		</Placeholder>
 	);
 }

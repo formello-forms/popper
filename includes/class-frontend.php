@@ -44,7 +44,7 @@ class Popper_Frontend {
 	public function __construct() {
 
 		add_action( 'template_redirect', array( $this, 'popper_matcher' ), 5 );
-		add_action( 'wp_body_open', array( $this, 'get_popups' ), 5 );
+		add_action( 'wp_footer', array( $this, 'get_popups' ), 5 );
 
 	}
 
@@ -52,11 +52,9 @@ class Popper_Frontend {
 	 * Output our popups.
 	 *
 	 * @since 1.7
-	 *
-	 * @return array
 	 */
 	public function get_popups() {
-
+		// phpcs:ignore
 		echo $this->popups;
 	}
 
@@ -105,7 +103,8 @@ class Popper_Frontend {
 			$matched = Popper_Conditions::show_data( $rule['location'], $rule['exclude'], $rule['user'] );
 
 			if ( $matched ) {
-				$popper  = get_post( $popper_id );
+				$popper = get_post( $popper_id );
+				// phpcs:ignore
 				$popups .= apply_filters( 'the_content', do_blocks( $popper->post_content ) );
 
 				$matched = false;

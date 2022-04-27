@@ -11,85 +11,53 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import {
-	Fragment,
-	RawHTML,
-	useState,
-} from '@wordpress/element';
+import { Fragment, RawHTML, useState } from '@wordpress/element';
 
-import {
-	__,
-	sprintf,
-} from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 import apiFetch from '@wordpress/api-fetch';
 
-import {
-	compose,
-} from '@wordpress/compose';
+import { decodeEntities } from '@wordpress/html-entities';
 
-import {
-	decodeEntities,
-} from '@wordpress/html-entities';
+import { useDispatch, useSelect } from '@wordpress/data';
 
-import {
-	withSelect,
-	useDispatch,
-	useSelect
-} from '@wordpress/data';
+import { parse } from '@wordpress/blocks';
 
-import {
-	parse,
-} from '@wordpress/blocks';
-
-import {
-	TabPanel,
-	Spinner,
-	SelectControl,
-	Modal,
-	Button
-} from '@wordpress/components';
+import { Spinner, Modal, Button } from '@wordpress/components';
 import { BlockPreview } from '@wordpress/block-editor';
 
-export function TemplatesModal ( props ) {
+export function TemplatesModal( props ) {
+	const { onRequestClose, type, clientId, setAttributes } = props;
 
-	const {
-		onRequestClose,
-		type,
-		clientId,
-	} = props;
+	const [ loading, setLoading ] = useState( false );
+	const [ error, setError ] = useState( false );
 
-	const [ loading, setLoading ] = useState( false )
-	const [ error, setError ] = useState( false )
-
-    const templates = useSelect(
-        ( select ) => select( 'formello/popper-templates' ).getTemplates(),
-        []
-    );
+	const templates = useSelect(
+		( select ) => select( 'formello/popper-templates' ).getTemplates(),
+		[]
+	);
 
 	const updateTransient = () => {
 		apiFetch( {
 			path: '/popper/v1/sync_template_library/',
 			method: 'POST',
 			data: {},
-		} )
-	}
+		} );
+	};
 
 	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
-	
+
 	const insertTemplate = ( content, clientId, cb ) => {
 		const parsedBlocks = parse( content );
+		setAttributes( parsedBlocks[ 0 ].attributes );
 
 		if ( parsedBlocks.length ) {
-
-			replaceInnerBlocks( clientId, parsedBlocks[0].innerBlocks )
+			replaceInnerBlocks( clientId, parsedBlocks[ 0 ].innerBlocks );
 			cb( false );
-
 		}
-	}
+	};
 
 	const getTemplates = ( type ) => {
-
 		if ( ! templates ) {
 			return templates;
 		}
@@ -114,7 +82,7 @@ export function TemplatesModal ( props ) {
 		} );
 
 		return result;
-	}
+	};
 
 	const allTemplates = getTemplates( type );
 	const showLoadingSpinner = loading || ! allTemplates;
@@ -125,85 +93,118 @@ export function TemplatesModal ( props ) {
 			className={ classnames(
 				'formello-plugin-templates-modal',
 				'formello-plugin-templates-modal-hide-header',
-				showLoadingSpinner ? 'formello-plugin-templates-modal-loading' : ''
+				showLoadingSpinner
+					? 'formello-plugin-templates-modal-loading'
+					: ''
 			) }
 			position="top"
 			isFullScreen
 			onRequestClose={ onRequestClose }
 		>
-
-			{ showLoadingSpinner &&
-				<div className="formello-plugin-templates-modal-loading-spinner"><Spinner /></div>
-			}
+			{ showLoadingSpinner && (
+				<div>
+					<Spinner />
+				</div>
+			) }
 			<Fragment>
-
 				<div className="formello-plugin-templates-categories-row">
 					<div className="formello-plugin-templates-count">
 						<RawHTML>
 							{ sprintf(
 								/* translators: Number of templates. */
 								__( 'Templates: %s', 'popper' ),
-								`<strong>${ allTemplates.length ? allTemplates.length : 0 }</strong>` )
-							}
+								`<strong>${
+									allTemplates.length
+										? allTemplates.length
+										: 0
+								}</strong>`
+							) }
 						</RawHTML>
 					</div>
 				</div>
 				<div>
-					<Button isPrimary onClick={ updateTransient }>Sync template</Button>
+					<Button isPrimary onClick={ updateTransient }>
+						Sync template
+					</Button>
 				</div>
-				{ allTemplates && ! allTemplates.length &&
+				{ allTemplates && ! allTemplates.length && (
 					<div>
 						{ 'local' === type ? (
 							<Fragment>
 								<p>{ __( 'No templates found.', 'popper' ) }</p>
-								<a className="components-button is-button is-primary" href={ formello.templatesURL } target="_blank" rel="noopener noreferrer">{ __( 'Add New', 'popper' ) }</a>
+								<a
+									className="components-button is-button is-primary"
+									href={ formello.templatesURL }
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{ __( 'Add New', 'popper' ) }
+								</a>
 							</Fragment>
 						) : (
 							<p>{ __( 'No templates found.', 'popper' ) }</p>
 						) }
 					</div>
-				}
+				) }
 
-				{ allTemplates && 
+				{ allTemplates && (
 					<ul className="popper-templates-list">
 						{ allTemplates.map( ( template ) => {
 							const withPreview = !! template.content;
-							const templateTitle = decodeEntities( template.title );
+							const templateTitle = decodeEntities(
+								template.title
+							);
 
 							return (
 								<li
-									className={ classnames( 'formello-plugin-templates-list-item', 'formello-plugin-templates-list-item-no-thumb' ) }
+									className={ classnames(
+										'formello-plugin-templates-list-item',
+										'formello-plugin-templates-list-item-no-thumb'
+									) }
 									key={ template.id }
 								>
 									<a
+										role="button"
+										tabIndex="0"
 										onClick={ () => {
 											setLoading( true );
-											if ( 'remote' === type && template.content ) {
-												insertTemplate( template.content, clientId, ( errorResponse ) => {
-													if ( errorResponse ) {
-														setError( errorResponse );
-													} else {
-														onRequestClose();
+											if (
+												'remote' === type &&
+												template.content
+											) {
+												insertTemplate(
+													template.content,
+													clientId,
+													( errorResponse ) => {
+														if ( errorResponse ) {
+															setError(
+																errorResponse
+															);
+														} else {
+															onRequestClose();
+														}
 													}
-												} );
-											}else{
+												);
+											} else {
 												onRequestClose( template.id );
 											}
 											setLoading( false );
 										} }
 									>
-										{ withPreview &&
+										{ withPreview && (
 											<BlockPreview
 												blocks={ parse( template.content ) }
 											/>
-										}
-										<div className="formello-plugin-templates-list-item-title">{ templateTitle }</div>
+										) }
+										<div className="formello-plugin-templates-list-item-title">
+											{ templateTitle }
+										</div>
 									</a>
 								</li>
 							);
 						} ) }
 					</ul>
-				}
+				) }
 			</Fragment>
 		</Modal>
 	);

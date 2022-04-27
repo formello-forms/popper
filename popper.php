@@ -3,7 +3,7 @@
  * Plugin Name: Popper
  * Plugin URI:  https://formello.net/
  * Description: Popup builder with exit-intent powered by Gutenberg.
- * Version:     0.2.8
+ * Version:     0.3.0
  * Author:      Formello
  * Author URI:  https://formello.net
  * License:     GPL-2.0-or-later
@@ -140,22 +140,34 @@ function popper_positions() {
 
 }
 add_filter( 'admin_enqueue_scripts', 'popper_positions', 10, 2 );
+add_filter( 'manage_popper_posts_columns', 'popper_columns_table' );
 
-// Add the custom columns to the book post type.
-add_filter( 'manage_popper_posts_columns', 'set_custom_edit_popper_columns' );
-function set_custom_edit_popper_columns( $columns ) {
+/**
+ * Add the custom columns to the book post type.
+ *
+ * @param array $columns The array of columns.
+ *
+ * @return array $columns
+ */
+function popper_columns_table( $columns ) {
 
 	$inserted = array();
 
 	$columns['display'] = __( 'Display Rules', 'popper' );
 	$columns['visibility'] = __( 'Visibility', 'popper' );
-	$columns['trigger'] = __( 'Trigger', 'popper' );
 
 	return $columns;
 }
 
-add_action( 'manage_popper_posts_custom_column', 'custom_popper_column', 10, 2 );
-function custom_popper_column( $column, $post_id ) {
+add_action( 'manage_popper_posts_custom_column', 'popper_columns_display', 10, 2 );
+
+/**
+ * Add the custom columns to the book post type.
+ *
+ * @param string $column The name of columns.
+ * @param number $post_id The post id.
+ */
+function popper_columns_display( $column, $post_id ) {
 	switch ( $column ) {
 
 		case 'display':
@@ -171,15 +183,20 @@ function custom_popper_column( $column, $post_id ) {
 				array_push( $exclude, Popper_Conditions::get_saved_label( $value ) );
 			}
 
-			echo '<b>Show on:</b> ';
-			echo implode( '<br> ', $locations );
-			echo '<br><b>Exclude on:</b> ';
-			echo implode( '<br> ', $exclude );
+			$title = sprintf(
+				'<b>%s</b> %s <br><b>%s</b> %s',
+				__( 'Show on:', 'formello' ),
+				implode( '<br> ', $locations ),
+				__( 'Exclude on:', 'formello' ),
+				implode( '<br> ', $exclude )
+			);
+			// phpcs:ignore
+			echo $title;
 			break;
 
 		case 'visibility':
-
-			$popup = get_post_meta( $post_id, 'popper_rules' , true );
+			$popup = get_post_meta( $post_id, 'popper_rules', true );
+			// phpcs:ignore
 			echo Popper_Conditions::get_user_label( $popup['user'] );
 			break;
 

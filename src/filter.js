@@ -1,75 +1,60 @@
-/**
- * WordPress Dependencies
- */
-const { __ } = wp.i18n;
-const { addFilter } = wp.hooks;
-const { InspectorAdvancedControls } = wp.editor;
-const { createHigherOrderComponent } = wp.compose;
+import { __ } from '@wordpress/i18n';
+import { addFilter } from '@wordpress/hooks';
+import { createHigherOrderComponent } from '@wordpress/compose';
+import { InspectorAdvancedControls } from '@wordpress/block-editor';
 import { SelectControl } from '@wordpress/components';
-import { useSelect, dispatch } from '@wordpress/data';
-import apiFetch from '@wordpress/api-fetch';
-import { useEffect, useState, Fragment } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { Fragment } from '@wordpress/element';
 import { parse } from '@wordpress/block-serialization-default-parser';
 import api from '@wordpress/api';
 
-/**
- * Add mobile visibility controls on Advanced Block Panel.
- *
- * @param {function} BlockEdit Block edit component.
- *
- * @return {function} BlockEdit Modified block edit component.
- */
-const withAdvancedControls = createHigherOrderComponent((BlockEdit) => {
-	return (props) => {
-		const allowedBlocks = ['core/image', 'core/button'];
+const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
+	return ( props ) => {
+		const allowedBlocks = [ 'core/image', 'core/button' ];
 
-		if (!allowedBlocks.includes(props.name)) {
-			return <BlockEdit {...props} />;
+		if ( ! allowedBlocks.includes( props.name ) ) {
+			return <BlockEdit { ...props } />;
 		}
 
-		const opts = [{ value: null, label: __( 'Select a popup', 'popper' ) }];
+		const opts = [ { value: null, label: __( 'Select a popup', 'popper' ) } ];
 
-		const findById = (val) => {
-			return popups.find((element) => {
-				return element.ID == val;
-			});
+		const findById = ( val ) => {
+			return popups.find( ( element ) => {
+				return element.ID === val;
+			} );
 		};
 
-		const setAnchor = (val) => {
-			let elm = findById(val);
-			if (!elm) {
+		const setAnchor = ( val ) => {
+			let elm = findById( val );
+			if ( ! elm ) {
 				return;
 			}
-			elm = parse(elm.post_content);
-			var attrs = elm[0].attrs;
-			if ('anchor' === attrs.openBehaviour) {
-				setAttributes({ anchor: attrs.anchor });
+			elm = parse( elm.post_content );
+			const attrs = elm[ 0 ].attrs;
+			if ( 'anchor' === attrs.openBehaviour ) {
+				setAttributes( { anchor: attrs.anchor } );
 			}
 		};
 
-		const addRule = (val) => {
-			console.log(popups)
-			var post = new wp.api.models.Popper( { id: val } );
-			post.fetch()
-				.done( (data) => {
+		const addRule = ( val ) => {
+			const post = new api.models.Popper( { id: val } );
+			post.fetch().done( ( data ) => {
+				post.setMeta( 'popper_rules', 'newValue' );
 
-					post.setMeta('popper_rules', 'newValue');
-
-					post.save({id: val });
-				});
-
+				post.save( { id: val } );
+			} );
 		};
 
-		const popups = useSelect((select) => {
-			return select('core').getEntityRecords( 'postType', 'popper', {
+		const popups = useSelect( ( select ) => {
+			return select( 'core' ).getEntityRecords( 'postType', 'popper', {
 				per_page: -1,
-			});
-		});
+			} );
+		} );
 
-		if (popups !== null) {
-			popups.map((post) => {
-				opts.push({ value: post.id, label: post.title.raw });
-			});
+		if ( popups !== null ) {
+			popups.forEach( ( post ) => {
+				opts.push( { value: post.id, label: post.title.raw } );
+			} );
 		}
 
 		const { attributes, setAttributes, isSelected } = props;
@@ -78,26 +63,26 @@ const withAdvancedControls = createHigherOrderComponent((BlockEdit) => {
 
 		return (
 			<Fragment>
-				<BlockEdit {...props} />
-				{isSelected && (
+				<BlockEdit { ...props } />
+				{ isSelected && (
 					<InspectorAdvancedControls>
 						<SelectControl
-							label={__('Open popup')}
-							value={popper}
-							options={opts}
-							onChange={(val) => {
-								setAttributes({ popper: val });
-								setAnchor(val);
-								addRule(val);
-							}}
+							label={ __( 'Open popup' ) }
+							value={ popper }
+							options={ opts }
+							onChange={ ( val ) => {
+								setAttributes( { popper: val } );
+								setAnchor( val );
+								addRule( val );
+							} }
 							help={ __( 'Open a popup on anchor click', 'popper' ) }
 						/>
 					</InspectorAdvancedControls>
-				)}
+				) }
 			</Fragment>
 		);
 	};
-}, 'withAdvancedControls');
+}, 'withAdvancedControls' );
 
 addFilter(
 	'editor.BlockEdit',
@@ -112,17 +97,17 @@ addFilter(
  *
  * @return {Object} settings Modified settings.
  */
-function addAttributes(settings) {
-	const allowedBlocks = ['core/image', 'core/button'];
+function addAttributes( settings ) {
+	const allowedBlocks = [ 'core/image', 'core/button' ];
 
 	//check if object exists for old Gutenberg version compatibility
-	if (allowedBlocks.includes(settings.name)) {
-		settings.attributes = Object.assign(settings.attributes, {
+	if ( allowedBlocks.includes( settings.name ) ) {
+		settings.attributes = Object.assign( settings.attributes, {
 			popper: {
 				type: 'numeric',
 				default: null,
 			},
-		});
+		} );
 	}
 
 	return settings;

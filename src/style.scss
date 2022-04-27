@@ -110,6 +110,8 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  border-radius: 0;
+  box-shadow: none;
   .wp-block-popper__close {
     position: absolute;
     top: 40px !important;
@@ -127,8 +129,7 @@
   overflow-x: hidden;
   max-height: 90vh;
   min-height: auto;
-  scrollbar-width: 8px;
-  border-radius: inherit;
+  scrollbar-width: thin;
 }
 
 /* Works on Chrome, Edge, and Safari */

@@ -1,51 +1,35 @@
 import { __ } from '@wordpress/i18n';
-import {
-	RangeControl,
-	PanelBody,
-	PanelRow,
-	SelectControl,
-	RadioControl,
-	ColorPicker
-} from '@wordpress/components';
-import { 
-	__experimentalColorGradientControl as ColorGradientControl,
-	PanelColorSettings
-} from '@wordpress/block-editor';
+import { RangeControl, PanelBody, RadioControl } from '@wordpress/components';
 
-const Button = (props) => {
-	const { attributes, setAttributes, showPreview } = props;
+const Button = ( props ) => {
 	const {
-		closeButtonColor,
-		closeButtonSize,
-		closeButtonAlignment,
-	} = attributes;
+		attributes: { closeButtonSize, closeButtonAlignment },
+		setAttributes,
+	} = props;
 
 	const options = [
-		{ label: __('Inside', 'popper'), value: 'inside' },
-		{ label: __('Outside', 'popper'), value: 'outside' },
-		{ label: __('Edge of screen', 'popper'), value: 'edge' },
+		{ label: __( 'Inside', 'popper' ), value: 'inside' },
+		{ label: __( 'Outside', 'popper' ), value: 'outside' },
+		{ label: __( 'Edge of screen', 'popper' ), value: 'edge' },
 	];
 
 	return (
 		<>
-			<PanelBody
-				title={__('Button', 'popper')}
-				initialOpen={false}
-			>
+			<PanelBody title={ __( 'Button', 'popper' ) } initialOpen={ false }>
 				<RangeControl
-					value={closeButtonSize}
-					label={__('Close Icon Size', 'popper')}
-					onChange={(val) => {
-						setAttributes({ closeButtonSize: val });
-					}}
+					value={ closeButtonSize }
+					label={ __( 'Close Icon Size', 'popper' ) }
+					onChange={ ( val ) => {
+						setAttributes( { closeButtonSize: val } );
+					} }
 					allowReset
-					min={12}
-					max={40}
+					min={ 12 }
+					max={ 40 }
 				/>
 				<RadioControl
-					label={__('Button position', 'popper')}
-					onChange={(val) =>
-						setAttributes({ closeButtonAlignment: val })
+					label={ __( 'Button position', 'popper' ) }
+					onChange={ ( val ) =>
+						setAttributes( { closeButtonAlignment: val } )
 					}
 					selected={ closeButtonAlignment }
 					options={ options }

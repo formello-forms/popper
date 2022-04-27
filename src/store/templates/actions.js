@@ -1,4 +1,3 @@
-
 export function apiFetch( request ) {
 	return {
 		type: 'API_FETCH',
