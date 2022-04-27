@@ -71,6 +71,9 @@ No. No external library is required. We mantain a clean fast code without depend
 
 == Changelog ==
 
+= 0.3.0 =
+* Fix css
+
 = 0.2.9 =
 * Fix template size
 * Better fullscreen support
