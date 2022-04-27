@@ -54,8 +54,7 @@ class Popper_Frontend {
 	 * @since 1.7
 	 */
 	public function get_popups() {
-		// phpcs:ignore
-		echo $this->popups;
+		echo wp_kses_post( do_blocks( $this->popups ) );
 	}
 
 	/**
@@ -104,13 +103,11 @@ class Popper_Frontend {
 
 			if ( $matched ) {
 				$popper = get_post( $popper_id );
-				// phpcs:ignore
-				$popups .= apply_filters( 'the_content', do_blocks( $popper->post_content ) );
+				$popups .= apply_filters( 'the_content', $popper->post_content );
 
 				$matched = false;
 			}
 		}
-		// phpcs:ignore
 		$this->popups = $popups;
 		add_filter( 'the_content', 'wpautop' );
 

@@ -104,8 +104,6 @@ class Popper_Conditions {
 
 				if ( 'post_format' === $taxonomy_slug ) {
 					continue;
-				} elseif ( ! apply_filters( 'generate_elements_show_taxonomy', $public, $taxonomy ) ) {
-					continue;
 				}
 
 				$label = str_replace(
