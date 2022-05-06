@@ -114,8 +114,7 @@
 	      "default": "#000000"
 	    },
 	    "overlayColor": {
-	      "type": "string",
-	      "default": "#000000bf"
+	      "type": "string"
 	    },
 	    "gradientBackground": {
 	      "type": "string"
