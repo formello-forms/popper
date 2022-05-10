@@ -7,6 +7,7 @@ import {
 	InspectorControls,
 	InnerBlocks,
 	useBlockProps,
+	useInnerBlocksProps,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 
@@ -128,6 +129,16 @@ function Edit( props ) {
 		modalStyle.width = undefined;
 	}
 
+	const blockProps = useBlockProps( {
+		className: containerClass,
+		style: modalStyle,
+	} )
+
+	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
+		templateLock: false,
+		renderAppender: hasInnerBlocks ? undefined : InnerBlocks.ButtonBlockAppender
+	} );
+
 	const closeButton = (
 		<button
 			className="wp-block-popper__close"
@@ -168,25 +179,13 @@ function Edit( props ) {
 					setAttributes={ setAttributes }
 				/>
 			</BlockControls>
-			<div
-				{ ...useBlockProps( {
-					className: containerClass,
-					style: modalStyle,
-				} ) }
-			>
+			<div {...innerBlocksProps}>
 				<Fragment>
 					{ showCloseButton &&
 						'edge' !== closeButtonAlignment &&
 						closeButton }
 					<main className="wp-block-popper__content">
-						<InnerBlocks
-							templateLock={ false }
-							renderAppender={
-								hasInnerBlocks ? undefined : (
-									<InnerBlocks.ButtonBlockAppender />
-								)
-							}
-						/>
+						{ children }
 					</main>
 				</Fragment>
 			</div>
@@ -229,7 +228,9 @@ function Placeholder( props ) {
 	);
 
 	return (
-		<div { ...useBlockProps() }>
+		<div { ...useBlockProps({
+			className: 'popper-placeholder'
+		}) }>
 			<BlockVariationPicker
 				icon={ 'external' }
 				label={ 'Popup' }

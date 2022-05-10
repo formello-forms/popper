@@ -2,6 +2,7 @@
 	"apiVersion": 2,
 	"name": "formello/popper",
 	"title": "Pop up",
+	"icon": "external",
 	"category": "widgets",
 	"description": "A great popup block.",
 	"textdomain": "popper",
@@ -106,12 +107,10 @@
 	      "default": ""
 	    },
 	    "backgroundColor": {
-	      "type": "string",
-	      "default": "#ffffff"
+	      "type": "string"
 	    },
 	    "closeButtonColor": {
-	      "type": "string",
-	      "default": "#000000"
+	      "type": "string"
 	    },
 	    "overlayColor": {
 	      "type": "string"

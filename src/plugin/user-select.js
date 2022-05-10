@@ -13,7 +13,7 @@ export function UserSelect( props ) {
 	}, [] );
 
 	return (
-		<Flex align="start" justify="start" className="popper-modal-rule">
+		<Flex align="start" justify="start">
 			<FlexItem>
 				<label className="components-form-token-field__label" htmlFor="select">
 					{ __( 'User', 'popper' ) }

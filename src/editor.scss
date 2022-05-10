@@ -7,6 +7,9 @@
 .post-type-popper .editor-styles-wrapper .block-editor-block-list__layout.is-root-container > :where(:not(.alignleft):not(.alignright)) {
   max-width: 100%;
   height: 100vh;
+  &.popper-placeholder {
+    max-width: 650px;
+  }
 }
 
 .wp-block-popper__container {

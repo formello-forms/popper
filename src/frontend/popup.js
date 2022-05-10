@@ -25,6 +25,9 @@ class Popup {
 
 	openModal() {
 		this.closeModals();
+		//document.body.style.overflow = 'hidden';
+		//document.body.style.height = '100vh';
+		//document.body.style.paddingRight = '15px';
 		this.element.classList.add( 'wp-block-popper-is-open' );
 		this.happened = true;
 	}
@@ -37,9 +40,12 @@ class Popup {
 	}
 
 	closeModal() {
+		//document.body.style.overflow = 'auto';
 		this.element.classList.remove( 'wp-block-popper-is-open' );
 		const frames = document.getElementsByTagName( 'iframe' );
 		for ( const item of frames ) {
+			if( 'tox-edit-area__iframe' === item.getAttribute('class') ) // if is tinyMce skip
+				continue;
 			item.setAttribute( 'src', item.src );
 		}
 		this.dismissModal();

@@ -3,7 +3,7 @@
  * Plugin Name: Popper
  * Plugin URI:  https://formello.net/
  * Description: Popup builder with exit-intent powered by Gutenberg.
- * Version:     0.3.2
+ * Version:     0.3.3
  * Author:      Formello
  * Author URI:  https://formello.net
  * License:     GPL-2.0-or-later
@@ -156,6 +156,11 @@ function popper_columns_table( $columns ) {
 	$columns['display'] = __( 'Display Rules', 'popper' );
 	$columns['visibility'] = __( 'Visibility', 'popper' );
 
+	unset( $columns['author'] );
+	unset( $columns['date'] );
+
+	$columns['date'] = __( 'Date' );
+
 	return $columns;
 }
 
@@ -200,3 +205,57 @@ function popper_columns_display( $column, $post_id ) {
 
 	}
 }
+
+/**
+ * Add link to table action row
+ *
+ * @param  array   $actions Actions.
+ * @param  WP_POST $post Post.
+ * @return string
+ */
+function popper_action_row( $actions, $post ) {
+	// check for your post type.
+	if ( 'popper' === $post->post_type ) {
+		$view_link = sprintf(
+			'<span id="popper-table"><a href="#" data-id="%s">%s</a></span>',
+			absint( $post->ID ),
+			__( 'Edit rules', 'popper' )
+		);
+
+		array_splice( $actions, 2, 0, $view_link );
+	}
+
+	return $actions;
+}
+//add_filter( 'post_row_actions', 'popper_action_row', 10, 2 );
+
+/**
+ * Load assets
+ *
+ * @throws \Error The error.
+ */
+function popper_load_assets() {
+	$script_asset_path = plugin_dir_path( __FILE__ ) . 'build/table.asset.php';
+	if ( ! file_exists( $script_asset_path ) ) {
+		throw new \Error(
+			'You need to run `npm start` or `npm run build` for the "create-block/formello" block first.'
+		);
+	}
+
+	$script_asset = require $script_asset_path;
+
+	wp_register_script( 'popper-table', plugin_dir_url( __FILE__ ) . 'build/table.js', $script_asset['dependencies'], $script_asset['version'], 'all' );
+
+}
+//add_action( 'admin_init', 'popper_load_assets' );
+
+/**
+ * Include js on admin pages.
+ */
+function popper_table_js() {
+	$screen = get_current_screen();
+	if ( 'edit-popper' === $screen->id ) {
+		wp_enqueue_script( 'popper-table' );
+	}
+}
+//add_action( 'admin_enqueue_scripts', 'popper_table_js' );

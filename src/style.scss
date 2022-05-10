@@ -79,7 +79,7 @@
 }
 
 .wp-block-popper__overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -104,13 +104,14 @@
   right: 0;
   bottom: 0;
   position: absolute;
+  margin: 0 !important;
   width: 100% !important;
   max-width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  border-radius: 0;
+  border-radius: 0 !important;
   box-shadow: none;
   .wp-block-popper__close {
     position: absolute;
@@ -224,7 +225,7 @@
           width: 90%;
           max-width: 90%;
           min-width: 90%;
-          max-height: 85vh;
+          max-height: 90vh;
           &.wide {
             width: 100%;
             max-height: 100vh;

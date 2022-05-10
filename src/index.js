@@ -17,12 +17,6 @@ const { name, attributes, supports } = metadata;
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 registerBlockType( name, {
-	/**
-	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
-	 */
-	apiVersion: 2,
-
-	icon: 'external',
 
 	attributes,
 
