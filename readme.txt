@@ -3,7 +3,7 @@ Contributors:      Formello
 Tags:              popup, pop up, exit intent, popup maker, exit popup, popup builder, wordpress popup block
 Requires at least: 5.6.0
 Tested up to:      5.9.3
-Stable tag:        0.3.3
+Stable tag:        0.3.4
 Requires PHP:      5.6.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -35,6 +35,16 @@ Popper has a nice set of animation ready to use and you can also choose differen
 **DOCUMENTATION**
 
 Here you can find [documentation](https://docs.formello.net/addons/popper).
+
+== WHAT’S NEXT ==
+
+If you like this plugin, then consider checking out our other projects:
+
+* [Formello](https://wordpress.org/plugins/formello): a form builder to collect leads, newsletter signup, contact form and more.
+* [Popper](https://wordpress.org/plugins/popper): a popup builder to increase leads with exit intent.
+* [Mortgage Calculator](https://wordpress.org/plugins/mortgage): a mortgage calculator block for Gutenberg.
+* [Pdf Embed](https://wordpress.org/plugins/pdf-embed): a simple block for Gutenberg to embed a PDF using official Adobe Embed API.
+
 
 **CONTRIBUTE**
 
@@ -70,6 +80,9 @@ No. No external library is required. We mantain a clean fast code without depend
 6. Popper display settings
 
 == Changelog ==
+
+= 0.3.4 =
+* Added trigger on table
 
 = 0.3.3 =
 * Better animation handling

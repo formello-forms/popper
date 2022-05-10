@@ -35,9 +35,9 @@ export default function Rules( props ) {
 
 	return (
 		<FormTokenField
-			label={ __( 'Selected ', 'popper' ) + type }
 			value={ postsFieldValue }
 			suggestions={ postNames }
+			placeholder={ __( 'Type to choose an item', 'popper' ) }
 			onChange={ ( selectedObjects ) => {
 				// Build array of selected objects.
 				const selectedObjectsArray = [];

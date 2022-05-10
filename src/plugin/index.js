@@ -6,6 +6,7 @@ import { BaseControl, PanelRow, Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { RulesModal } from './modal';
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 const Component = () => {
 	const postType = useSelect(
@@ -17,6 +18,14 @@ const Component = () => {
 	if ( 'popper' !== postType ) {
 		return false;
 	}
+
+	const updateTransient = () => {
+		apiFetch( {
+			path: '/popper/v1/sync_template_library/',
+			method: 'POST',
+			data: {},
+		} );
+	};
 
 	const closeModal = () => setModalOpen( false );
 
@@ -54,6 +63,12 @@ const Component = () => {
 					</Button>
 				</>
 			) }
+				<Button
+					isPrimary
+					onClick={ updateTransient }
+				>
+					{ __( 'Sync template', 'popper' ) }
+				</Button>
 
 			{ isModalOpen && <RulesModal onRequestClose={ closeModal } /> }
 		</PluginDocumentSettingPanel>

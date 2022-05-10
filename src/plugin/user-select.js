@@ -15,9 +15,6 @@ export function UserSelect( props ) {
 	return (
 		<Flex align="start" justify="start">
 			<FlexItem>
-				<label className="components-form-token-field__label" htmlFor="select">
-					{ __( 'User', 'popper' ) }
-				</label>
 				<select
 					onChange={ ( val ) => {
 						props.onChange( undefined, val.target.value, index );

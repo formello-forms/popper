@@ -27,7 +27,7 @@ export function Select( props ) {
 	};
 
 	return (
-		<Flex align="start" justify="start">
+		<Flex align="start" justify="start" className="popper-modal-row">
 			<FlexItem>
 				<label className="components-form-token-field__label" htmlFor="select">
 					{ __( 'Where', 'popper' ) }
@@ -72,7 +72,6 @@ export function Select( props ) {
 				<Button
 					className="popper-modal-button"
 					icon="no"
-					isSmall
 					onClick={ () => {
 						onDelete( index );
 					} }

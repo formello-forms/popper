@@ -6,34 +6,43 @@ import {
 	TextControl,
 	RangeControl,
 } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
+import { useEntityProp } from '@wordpress/core-data';
 
 const OpenBehaviour = ( props ) => {
 	const { attributes, setAttributes } = props;
 	const { openBehaviour, anchor, waitTime, offset, target, pageviews } =
 		attributes;
 
-	const handleChangeOpenBehaviour = ( value ) => {
-		setAttributes( { openBehaviour: value } );
-	};
+    const postType = useSelect(
+        ( select ) => select( 'core/editor' ).getCurrentPostType(),
+        []
+    );
 
-	const updateAnchor = ( val ) => {
-		setAttributes( { anchor: val } );
-	};
+    const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
 
-	const updateTarget = ( val ) => {
-		setAttributes( { target: val } );
-	};
+    const metaFieldValue = meta[ 'popper_trigger' ];
 
-	const updateWaitTime = ( val ) => {
-		setAttributes( { waitTime: val } );
-	};
+    const updateTrigger = ( key, val ) => {
+		setAttributes( { [key]: val } );
+        setMeta( { 
+        	...meta,
+        	popper_trigger: { 
+        		...meta.popper_trigger,
+        		value: String(val)
+        	} 
+        } );
+    };
 
-	const updateScrollOffset = ( val ) => {
-		setAttributes( { offset: val } );
-	};
-
-	const updatePageViews = ( val ) => {
-		setAttributes( { pageviews: val } );
+	const handleChangeOpenBehaviour = ( val ) => {
+		setAttributes( { openBehaviour: val } );
+        setMeta( { 
+        	...meta,
+        	popper_trigger: { 
+        		...meta.popper_trigger,
+        		trigger: val
+        	} 
+        } );
 	};
 
 	const options = [
@@ -67,7 +76,7 @@ const OpenBehaviour = ( props ) => {
 								) }
 							</small>
 						}
-						onChange={ updateAnchor }
+						onChange={ (val) => updateTrigger( 'anchor', val ) }
 					/>
 				) }
 				{ openBehaviour === 'target' && (
@@ -82,7 +91,7 @@ const OpenBehaviour = ( props ) => {
 								) }
 							</small>
 						}
-						onChange={ updateTarget }
+						onChange={ (val) => updateTrigger( 'target', val ) }
 					/>
 				) }
 				{ openBehaviour === 'scroll' && (
@@ -97,7 +106,7 @@ const OpenBehaviour = ( props ) => {
 						}
 						beforeIcon="image-flip-vertical"
 						value={ offset }
-						onChange={ updateScrollOffset }
+						onChange={ (val) => updateTrigger( 'offset', val ) }
 						min={ 0 }
 						max={ 100 }
 					/>
@@ -114,7 +123,7 @@ const OpenBehaviour = ( props ) => {
 						}
 						beforeIcon="visibility"
 						value={ pageviews }
-						onChange={ updatePageViews }
+						onChange={ (val) => updateTrigger( 'pageviews', val ) }
 						min={ 0 }
 						max={ 100 }
 					/>
@@ -131,7 +140,7 @@ const OpenBehaviour = ( props ) => {
 						}
 						beforeIcon="clock"
 						value={ waitTime }
-						onChange={ updateWaitTime }
+						onChange={ (val) => updateTrigger( 'waitTime', val ) }
 						min={ 0 }
 						max={ 100 }
 					/>

@@ -8,6 +8,7 @@ import { useEntityProp } from '@wordpress/core-data';
 
 import { TabPanel, Button, Modal } from '@wordpress/components';
 import { Select } from './select';
+import { Tabs } from './tabs';
 import { UserSelect } from './user-select';
 
 export function RulesModal( props ) {
@@ -75,81 +76,21 @@ export function RulesModal( props ) {
 			title={ __( 'Rules', 'popper' ) }
 			onRequestClose={ updateMetaValue }
 			className={ 'popper-modal-rule' }
+			shouldCloseOnClickOutside={ false }
 		>
-			<TabPanel
-				onSelect={ onSelect }
-				tabs={ [
-					{
-						name: 'location',
-						title: <span>{ __( 'Location', 'popper' ) }</span>,
-						description: (
-							<p>
-								{ __(
-									'Choose where you want display this popup.',
-									'popper'
-								) }
-							</p>
-						),
-					},
-					{
-						name: 'exclude',
-						title: <span>{ __( 'Exclude', 'popper' ) }</span>,
-						description: (
-							<p>
-								{ __(
-									"Choose where you don't want display this popup.",
-									'popper'
-								) }
-							</p>
-						),
-					},
-					{
-						name: 'user',
-						title: <span>{ __( 'Users', 'popper' ) }</span>,
-						description: (
-							<p>
-								{ __(
-									'Choose which user will see this popup.',
-									'popper'
-								) }
-							</p>
-						),
-					},
-				] }
-			>
-				{ ( tabData ) => {
-					return (
-						<Fragment>
-							<h2>{ tabData.title }</h2>
-							{ tabData.description }
-							<Fragment>
-								{ rules[ activeTab ].map( ( r, i ) => {
-									const Component =
-										'user' === tabData.name
-											? UserSelect
-											: Select;
-									return (
-										<Component
-											onChange={ onChange }
-											onDelete={ onDelete }
-											rule={ r }
-											index={ i }
-											key={ i }
-										/>
-									);
-								} ) }
-							</Fragment>
-							<Button
-								isPrimary={ true }
-								onClick={ addRule }
-								className={ 'popper-modal-button' }
-							>
-								{ __( 'Add rule', 'popper' ) }
-							</Button>
-						</Fragment>
-					);
-				} }
-			</TabPanel>
+			<Tabs 
+				onDelete={ onDelete } 
+				onChange={ onChange } 
+				addRule={ addRule } 
+				rules={ rules } 
+				onSelect={ onSelect } 
+				activeTab={ activeTab }
+			/>
+			<div className={ 'popper-modal-buttons' }>
+			<Button isPrimary onClick={ updateMetaValue }>
+				{ __( 'Save', 'popper' ) }
+			</Button>
+			</div>
 		</Modal>
 	);
 }

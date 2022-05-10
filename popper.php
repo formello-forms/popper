@@ -3,7 +3,7 @@
  * Plugin Name: Popper
  * Plugin URI:  https://formello.net/
  * Description: Popup builder with exit-intent powered by Gutenberg.
- * Version:     0.3.3
+ * Version:     0.3.4
  * Author:      Formello
  * Author URI:  https://formello.net
  * License:     GPL-2.0-or-later
@@ -112,13 +112,29 @@ function popper_register() {
 		'popper_trigger',
 		array(
 			'single' => true,
-			'type' => 'string',
-			'default' => '',
-			'show_in_rest'  => true,
+			'type' => 'object',
+			'default' => array(
+				'trigger' => '',
+				'value' => '',
+			),
+			'show_in_rest' => array(
+				'schema' => array(
+					'type'       => 'object',
+					'properties' => array(
+						'trigger' => array(
+							'type' => 'string',
+						),
+						'value' => array(
+							'type' => 'string',
+						),
+					),
+				),
+			),
 			'object_subtype' => 'popper',
 		)
 	);
 }
+
 add_action( 'init', 'popper_register' );
 
 /**
@@ -128,6 +144,11 @@ function popper_positions() {
 	$positions = Popper_Conditions::get_conditions();
 	$users = Popper_Conditions::get_user_conditions();
 
+	$screen = get_current_screen();
+	if ( 'edit-popper' === $screen->id ) {
+		wp_enqueue_script( 'popper-table' );
+	}
+
 	wp_localize_script(
 		'wp-block-directory',
 		'popper',
@@ -135,6 +156,15 @@ function popper_positions() {
 			'positions' => $positions,
 			'users' => $users,
 			'installLink' => wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=formello' ), 'install-plugin_popper' ),
+		)
+	);
+
+	wp_localize_script(
+		'popper-table',
+		'popper',
+		array(
+			'positions' => $positions,
+			'users' => $users,
 		)
 	);
 
@@ -155,6 +185,7 @@ function popper_columns_table( $columns ) {
 
 	$columns['display'] = __( 'Display Rules', 'popper' );
 	$columns['visibility'] = __( 'Visibility', 'popper' );
+	$columns['trigger'] = __( 'Trigger', 'popper' );
 
 	unset( $columns['author'] );
 	unset( $columns['date'] );
@@ -188,19 +219,38 @@ function popper_columns_display( $column, $post_id ) {
 				array_push( $exclude, Popper_Conditions::get_saved_label( $value ) );
 			}
 
-			$title = sprintf(
-				'<b>%s</b> %s <br><b>%s</b> %s',
+			$show = implode( ', ', $locations );
+			$exclude = implode( ', ', $exclude );
+
+			echo sprintf(
+				'<b>%s</b> %s',
+				// phpcs:ignore.
 				__( 'Show on:', 'formello' ),
-				implode( '<br> ', $locations ),
-				__( 'Exclude on:', 'formello' ),
-				implode( '<br> ', $exclude )
+				esc_attr( $show ),
 			);
-			echo wp_kses_post( $title );
+
+			if ( $exclude ) {
+				echo sprintf(
+					'<br /><b>%s</b>: %s',
+					// phpcs:ignore.
+					__( 'Exclude on', 'formello' ),
+					esc_attr( $exclude ),
+				);
+			}
 			break;
 
 		case 'visibility':
 			$popup = get_post_meta( $post_id, 'popper_rules', true );
-			echo wp_kses_post( Popper_Conditions::get_user_label( $popup['user'] ) );
+			echo esc_attr( rtrim( Popper_Conditions::get_user_label( $popup['user'] ), ',' ) );
+			break;
+
+		case 'trigger':
+			$trigger = get_post_meta( $post_id, 'popper_trigger', true );
+			echo sprintf(
+				'<b>%s</b>: %s',
+				esc_attr( ucfirst( $trigger['trigger'] ) ),
+				esc_attr( $trigger['value'] ),
+			);
 			break;
 
 	}
@@ -249,13 +299,3 @@ function popper_load_assets() {
 }
 //add_action( 'admin_init', 'popper_load_assets' );
 
-/**
- * Include js on admin pages.
- */
-function popper_table_js() {
-	$screen = get_current_screen();
-	if ( 'edit-popper' === $screen->id ) {
-		wp_enqueue_script( 'popper-table' );
-	}
-}
-//add_action( 'admin_enqueue_scripts', 'popper_table_js' );
