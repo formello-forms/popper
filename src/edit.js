@@ -136,7 +136,7 @@ function Edit( props ) {
 
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
 		templateLock: false,
-		renderAppender: hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : null
+		renderAppender: hasInnerBlocks ? undefined : InnerBlocks.ButtonBlockAppender,
 	} );
 
 	const closeButton = (

@@ -20,6 +20,9 @@ const variations = [
 				/>
 			</SVG>
 		),
+		attributes: {
+			backgroundColor: '#ffffff',
+		},
 		innerBlocks: [ [ 'core/heading', { content: 'My modal' } ] ],
 		scope: [ 'block' ],
 	},
@@ -32,6 +35,9 @@ const variations = [
 				<Path d="M3 18h8V6H3v12zM14 7.5V9h7V7.5h-7zm0 5.3h7v-1.5h-7v1.5zm0 3.7h7V15h-7v1.5z" />
 			</SVG>
 		),
+		attributes: {
+			backgroundColor: '#ffffff',
+		},
 		innerBlocks: [
 			[
 				'core/media-text',
@@ -88,6 +94,9 @@ const variations = [
 				<Path d="M19 6.5H5c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7c0-1.1-.9-2-2-2zm.5 9c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5v-7c0-.3.2-.5.5-.5h14c.3 0 .5.2.5.5v7zM8 12.8h8v-1.5H8v1.5z" />
 			</SVG>
 		),
+		attributes: {
+			backgroundColor: '#ffffff',
+		},
 		innerBlocks: [
 			[
 				'core/group',

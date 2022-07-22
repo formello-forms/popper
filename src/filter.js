@@ -16,44 +16,47 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 			return <BlockEdit { ...props } />;
 		}
 
-		const opts = [ { value: null, label: __( 'Select a popup', 'popper' ) } ];
+		const opts = [ { value: '', label: __( 'Select a popup', 'popper' ) } ];
+
+		const { postType } = useSelect( ( select ) => ( {
+			postType: select( 'core/editor' ).getCurrentPostType(),
+		} ) );
+
+		const { popups } = useSelect( ( select ) => ( {
+			popups: select( 'core' ).getEntityRecords( 'postType', 'popper', {
+					per_page: -1,
+				} )
+		} ) );
 
 		const findById = ( val ) => {
-			return popups.find( ( element ) => {
-				return element.ID === val;
-			} );
+			return popups.find( x => x.id === Number(val) )
 		};
 
 		const setAnchor = ( val ) => {
-			let elm = findById( val );
-			if ( ! elm ) {
-				return;
-			}
-			elm = parse( elm.post_content );
-			const attrs = elm[ 0 ].attrs;
-			if ( 'anchor' === attrs.openBehaviour ) {
-				setAttributes( { anchor: attrs.anchor } );
+			if( val ){
+				const popup = findById( val );
+				setAttributes( { anchor: popup.meta.popper_trigger.value } );
+			}else{
+				setAttributes( { anchor: val } )
 			}
 		};
 
 		const addRule = ( val ) => {
-			const post = new api.models.Popper( { id: val } );
+			const popup = findById( val );
+			console.log( popup.meta.popper_rules.location )
+			/*const post = new api.models.Popper( { id: val } );
 			post.fetch().done( ( data ) => {
 				post.setMeta( 'popper_rules', 'newValue' );
 
 				post.save( { id: val } );
-			} );
+			} );*/
 		};
 
-		const popups = useSelect( ( select ) => {
-			return select( 'core' ).getEntityRecords( 'postType', 'popper', {
-				per_page: -1,
-			} );
-		} );
-
-		if ( popups !== null ) {
+		if ( null !== popups && popups.length ) {
 			popups.forEach( ( post ) => {
-				opts.push( { value: post.id, label: post.title.raw } );
+				if( 'anchor' === post.meta.popper_trigger.trigger || 'target' === post.meta.popper_trigger.trigger ) {
+					opts.push( { value: post.id, label: post.title.raw + ' (' + post.meta.popper_trigger.trigger + ')' || __( 'No title', 'popper' ) } );
+				}
 			} );
 		}
 
@@ -71,7 +74,7 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 							value={ popper }
 							options={ opts }
 							onChange={ ( val ) => {
-								setAttributes( { popper: val } );
+								setAttributes( { popper: val.id } );
 								setAnchor( val );
 								addRule( val );
 							} }

@@ -3,7 +3,8 @@
  * Plugin Name: Popper
  * Plugin URI:  https://formello.net/
  * Description: Popup builder with exit-intent powered by Gutenberg.
- * Version:     0.3.4
+ * Version:     0.3.5
+ * Requires Plugins: formello
  * Author:      Formello
  * Author URI:  https://formello.net
  * License:     GPL-2.0-or-later
@@ -64,7 +65,12 @@ function popper_register() {
 		'menu_icon'           => 'dashicons-external',
 		'capability_type'     => 'post',
 		'template'            => array(
-			array( 'formello/popper' ),
+			array(
+				'formello/popper',
+				array(
+					'cpt' => true,
+				),
+			),
 		),
 		'template_lock'       => 'insert',
 		'supports'            => array(
@@ -181,8 +187,6 @@ add_filter( 'manage_popper_posts_columns', 'popper_columns_table' );
  */
 function popper_columns_table( $columns ) {
 
-	$inserted = array();
-
 	$columns['display'] = __( 'Display Rules', 'popper' );
 	$columns['visibility'] = __( 'Visibility', 'popper' );
 	$columns['trigger'] = __( 'Trigger', 'popper' );
@@ -246,6 +250,9 @@ function popper_columns_display( $column, $post_id ) {
 
 		case 'trigger':
 			$trigger = get_post_meta( $post_id, 'popper_trigger', true );
+			if ( ! $trigger['value'] ) {
+				break;
+			}
 			echo sprintf(
 				'<b>%s</b>: %s',
 				esc_attr( ucfirst( $trigger['trigger'] ) ),
