@@ -13,7 +13,7 @@ export function UserSelect( props ) {
 	}, [] );
 
 	return (
-		<Flex align="start" justify="start">
+		<Flex align="start" justify="start" className="popper-modal-row">
 			<FlexItem>
 				<select
 					onChange={ ( val ) => {
@@ -42,6 +42,7 @@ export function UserSelect( props ) {
 				<Button
 					className="popper-modal-button"
 					icon="no"
+					isSmall
 					onClick={ () => {
 						onDelete( index );
 					} }

@@ -4,8 +4,8 @@ import { __ } from '@wordpress/i18n';
 const variations = [
 	{
 		name: 'simple',
-		title: __( 'Basic' ),
-		description: __( 'Basic popup' ),
+		title: __( 'Blank' ),
+		description: __( 'Blank popup' ),
 		icon: (
 			<SVG
 				width="48"
@@ -23,7 +23,7 @@ const variations = [
 		attributes: {
 			backgroundColor: '#ffffff',
 		},
-		innerBlocks: [ [ 'core/heading', { content: 'My modal' } ] ],
+		innerBlocks: [ [ 'core/paragraph' ] ],
 		scope: [ 'block' ],
 	},
 	{

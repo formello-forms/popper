@@ -32,6 +32,7 @@ const Component = () => {
 	const formelloInstalled = getBlockTypes().filter( ( block ) => {
 		return block.name.indexOf( 'formello/form' ) !== -1;
 	} );
+
 	return (
 		<PluginDocumentSettingPanel
 			title={ __( 'Display Rules', 'popper' ) }
@@ -49,6 +50,14 @@ const Component = () => {
 					{ __( 'Conditions', 'popper' ) }
 				</Button>
 			</BaseControl>
+			
+			<Button
+				isPrimary
+				onClick={ updateTransient }
+			>
+				{ __( 'Sync template', 'popper' ) }
+			</Button>
+
 			{ ! formelloInstalled.length && (
 				<>
 					<PanelRow>
@@ -63,12 +72,6 @@ const Component = () => {
 					</Button>
 				</>
 			) }
-				<Button
-					isPrimary
-					onClick={ updateTransient }
-				>
-					{ __( 'Sync template', 'popper' ) }
-				</Button>
 
 			{ isModalOpen && <RulesModal onRequestClose={ closeModal } /> }
 		</PluginDocumentSettingPanel>

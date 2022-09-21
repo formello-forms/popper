@@ -13,9 +13,12 @@ class Popup {
 			return false;
 		}
 		this.isMobile = window.matchMedia(
-			'only screen and (max-width: 760px)'
+			'only screen and (max-width: 767px)'
 		).matches;
-		this.init();
+		this.isTablet = window.matchMedia(
+			'(min-width:768px) and (max-width: 992px)'
+		).matches;
+		this.checkDevice();
 	}
 
 	init() {
@@ -40,7 +43,7 @@ class Popup {
 	}
 
 	closeModal() {
-		//document.body.style.overflow = 'auto';
+		document.body.style.overflow = 'auto';
 		this.element.classList.remove( 'wp-block-popper-is-open' );
 		const frames = document.getElementsByTagName( 'iframe' );
 		for ( const item of frames ) {
@@ -95,6 +98,23 @@ class Popup {
 		localStorage.setItem( this.storageKey, JSON.stringify( newCache ) );
 
 		return false;
+	}
+
+	checkDevice() {
+		const { devices } = this.element.dataset;
+		if( !devices )
+			return;
+
+		const devicesArr = JSON.parse( devices )
+		if( devicesArr.includes( 'desktop' ) && !this.isMobile && !this.isTablet ){
+			this.init();
+		}
+		if( devicesArr.includes( 'tablet' ) && this.isTablet ){
+			this.init();
+		}
+		if( devicesArr.includes( 'mobile' ) && this.isMobile ){
+			this.init();
+		}
 	}
 
 	bindOpen() {

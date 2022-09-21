@@ -9,6 +9,7 @@
 	"supports": {
 		"html": false,
 		"multiple": false,
+		"lock": false,
 		"className": false,
 		"reusable": false,
 		"spacing": {
@@ -133,6 +134,9 @@
 	    "uuid": {
 	      "type": "number",
 	      "default": null
+	    },
+	    "devices": {
+	    	"type": "array"
 	    }
 	},
 	"editorScript": "file:./build/index.js",

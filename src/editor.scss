@@ -9,6 +9,7 @@
   height: 100vh;
   &.popper-placeholder {
     max-width: 650px;
+    height: auto;
   }
 }
 
@@ -67,6 +68,10 @@
     display: none;
   }
   margin-bottom: 1em;
+  align-items: center !important;
+  .components-form-token-field__input-container{
+    margin: 0;
+  }
 }
 
 .popper-modal-buttons {

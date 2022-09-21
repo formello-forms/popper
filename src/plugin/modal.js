@@ -12,7 +12,7 @@ import { Tabs } from './tabs';
 import { UserSelect } from './user-select';
 
 export function RulesModal( props ) {
-	const { onRequestClose } = props;
+	const { onRequestClose, setAttributes } = props;
 
 	const postType = useSelect(
 		( select ) => select( 'core/editor' ).getCurrentPostType(),
@@ -29,7 +29,7 @@ export function RulesModal( props ) {
 
 	const addRule = () => {
 		let joined;
-		if ( 'user' === activeTab ) {
+		if ( 'user' === activeTab || 'device' === activeTab ) {
 			joined = rules[ activeTab ].concat( '' );
 		} else {
 			joined = rules[ activeTab ].concat( { rule: '', object: [] } );
@@ -52,7 +52,18 @@ export function RulesModal( props ) {
 		items[ index ] = item;
 		// 5. Set the state to our new copy
 		setRules( { ...rules, [ activeTab ]: items } );
-		setMeta( { ...meta, popper_rules: rules } );
+		onChangeDevice( items )
+	};
+
+	const onChangeDevice = ( items ) => {
+
+		var result = items.filter(obj => {
+		  return obj.visibility === true
+		}).map( (obj) => {
+			return obj.device;
+		});
+		setAttributes( { devices: result } )
+
 	};
 
 	const updateMetaValue = () => {
@@ -68,28 +79,28 @@ export function RulesModal( props ) {
 		const items = [ ...rules[ activeTab ] ];
 		items.splice( index, 1 );
 		setRules( { ...rules, [ activeTab ]: items } );
-		setMeta( { ...meta, popper_rules: rules } );
 	};
 
 	return (
 		<Modal
 			title={ __( 'Rules', 'popper' ) }
-			onRequestClose={ updateMetaValue }
+			onRequestClose={ onRequestClose }
 			className={ 'popper-modal-rule' }
 			shouldCloseOnClickOutside={ false }
 		>
 			<Tabs 
 				onDelete={ onDelete } 
 				onChange={ onChange } 
+				onChangeDevice={ onChangeDevice } 
 				addRule={ addRule } 
 				rules={ rules } 
 				onSelect={ onSelect } 
 				activeTab={ activeTab }
 			/>
 			<div className={ 'popper-modal-buttons' }>
-			<Button isPrimary onClick={ updateMetaValue }>
-				{ __( 'Save', 'popper' ) }
-			</Button>
+				<Button isPrimary onClick={ updateMetaValue }>
+					{ __( 'Save', 'popper' ) }
+				</Button>
 			</div>
 		</Modal>
 	);

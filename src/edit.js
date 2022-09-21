@@ -28,7 +28,7 @@ import Controls from './settings/controls';
 import classnames from 'classnames';
 
 function Edit( props ) {
-	const { attributes, setAttributes, clientId } = props;
+	const { attributes, setAttributes, clientId, hasInnerBlocks } = props;
 
 	const {
 		width,
@@ -50,17 +50,6 @@ function Edit( props ) {
 
 	const postId = useSelect( ( select ) =>
 		select( 'core/editor' ).getCurrentPostId()
-	);
-
-	const { hasInnerBlocks } = useSelect(
-		( select ) => {
-			const { getBlock } = select( blockEditorStore );
-			const block = getBlock( clientId );
-			return {
-				hasInnerBlocks: !! ( block && block.innerBlocks.length ),
-			};
-		},
-		[ clientId ]
 	);
 
 	const [ isModalOpen, setModalOpen ] = useState( false );
@@ -87,6 +76,10 @@ function Edit( props ) {
 
 	const overlayStyle = {
 		backgroundColor: overlayColor,
+	};
+
+	const contentStyle = {
+		borderRadius,
 	};
 
 	if ( overlayColor && ! align.includes( 'center' ) ) {
@@ -136,7 +129,7 @@ function Edit( props ) {
 
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
 		templateLock: false,
-		renderAppender: hasInnerBlocks ? undefined : InnerBlocks.ButtonBlockAppender,
+		renderAppender: hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : null,
 	} );
 
 	const closeButton = (
@@ -180,14 +173,12 @@ function Edit( props ) {
 				/>
 			</BlockControls>
 			<div {...innerBlocksProps}>
-				<Fragment>
-					{ showCloseButton &&
-						'edge' !== closeButtonAlignment &&
-						closeButton }
-					<main className="wp-block-popper__content">
-						{ children }
-					</main>
-				</Fragment>
+				{ showCloseButton &&
+					'edge' !== closeButtonAlignment &&
+					closeButton }
+
+				{ children }
+
 			</div>
 			{ 'templates' === isModalOpen && (
 				<TemplatesModal
@@ -197,7 +188,7 @@ function Edit( props ) {
 				/>
 			) }
 			{ 'options' === isModalOpen && (
-				<RulesModal onRequestClose={ closeModal } />
+				<RulesModal onRequestClose={ closeModal } { ...props } />
 			) }
 		</div>
 	);

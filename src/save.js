@@ -28,10 +28,16 @@ export default function save( { attributes, className } ) {
 		align,
 		fullPage,
 		uuid,
+		devices
 	} = attributes;
 
 	const modalStyle = {
 		width,
+		borderRadius,
+		backgroundColor,
+	};
+
+	const contentStyle = {
 		borderRadius,
 		backgroundColor,
 	};
@@ -84,6 +90,7 @@ export default function save( { attributes, className } ) {
 			data-outside={ closeOnClickOutside }
 			data-form={ closeOnFormSubmission }
 			data-created={ uuid }
+			data-devices={ JSON.stringify( devices ) }
 			id={ 'modal-' + uuid }
 			aria-hidden="true"
 			className={ popperClass }

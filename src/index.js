@@ -22,6 +22,8 @@ registerBlockType( name, {
 
 	variations,
 
+	deprecated,
+	
 	supports,
 
 	/**
@@ -34,5 +36,4 @@ registerBlockType( name, {
 	 */
 	save,
 
-	deprecated,
 } );

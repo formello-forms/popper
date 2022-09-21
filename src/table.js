@@ -5,14 +5,14 @@ import { getQueryArg } from '@wordpress/url';
 import api from '@wordpress/api';
 import { Tabs } from './plugin/tabs';
 
-const Exporter = () => {
+const Exporter = (props) => {
     const [ isOpen, setOpen ] = useState( false );
     const [ id, setId ] = useState( false );
-    const openModal = () => setOpen( true );
+    const openModal = (e) => console.log( e );
     const closeModal = () => setOpen( false );
 
+		console.log(props)
 	const updateMetaValue = () => {
-		console.log(88)
 	}
 
 	const onSelect = () => {
@@ -34,20 +34,13 @@ const Exporter = () => {
 					onRequestClose={ updateMetaValue }
 					className={ 'popper-modal-rule' }
 				>
-					<Tabs 
-						onDelete={ onDelete } 
-						onChange={ onChange } 
-						addRule={ addRule } 
-						rules={ rules } 
-						onSelect={ onSelect } 
-						activeTab={ activeTab }
-					/>
+					Stocazz
 				</Modal>
             ) }
         </Fragment>
     );
 }
 
-window.addEventListener( 'DOMContentLoaded', () => {
-	render( <Exporter />, document.getElementById( 'popper-table' ) );
+window.addEventListener( 'DOMContentLoaded', (e) => {
+	render( <Exporter stocazzo="345dfr" />, document.getElementById( 'popper-table' ) );
 } );

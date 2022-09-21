@@ -3,7 +3,7 @@
  * Plugin Name: Popper
  * Plugin URI:  https://formello.net/
  * Description: Popup builder with exit-intent powered by Gutenberg.
- * Version:     0.3.6
+ * Version:     0.3.7
  * Requires Plugins: formello
  * Author:      Formello
  * Author URI:  https://formello.net
@@ -67,9 +67,6 @@ function popper_register() {
 		'template'            => array(
 			array(
 				'formello/popper',
-				array(
-					'cpt' => true,
-				),
 			),
 		),
 		'template_lock'       => 'insert',
@@ -77,6 +74,7 @@ function popper_register() {
 			'title',
 			'editor',
 			'custom-fields',
+			'revisions',
 			'author',
 		),
 	);
@@ -92,6 +90,20 @@ function popper_register() {
 				'location' => array(),
 				'exclude' => array(),
 				'user' => array(),
+				'device' => array(
+					array(
+						'device' => 'desktop',
+						'visibility' => false,
+					),
+					array(
+						'device' => 'tablet',
+						'visibility' => false,
+					),
+					array(
+						'device' => 'mobile',
+						'visibility' => false,
+					),
+				),
 			),
 			'show_in_rest'  => array(
 				'schema' => array(
@@ -104,6 +116,9 @@ function popper_register() {
 							'type' => 'array',
 						),
 						'user'    => array(
+							'type' => 'array',
+						),
+						'device'    => array(
 							'type' => 'array',
 						),
 					),
@@ -187,9 +202,10 @@ add_filter( 'manage_popper_posts_columns', 'popper_columns_table' );
  */
 function popper_columns_table( $columns ) {
 
-	$columns['display'] = __( 'Display Rules', 'popper' );
-	$columns['visibility'] = __( 'Visibility', 'popper' );
+	$columns['location'] = __( 'Locations', 'popper' );
+	$columns['users'] = __( 'Users', 'popper' );
 	$columns['trigger'] = __( 'Trigger', 'popper' );
+	$columns['device'] = __( 'Devices', 'popper' );
 
 	unset( $columns['author'] );
 	unset( $columns['date'] );
@@ -210,7 +226,7 @@ add_action( 'manage_popper_posts_custom_column', 'popper_columns_display', 10, 2
 function popper_columns_display( $column, $post_id ) {
 	switch ( $column ) {
 
-		case 'display':
+		case 'location':
 			$popup = get_post_meta( $post_id, 'popper_rules', true );
 
 			$locations = array();
@@ -226,12 +242,14 @@ function popper_columns_display( $column, $post_id ) {
 			$show = implode( ', ', $locations );
 			$exclude = implode( ', ', $exclude );
 
-			echo sprintf(
-				'<b>%s</b> %s',
-				// phpcs:ignore.
-				__( 'Show on:', 'formello' ),
-				esc_attr( $show ),
-			);
+			if ( $show ) {
+				echo sprintf(
+					'<b>%s</b> %s',
+					// phpcs:ignore.
+					__( 'Show on:', 'formello' ),
+					esc_attr( $show ),
+				);
+			}
 
 			if ( $exclude ) {
 				echo sprintf(
@@ -243,21 +261,39 @@ function popper_columns_display( $column, $post_id ) {
 			}
 			break;
 
-		case 'visibility':
+		case 'users':
 			$popup = get_post_meta( $post_id, 'popper_rules', true );
-			echo esc_attr( rtrim( Popper_Conditions::get_user_label( $popup['user'] ), ',' ) );
+			echo esc_attr( rtrim( Popper_Conditions::get_user_label( $popup['user'] ), ', ' ) );
+			break;
+
+		case 'device':
+			$popup = get_post_meta( $post_id, 'popper_rules', true );
+			$active = array_filter(
+				$popup['device'],
+				function ( $var ) {
+					return ( true === $var['visibility'] );
+				}
+			);
+			$devices = array_column( $active, 'device' );
+			echo esc_attr( implode( ', ', $devices ) );
 			break;
 
 		case 'trigger':
 			$trigger = get_post_meta( $post_id, 'popper_trigger', true );
-			if ( ! $trigger['value'] ) {
+			if ( ! $trigger['trigger'] ) {
 				break;
 			}
 			echo sprintf(
-				'<b>%s</b>: %s',
+				'<b>%s</b>',
 				esc_attr( ucfirst( $trigger['trigger'] ) ),
-				esc_attr( $trigger['value'] ),
 			);
+			if ( $trigger['value'] ) {
+				echo sprintf(
+					': %s',
+					esc_attr( $trigger['value'] ),
+				);
+			}
+
 			break;
 
 	}

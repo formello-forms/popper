@@ -3,12 +3,13 @@ import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import { TabPanel, Button } from '@wordpress/components';
-import { Select } from './select';
+import { MySelect } from './select';
 import { UserSelect } from './user-select';
+import { Devices } from './devices';
 
 export function Tabs( props ) {
 
-	const { onDelete, onChange, addRule, rules, onSelect, activeTab } = props;
+	const { onDelete, onChange, onChangeDevice, addRule, rules, onSelect, activeTab } = props;
 
 	return (
 		<TabPanel
@@ -16,6 +17,7 @@ export function Tabs( props ) {
 			tabs={ [
 				{
 					name: 'location',
+					component: MySelect,
 					title: <span>{ __( 'Location', 'popper' ) }</span>,
 					description: (
 						<p>
@@ -28,6 +30,7 @@ export function Tabs( props ) {
 				},
 				{
 					name: 'exclude',
+					component: MySelect,
 					title: <span>{ __( 'Exclude', 'popper' ) }</span>,
 					description: (
 						<p>
@@ -40,11 +43,25 @@ export function Tabs( props ) {
 				},
 				{
 					name: 'user',
+					component: UserSelect,
 					title: <span>{ __( 'Users', 'popper' ) }</span>,
 					description: (
 						<p>
 							{ __(
 								'Choose which user will see this popup.',
+								'popper'
+							) }
+						</p>
+					),
+				},
+				{
+					name: 'device',
+					component: Devices,
+					title: <span>{ __( 'Devices', 'popper' ) }</span>,
+					description: (
+						<p>
+							{ __(
+								'Choose which device will see this popup.',
 								'popper'
 							) }
 						</p>
@@ -59,13 +76,11 @@ export function Tabs( props ) {
 						{ tabData.description }
 						<Fragment>
 							{ rules[ activeTab ].map( ( r, i ) => {
-								const Component =
-									'user' === tabData.name
-										? UserSelect
-										: Select;
+								const Component = tabData.component
 								return (
 									<Component
 										onChange={ onChange }
+										onChangeDevice={ onChangeDevice }
 										onDelete={ onDelete }
 										rule={ r }
 										index={ i }
@@ -74,13 +89,16 @@ export function Tabs( props ) {
 								);
 							} ) }
 						</Fragment>
-						<Button
-							isPrimary={ true }
-							onClick={ addRule }
-							className={ 'popper-modal-button' }
-						>
-							{ __( 'Add rule', 'popper' ) }
-						</Button>
+						{
+							'device' !== activeTab &&
+							<Button
+								isPrimary={ true }
+								onClick={ addRule }
+								className={ 'popper-modal-button' }
+							>
+								{ __( 'Add rule', 'popper' ) }
+							</Button>
+						}
 					</Fragment>
 				);
 			} }

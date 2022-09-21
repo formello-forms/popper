@@ -18,7 +18,8 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 
 		const opts = [ { value: '', label: __( 'Select a popup', 'popper' ) } ];
 
-		const { postType } = useSelect( ( select ) => ( {
+		const { postType, postId } = useSelect( ( select ) => ( {
+			postId: select( 'core/editor' ).getCurrentPostId(),
 			postType: select( 'core/editor' ).getCurrentPostType(),
 		} ) );
 
@@ -42,14 +43,28 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 		};
 
 		const addRule = ( val ) => {
+			if( !val ){
+				return
+			}
 			const popup = findById( val );
-			console.log( popup.meta.popper_rules.location )
-			/*const post = new api.models.Popper( { id: val } );
-			post.fetch().done( ( data ) => {
-				post.setMeta( 'popper_rules', 'newValue' );
 
+			const rule = {
+				rule: 'post:' + postType,
+				object: [postId]
+			}
+
+			const ruleExists  = popup.meta.popper_rules.location.find(x => x.rule === rule.rule && x.object.includes(postId) )
+
+			if( ruleExists ){
+				return
+			}
+
+			popup.meta.popper_rules.location.push( rule )
+			const post = new api.models.Popper( { id: val } );
+			post.fetch().done( ( data ) => {
+				post.setMeta( 'popper_rules', popup.meta.popper_rules );
 				post.save( { id: val } );
-			} );*/
+			} );
 		};
 
 		if ( null !== popups && popups.length ) {
@@ -74,7 +89,7 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 							value={ popper }
 							options={ opts }
 							onChange={ ( val ) => {
-								setAttributes( { popper: val.id } );
+								setAttributes( { popper: val } );
 								setAnchor( val );
 								addRule( val );
 							} }

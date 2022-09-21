@@ -52,6 +52,7 @@ export default function Rules( props ) {
 				onChange( 'object', selectedObjectsArray, index );
 			} }
 			maxSuggestions={ 5 }
+			__experimentalShowHowTo={ false }
 		/>
 	);
 }

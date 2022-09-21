@@ -6,7 +6,7 @@ import { Button, Flex, FlexItem } from '@wordpress/components';
 
 import Rules from './conditions';
 
-export function Select( props ) {
+export function MySelect( props ) {
 	const [ options, setOptions ] = useState( [] );
 	const supported = [ 'post', 'taxonomy' ];
 	const { index, onDelete, rule } = props;
@@ -72,6 +72,7 @@ export function Select( props ) {
 				<Button
 					className="popper-modal-button"
 					icon="no"
+					isSmall
 					onClick={ () => {
 						onDelete( index );
 					} }
