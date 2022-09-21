@@ -19,7 +19,6 @@ export function Devices( props ) {
 		            label={ rule.device }
 		            checked={ rule.visibility }
 					onChange={ ( val ) => {
-						//onChangeDevice( 'visibility', val, rule.device );
 						onChange( 'visibility', val, index );
 					} }
 		        />

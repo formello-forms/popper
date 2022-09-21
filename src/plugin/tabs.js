@@ -11,6 +11,23 @@ export function Tabs( props ) {
 
 	const { onDelete, onChange, onChangeDevice, addRule, rules, onSelect, activeTab } = props;
 
+	if( !rules['device'] ){
+		rules['device'] = [
+			{
+				device: 'desktop',
+				visibility: false
+			},
+			{
+				device: 'tablet',
+				visibility: false
+			},
+			{
+				device: 'mobile',
+				visibility: false
+			},
+		]
+	}
+
 	return (
 		<TabPanel
 			onSelect={ onSelect }
