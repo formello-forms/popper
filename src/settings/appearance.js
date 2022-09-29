@@ -8,10 +8,18 @@ const Appearance = ( props ) => {
 		width,
 		backgroundColor,
 		closeButtonColor,
-		borderRadius,
 		overlayColor,
 		animation,
+		closeButtonBgColor,
+		closeButtonStyle
 	} = attributes;
+
+	const changeButtonColor = ( property, color ) => {
+		setAttributes( { closeButtonStyle: {
+			...closeButtonStyle,
+			[property]: color
+		} } )
+	}
 
 	return (
 		<>
@@ -33,10 +41,14 @@ const Appearance = ( props ) => {
 						enableAlpha: true,
 					},
 					{
-						value: closeButtonColor,
-						onChange: ( color ) =>
-							setAttributes( { closeButtonColor: color } ),
-						label: __( 'Close Button Color', 'popper' ),
+						value: closeButtonStyle?.backgroundColor,
+						onChange: ( color ) => changeButtonColor( 'backgroundColor', color ),
+						label: __( 'Button Background Color', 'popper' ),
+					},
+					{
+						value: closeButtonStyle?.color,
+						onChange: ( color ) => changeButtonColor( 'color', color ),
+						label: __( 'Button Text Color', 'popper' ),
 					},
 				] }
 			/>
@@ -44,16 +56,6 @@ const Appearance = ( props ) => {
 				title={ __( 'Modal Appearance', 'popper' ) }
 				initialOpen={ false }
 			>
-				<RangeControl
-					value={ borderRadius }
-					label={ __( 'Popup Border Radius', 'popper' ) }
-					onChange={ ( val ) => {
-						setAttributes( { borderRadius: val } );
-					} }
-					allowReset
-					min={ 0 }
-					max={ 100 }
-				/>
 				<RangeControl
 					value={ width }
 					label={ __( 'Popup Min Width', 'popper' ) }

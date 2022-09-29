@@ -31,113 +31,112 @@
 	},
 	"attributes": {
 		"lock": {
-		  "type": "object",
-		  "default": {
-			"move": true,
-			"remove": true
-		  }
+			"type": "object",
+			"default": {
+				"move": true,
+				"remove": true
+			}
 		},
-	    "align": {
-		  "type": "string",
-	      "default": "center center"
-	    },
-	    "fullPage": {
-	      "type": "boolean",
-	      "default": false
-	    },
-	    "width": {
-	      "type": "number",
-	      "default": 500
-	    },
-	    "waitTime": {
-	      "type": "number",
-	      "default": 1
-	    },
-	    "offset": {
-	      "type": "number",
-	      "default": 20
-	    },
-	    "openBehaviour": {
-	      "type": "string",
-	      "default": "load"
-	    },
-	    "showCloseButton": {
-	      "type": "boolean",
-	      "default": true
-	    },
-	    "closeButtonAlignment": {
-	      "type": "string",
-	      "default": "inside"
-	    },
-	    "closeButtonSize": {
-	      "type": "number",
-	      "default": 20
-	    },
-	    "animation": {
-	      "type": "string"
-	    },
-	    "borderRadius": {
-	      "type": "number",
-	      "default": 4
-	    },
-	    "boxShadow": {
-	      "type": "string",
-	      "default": "wp-block-popper__shadow-md"
-	    },
-	    "closeOnClickOutside": {
-	      "type": "boolean",
-	      "default": true
-	    },
-	    "closeOnAnchorClick": {
-	      "type": "boolean",
-	      "default": false
-	    },
-	    "closeOnFormSubmission": {
-	      "type": "boolean",
-	      "default": false
-	    },
-	    "closeAnchor": {
-	      "type": "string"
-	    },
-	    "anchor": {
-	      "type": "string",
-	      "default": ""
-	    },
-	    "target": {
-	      "type": "string",
-	      "default": ""
-	    },
-	    "backgroundColor": {
-	      "type": "string"
-	    },
-	    "closeButtonColor": {
-	      "type": "string"
-	    },
-	    "overlayColor": {
-	      "type": "string"
-	    },
-	    "gradientBackground": {
-	      "type": "string"
-	    },
-	    "dismissForVisitors": {
-	      "type": "boolean",
-	      "default": true
-	    },
-	    "dismissPeriod": {
-	      "type": "number",
-	      "default": 1
-	    },
-	    "pageviews": {
-	      "type": "number",
-	      "default": 3
-	    },
-	    "uuid": {
-	      "type": "number",
-	      "default": null
-	    },
-	    "devices": {
-	    	"type": "array"
-	    }
+		"align": {
+			"type": "string",
+			"default": "center center"
+		},
+		"anchor": {
+			"type": "string",
+			"default": ""
+		},
+		"animation": {
+			"type": "string"
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"boxShadow": {
+			"type": "string",
+			"default": "wp-block-popper__shadow-md"
+		},
+		"closeAnchor": {
+			"type": "string"
+		},
+		"closeButtonAlignment": {
+			"type": "string",
+			"default": "inside"
+		},
+		"closeButtonColor": {
+			"type": "string"
+		},
+		"closeButtonSize": {
+			"type": "number",
+			"default": 20
+		},
+		"closeButtonStyle": {
+			"type": "object"
+		},
+		"closeOnAnchorClick": {
+			"type": "boolean",
+			"default": false
+		},
+		"closeOnClickOutside": {
+			"type": "boolean",
+			"default": true
+		},
+		"closeOnFormSubmission": {
+			"type": "boolean",
+			"default": false
+		},
+		"devices": {
+			"type": "array",
+			"default": ["desktop", "tablet", "mobile"]
+		},
+		"dismissForVisitors": {
+			"type": "boolean",
+			"default": true
+		},
+		"dismissPeriod": {
+			"type": "number",
+			"default": 1
+		},
+		"gradientBackground": {
+			"type": "string"
+		},
+		"fullPage": {
+			"type": "boolean",
+			"default": false
+		},
+		"offset": {
+			"type": "number",
+			"default": 20
+		},
+		"openBehaviour": {
+			"type": "string",
+			"default": "load"
+		},
+		"overlayColor": {
+			"type": "string"
+		},
+		"showCloseButton": {
+			"type": "boolean",
+			"default": true
+		},
+		"pageviews": {
+			"type": "number"
+		},
+		"target": {
+			"type": "string",
+			"default": ""
+		},
+		"uuid": {
+			"type": "number",
+			"default": null
+		},
+		"waitTime": {
+			"type": "number",
+			"default": 1
+		},
+		"width": {
+			"type": "number",
+			"default": 500
+		}
 	},
 	"editorScript": "file:./build/index.js",
 	"editorStyle": "file:./build/index.css",

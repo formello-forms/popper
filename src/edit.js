@@ -9,6 +9,7 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 	store as blockEditorStore,
+	__experimentalUseBorderProps as useBorderProps,
 } from '@wordpress/block-editor';
 
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
@@ -18,12 +19,14 @@ import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 import BlockVariationPicker from './placeholder';
 import Button from './settings/button';
 import Appearance from './settings/appearance';
+import Devices from './settings/devices';
 import OpenBehaviour from './settings/open-behaviour';
 import CloseBehaviour from './settings/close-behaviour';
 import { RulesModal } from './plugin/modal';
 import { TemplatesModal } from './library';
 import './editor.scss';
 import Controls from './settings/controls';
+import { ReactComponent as Icon } from './assets/Icon.svg';
 
 import classnames from 'classnames';
 
@@ -42,6 +45,7 @@ function Edit( props ) {
 		align,
 		fullPage,
 		borderRadius,
+		closeButtonStyle
 	} = attributes;
 
 	useEffect( () => {
@@ -55,31 +59,20 @@ function Edit( props ) {
 	const [ isModalOpen, setModalOpen ] = useState( false );
 	const closeModal = () => setModalOpen( false );
 
-	const closeButtonStyle = {};
+	const borderProps = useBorderProps( attributes );
 
-	if ( closeButtonColor ) {
-		closeButtonStyle.color = closeButtonColor;
-		closeButtonStyle.fontSize = closeButtonSize;
-		closeButtonStyle.width = closeButtonSize;
-		closeButtonStyle.height = closeButtonSize;
-	}
-
-	if ( 'outside' === closeButtonAlignment ) {
-		closeButtonStyle.top = ( closeButtonSize + 4 ) * -1;
-		closeButtonStyle.right = 0;
-	}
+	let buttonStyle = {
+		...closeButtonStyle
+	};
 
 	const modalStyle = {
 		width,
 		borderRadius,
+		...borderProps.style
 	};
 
 	const overlayStyle = {
 		backgroundColor: overlayColor,
-	};
-
-	const contentStyle = {
-		borderRadius,
 	};
 
 	if ( overlayColor && ! align.includes( 'center' ) ) {
@@ -103,8 +96,13 @@ function Edit( props ) {
 		}
 	);
 
-	const containerClass = classnames( 'wp-block-popper__container', boxShadow, {
+	const containerClass = classnames( 'wp-block-popper__container', boxShadow, borderProps.className, {
 		wide: fullPage,
+	} );
+
+	const buttonClass = classnames( 'wp-block-popper__close', {
+		'wp-block-popper__close-outside': 'outside' === closeButtonAlignment && !fullPage,
+		'wp-block-popper__close-corner': 'corner' === closeButtonAlignment,
 	} );
 
 	/**
@@ -124,7 +122,7 @@ function Edit( props ) {
 
 	const blockProps = useBlockProps( {
 		className: containerClass,
-		style: modalStyle,
+		style: modalStyle
 	} )
 
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
@@ -134,10 +132,11 @@ function Edit( props ) {
 
 	const closeButton = (
 		<button
-			className="wp-block-popper__close"
-			style={ closeButtonStyle }
-		></button>
+			className={ buttonClass }
+			style={ buttonStyle }
+		><Icon /></button>
 	);
+
 
 	return (
 		<div className={ popperClass } style={ overlayStyle }>
@@ -146,6 +145,7 @@ function Edit( props ) {
 				<OpenBehaviour { ...props } />
 				<CloseBehaviour { ...props } />
 				<Appearance { ...props } />
+				<Devices {...props} />
 				<Button { ...props } />
 			</InspectorControls>
 			<BlockControls>

@@ -100,7 +100,7 @@ class Popper_Frontend {
 			// Get the rules.
 			$rule = maybe_unserialize( $rule->meta_value );
 
-			$matched = Popper_Conditions::show_data( $rule['location'], $rule['exclude'], $rule['user'] );
+			$matched = Popper_Conditions::show_data( $rule['location'], $rule['exclude'], $rule['user'], $rule['date'] );
 
 			if ( $matched ) {
 				$popper = get_post( $popper_id );

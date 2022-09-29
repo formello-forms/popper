@@ -20,6 +20,7 @@ export function Devices( props ) {
 		            checked={ rule.visibility }
 					onChange={ ( val ) => {
 						onChange( 'visibility', val, index );
+						onChangeDevice( 'visibility', val, index );
 					} }
 		        />
 			</FlexItem>

@@ -17,6 +17,10 @@
   width: fit-content;
 }
 
+.wp-block-popper__close {
+  position: absolute !important;
+}
+
 .wp-block-formello-popper, .wp-block-popper__container.wide {
   width: 100%;
   z-index: 5;
@@ -39,6 +43,7 @@
   z-index: 9;
   position: relative;
   min-height: 600px;
+  overflow-y: auto;
 }
 
 .wp-block-popper--left, .wp-block-popper--right, .wp-block-popper--top, .wp-block-popper--bottom {

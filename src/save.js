@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import { ReactComponent as Icon } from './assets/Icon.svg';
 
 export default function save( { attributes, className } ) {
 	const {
@@ -10,6 +11,7 @@ export default function save( { attributes, className } ) {
 		offset,
 		openBehaviour,
 		backgroundColor,
+		closeButtonStyle,
 		closeButtonColor,
 		closeButtonSize,
 		closeButtonAlignment,
@@ -33,26 +35,8 @@ export default function save( { attributes, className } ) {
 
 	const modalStyle = {
 		width,
-		borderRadius,
 		backgroundColor,
 	};
-
-	const contentStyle = {
-		borderRadius,
-		backgroundColor,
-	};
-
-	const closeButtonStyle = {
-		color: closeButtonColor,
-		fontSize: closeButtonSize,
-		width: closeButtonSize,
-		height: closeButtonSize,
-	};
-
-	if ( 'outside' === closeButtonAlignment ) {
-		closeButtonStyle.top = ( closeButtonSize + 4 ) * -1;
-		closeButtonStyle.right = 0;
-	}
 
 	const popperClass = classnames( 'wp-block-popper', className, {
 		'wp-block-popper--right': align.includes( 'right' ),
@@ -65,16 +49,21 @@ export default function save( { attributes, className } ) {
 		wide: fullPage,
 	} );
 
+	const buttonClass = classnames( 'wp-block-popper__close', {
+		'wp-block-popper__close-outside': 'outside' === closeButtonAlignment && !fullPage,
+		'wp-block-popper__close-corner': 'corner' === closeButtonAlignment,
+	} );
+
 	if ( animation ) {
 		modalStyle[ '--popper-animation' ] = animation;
 	}
 
 	const closeButton = (
 		<button
-			className="wp-block-popper__close"
+			className={ buttonClass }
 			aria-label="Close modal"
 			style={ closeButtonStyle }
-		></button>
+		><Icon /></button>
 	);
 
 	return (

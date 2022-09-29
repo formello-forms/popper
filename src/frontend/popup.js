@@ -19,6 +19,7 @@ class Popup {
 			'(min-width:768px) and (max-width: 992px)'
 		).matches;
 		this.checkDevice();
+		this.scrollBarWidth = Math.abs(window.innerWidth - document.documentElement.clientWidth);
 	}
 
 	init() {
@@ -28,11 +29,12 @@ class Popup {
 
 	openModal() {
 		this.closeModals();
-		//document.body.style.overflow = 'hidden';
-		//document.body.style.height = '100vh';
-		//document.body.style.paddingRight = '15px';
 		this.element.classList.add( 'wp-block-popper-is-open' );
 		this.happened = true;
+		this.handleScroll();
+		this.element.addEventListener('animationend', () => {
+			this.handleScroll();
+		});
 	}
 
 	closeModals() {
@@ -40,6 +42,19 @@ class Popup {
 		for ( let i = 0; i < popups.length; i++ ) {
 			popups[ i ].classList.toggle( 'wp-block-popper-is-open' );
 		}
+	}
+
+	handleScroll() {
+
+		var hasVerticalScrollbar = this.element.scrollHeight > this.element.clientHeight;
+
+		if( hasVerticalScrollbar ){
+			this.element.style.overflow = 'auto';
+			this.element.style.pointerEvents = 'auto';
+			document.body.style.overflow = 'hidden';
+			document.body.style.paddingRight = this.scrollBarWidth + 'px';
+		}
+
 	}
 
 	closeModal() {
@@ -51,6 +66,11 @@ class Popup {
 				continue;
 			item.setAttribute( 'src', item.src );
 		}
+
+		this.element.style.removeProperty( 'overflow' );
+		document.body.style.removeProperty( 'overflow' );
+		document.body.style.removeProperty( 'padding-right' );
+
 		this.dismissModal();
 	}
 
@@ -196,14 +216,11 @@ class Popup {
 		if ( ! this.isMobile ) {
 			return false;
 		}
-		if ( this.happened ) {
-			return false;
-		}
 		// The speed check starts after 5 seconds.
 		window.onscroll = () => {
 			setTimeout( () => {
 				const isOpen = ScrollSpeed() * -1 > 50;
-				if ( isOpen && this.isScrollingUp() ) {
+				if ( isOpen && this.isScrollingUp() && ! this.happened ) {
 					this.openModal();
 				}
 				this.oldScroll = window.scrollY;

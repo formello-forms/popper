@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "popper/button",
+	"parent": ["formello/popper"],
+	"title": "Button",
+	"icon": "button",
+	"textdomain": "popper",
+	"attributes": {
+	    "lock": {
+	        "type": "object",
+	        "default": {
+	            "move": true,
+	            "remove": true
+	        }
+	    },
+		"text": {
+			"type": "string",
+			"default": "Close"
+		},
+		"alignment": {
+			"type": "string",
+			"default": "left"
+		}
+	},
+	"supports": {
+		"html": false,
+		"lock": false,
+		"multiple": false,
+		"reusable": false,
+		"className": false,
+		"color": {
+			"background": true,
+			"text": true,
+			"gradients": true
+		},
+		"__experimentalBorder": true,
+		"spacing": {
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true
+			}
+		}
+	}
+}

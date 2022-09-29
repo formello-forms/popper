@@ -8,7 +8,7 @@ import { RulesModal } from './modal';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
-const Component = () => {
+const Component = ( props ) => {
 	const postType = useSelect(
 		( select ) => select( 'core/editor' ).getCurrentPostType(),
 		[]
@@ -73,7 +73,7 @@ const Component = () => {
 				</>
 			) }
 
-			{ isModalOpen && <RulesModal onRequestClose={ closeModal } /> }
+			{ isModalOpen && <RulesModal onRequestClose={ closeModal } {...props} /> }
 		</PluginDocumentSettingPanel>
 	);
 };

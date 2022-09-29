@@ -2,8 +2,8 @@
 Contributors:      Formello
 Tags:              popup, pop up, exit intent, popup maker, exit popup, popup builder, wordpress popup block
 Requires at least: 5.6.0
-Tested up to:      6.0.1
-Stable tag:        0.3.8
+Tested up to:      6.0.2
+Stable tag:        0.3.9
 Requires PHP:      5.6.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -80,6 +80,14 @@ No. No external library is required. We mantain a clean fast code without depend
 6. Popper display settings
 
 == Changelog ==
+
+= 0.3.9 =
+* Better handling of borders using Gutenberg default controls
+* Better css for long scrollable popup
+* Added date support
+* Added button position
+* Switch to svg icon for closing button
+* Added background and color options for buttons
 
 = 0.3.8 =
 * Fix device error

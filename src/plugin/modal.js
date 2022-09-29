@@ -52,11 +52,10 @@ export function RulesModal( props ) {
 		items[ index ] = item;
 		// 5. Set the state to our new copy
 		setRules( { ...rules, [ activeTab ]: items } );
-		onChangeDevice( items )
 	};
 
-	const onChangeDevice = ( items ) => {
-
+	const onChangeDevice = () => {
+		let items = rules[ activeTab ];
 		var result = items.filter(obj => {
 		  return obj.visibility === true
 		}).map( (obj) => {

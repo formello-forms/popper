@@ -90,19 +90,17 @@ function popper_register() {
 				'location' => array(),
 				'exclude' => array(),
 				'user' => array(),
+				'date' => array(
+					array(
+						'type' => 'evergreen',
+						'startDate' => false,
+						'endDate' => false,
+					),
+				),
 				'device' => array(
-					array(
-						'device' => 'desktop',
-						'visibility' => false,
-					),
-					array(
-						'device' => 'tablet',
-						'visibility' => false,
-					),
-					array(
-						'device' => 'mobile',
-						'visibility' => false,
-					),
+					'desktop',
+					'tablet',
+					'mobile',
 				),
 			),
 			'show_in_rest'  => array(
@@ -116,6 +114,9 @@ function popper_register() {
 							'type' => 'array',
 						),
 						'user'    => array(
+							'type' => 'array',
+						),
+						'date'    => array(
 							'type' => 'array',
 						),
 						'device'    => array(
@@ -206,6 +207,7 @@ function popper_columns_table( $columns ) {
 	$columns['users'] = __( 'Users', 'popper' );
 	$columns['trigger'] = __( 'Trigger', 'popper' );
 	$columns['device'] = __( 'Devices', 'popper' );
+	$columns['dates'] = __( 'Dates', 'popper' );
 
 	unset( $columns['author'] );
 	unset( $columns['date'] );
@@ -268,14 +270,22 @@ function popper_columns_display( $column, $post_id ) {
 
 		case 'device':
 			$popup = get_post_meta( $post_id, 'popper_rules', true );
-			$active = array_filter(
-				$popup['device'],
-				function ( $var ) {
-					return ( true === $var['visibility'] );
-				}
-			);
-			$devices = array_column( $active, 'device' );
-			echo esc_attr( implode( ', ', $devices ) );
+			echo esc_attr( implode( ', ', $popup['device'] ) );
+			break;
+
+		case 'dates':
+			$popup = get_post_meta( $post_id, 'popper_rules', true );
+			$dates = $popup['date'][0];
+			if ( 'custom' === $dates['type'] ) {
+				echo sprintf(
+					'<b>From</b>: %s <br /><b>To</b>: %s',
+					esc_attr( wp_date( get_option( 'date_format' ), strtotime( $dates['startDate'] ) ) ),
+					esc_attr( wp_date( get_option( 'date_format' ), strtotime( $dates['endDate'] ) ) )
+				);
+			}
+			if ( 'evergreen' === $dates['type'] ) {
+				echo esc_attr( $dates['type'] );
+			}
 			break;
 
 		case 'trigger':
@@ -298,47 +308,3 @@ function popper_columns_display( $column, $post_id ) {
 
 	}
 }
-
-/**
- * Add link to table action row
- *
- * @param  array   $actions Actions.
- * @param  WP_POST $post Post.
- * @return string
- */
-function popper_action_row( $actions, $post ) {
-	// check for your post type.
-	if ( 'popper' === $post->post_type ) {
-		$view_link = sprintf(
-			'<span id="popper-table"><a href="#" data-id="%s">%s</a></span>',
-			absint( $post->ID ),
-			__( 'Edit rules', 'popper' )
-		);
-
-		array_splice( $actions, 2, 0, $view_link );
-	}
-
-	return $actions;
-}
-//add_filter( 'post_row_actions', 'popper_action_row', 10, 2 );
-
-/**
- * Load assets
- *
- * @throws \Error The error.
- */
-function popper_load_assets() {
-	$script_asset_path = plugin_dir_path( __FILE__ ) . 'build/table.asset.php';
-	if ( ! file_exists( $script_asset_path ) ) {
-		throw new \Error(
-			'You need to run `npm start` or `npm run build` for the "create-block/formello" block first.'
-		);
-	}
-
-	$script_asset = require $script_asset_path;
-
-	wp_register_script( 'popper-table', plugin_dir_url( __FILE__ ) . 'build/table.js', $script_asset['dependencies'], $script_asset['version'], 'all' );
-
-}
-//add_action( 'admin_init', 'popper_load_assets' );
-

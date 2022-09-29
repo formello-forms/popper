@@ -6,6 +6,7 @@ import { TabPanel, Button } from '@wordpress/components';
 import { MySelect } from './select';
 import { UserSelect } from './user-select';
 import { Devices } from './devices';
+import { Dates } from './dates';
 
 export function Tabs( props ) {
 
@@ -72,17 +73,10 @@ export function Tabs( props ) {
 					),
 				},
 				{
-					name: 'device',
-					component: Devices,
-					title: <span>{ __( 'Devices', 'popper' ) }</span>,
-					description: (
-						<p>
-							{ __(
-								'Choose which device will see this popup.',
-								'popper'
-							) }
-						</p>
-					),
+					name: 'date',
+					component: Dates,
+					title: <span>{ __( 'Date', 'popper' ) }</span>,
+					description: '',
 				},
 			] }
 		>
@@ -107,7 +101,7 @@ export function Tabs( props ) {
 							} ) }
 						</Fragment>
 						{
-							'device' !== activeTab &&
+							'date' !== activeTab &&
 							<Button
 								isPrimary={ true }
 								onClick={ addRule }

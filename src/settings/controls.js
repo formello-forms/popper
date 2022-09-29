@@ -18,8 +18,18 @@ import icons from '../icons';
 export default function Controls( props ) {
 	const {
 		setAttributes,
-		attributes: { borderRadius, boxShadow, align, fullPage },
+		attributes: { borderRadius, boxShadow, align, fullPage, style },
 	} = props;
+
+	const changeBorder = ( val ) => {
+		setAttributes( { style: {
+			...style,
+			border: {
+				...style?.border,
+				radius: val
+			}
+		} } )		
+	}
 
 	return (
 		<Fragment>
@@ -34,6 +44,8 @@ export default function Controls( props ) {
 						isActive={ fullPage }
 						onToggle={ () => setAttributes( { fullPage: ! fullPage } ) }
 					/>
+				</ToolbarGroup>
+				<ToolbarGroup>
 					<ToolbarDropdownMenu
 						icon={ icons.boxShadow }
 						label={ __( 'Box shadow', 'popper' ) }
@@ -114,41 +126,37 @@ export default function Controls( props ) {
 								label: __( 'None', 'popper' ),
 								title: 'None',
 								icon: icons.borderRadiusNone,
-								isActive: borderRadius === 0 ? true : false,
-								onClick: () =>
-									setAttributes( { borderRadius: 0 } ),
+								isActive: undefined === style?.border?.radius ? true : false,
+								onClick: () => changeBorder( undefined )
 							},
 							{
 								label: __( 'Small', 'popper' ),
 								title: 'Small',
 								icon: icons.borderRadiusSmall,
-								isActive: borderRadius === 20 ? true : false,
-								onClick: () =>
-									setAttributes( { borderRadius: 2 } ),
+								isActive: '2px' === style?.border?.radius ? true : false,
+								onClick: () => changeBorder( '2px' )
+
 							},
 							{
 								label: __( 'Medium', 'popper' ),
 								title: 'Medium',
 								icon: icons.borderRadiusMedium,
-								isActive: borderRadius === 4 ? true : false,
-								onClick: () =>
-									setAttributes( { borderRadius: 4 } ),
+								isActive: '4px' === style?.border?.radius ? true : false,
+								onClick: () => changeBorder( '4px' )
 							},
 							{
 								label: __( 'Large', 'popper' ),
 								title: 'Large',
 								icon: icons.borderRadiusLarge,
-								isActive: borderRadius === 8 ? true : false,
-								onClick: () =>
-									setAttributes( { borderRadius: 8 } ),
+								isActive: '8px' === style?.border?.radius ? true : false,
+								onClick: () => changeBorder( '8px' )
 							},
 							{
 								label: __( 'X-Large', 'popper' ),
 								title: 'X-Large',
 								icon: icons.borderRadiusXLarge,
-								isActive: borderRadius === 24 ? true : false,
-								onClick: () =>
-									setAttributes( { borderRadius: 24 } ),
+								isActive: '24px' === style?.border?.radius ? true : false,
+								onClick: () => changeBorder( '24px' )
 							},
 						] }
 					/>

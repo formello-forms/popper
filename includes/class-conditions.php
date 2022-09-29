@@ -301,7 +301,7 @@ class Popper_Conditions {
 	 * @param array $roles The roles.
 	 * @return bool
 	 */
-	public static function show_data( $conditionals, $exclude, $roles ) {
+	public static function show_data( $conditionals, $exclude, $roles, $dates ) {
 		$current_location = self::get_current_location();
 		$show = false;
 
@@ -370,6 +370,22 @@ class Popper_Conditions {
 			$check = array_intersect( $roles, $user_info );
 			if ( ! count( $check ) > 0 && ! in_array( 'general:all', $roles ) ) {
 				$show = false;
+			}
+		}
+
+		// Exclude dates.
+		if ( $show && ! empty( $dates ) ) {
+			$type = $dates[0]['type'];
+			$startDate = strtotime( $dates[0]['startDate'] );
+			$endDate = strtotime( $dates[0]['endDate'] );
+			if ( $startDate > time() ) {
+				$show = false;
+			};
+			if ( $endDate < time() ) {
+				$show = false;
+			};
+			if ( 'evergreen' === $type ) {
+				$show = true;
 			}
 		}
 
