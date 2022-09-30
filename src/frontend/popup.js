@@ -31,10 +31,10 @@ class Popup {
 		this.closeModals();
 		this.element.classList.add( 'wp-block-popper-is-open' );
 		this.happened = true;
-		this.handleScroll();
 		this.element.addEventListener('animationend', () => {
 			this.handleScroll();
 		});
+		this.handleScroll();
 	}
 
 	closeModals() {
@@ -46,13 +46,14 @@ class Popup {
 
 	handleScroll() {
 
-		var hasVerticalScrollbar = this.element.scrollHeight > this.element.clientHeight;
+		var hasVerticalScrollbar = this.element.querySelector('.wp-block-popper__container').scrollHeight > this.element.clientHeight;
 
 		if( hasVerticalScrollbar ){
-			this.element.style.overflow = 'auto';
 			this.element.style.pointerEvents = 'auto';
-			document.body.style.overflow = 'hidden';
-			document.body.style.paddingRight = this.scrollBarWidth + 'px';
+			//this.element.style.overflow = 'auto';
+			//this.element.style.pointerEvents = 'auto';
+			//document.body.style.overflow = 'hidden';
+			//document.body.style.paddingRight = this.scrollBarWidth + 'px';
 		}
 
 	}

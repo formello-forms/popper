@@ -275,6 +275,9 @@ function popper_columns_display( $column, $post_id ) {
 
 		case 'dates':
 			$popup = get_post_meta( $post_id, 'popper_rules', true );
+			if ( empty( $popup['date'] ) ) {
+				return;
+			}
 			$dates = $popup['date'][0];
 			if ( 'custom' === $dates['type'] ) {
 				echo sprintf(
