@@ -2,8 +2,8 @@
 Contributors:      Formello
 Tags:              popup, pop up, exit intent, popup maker, exit popup, popup builder, wordpress popup block
 Requires at least: 5.6.0
-Tested up to:      6.0.2
-Stable tag:        0.4.1
+Tested up to:      6.1.1
+Stable tag:        0.4.2
 Requires PHP:      5.6.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -80,6 +80,13 @@ No. No external library is required. We mantain a clean fast code without depend
 6. Popper display settings
 
 == Changelog ==
+
+= 0.4.2 =
+* Better handling of remote template
+* Added scroll hide
+* Added close button block
+* Code clean up
+* Better handling of templates using pattern modal
 
 = 0.4.1 =
 * Fix missing date meta

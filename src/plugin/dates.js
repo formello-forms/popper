@@ -40,6 +40,8 @@ export function Dates( props ) {
 							{ openStartDate && (
 								<Popover position="bottom" onClose={ setOpenStartDate.bind( null, false )}>
 									<DateTimePicker
+										__nextRemoveHelpButton
+										__nextRemoveResetButton
 										label="My Date/Time Picker"
 										currentDate={ rule.startDate }
 					            		onChange={ ( val ) => onChange( 'startDate', val, index ) }
@@ -65,9 +67,11 @@ export function Dates( props ) {
 							{ openEndDate && (
 								<Popover position="bottom" onClose={ setOpenEndDate.bind( null, false )}>
 									<DateTimePicker
+										__nextRemoveHelpButton
+										__nextRemoveResetButton
 										label="My Date/Time Picker"
 										currentDate={ rule.endDate }
-					            		onChange={ ( val ) => onChange( 'endDate', val, index ) }
+										onChange={ ( val ) => onChange( 'endDate', val, index ) }
 										is12Hour ={true}
 										isInvalidDate={
 											(val) =>  new Date(val) < new Date( rule.startDate )

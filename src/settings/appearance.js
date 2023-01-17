@@ -7,19 +7,9 @@ const Appearance = ( props ) => {
 	const {
 		width,
 		backgroundColor,
-		closeButtonColor,
 		overlayColor,
 		animation,
-		closeButtonBgColor,
-		closeButtonStyle
 	} = attributes;
-
-	const changeButtonColor = ( property, color ) => {
-		setAttributes( { closeButtonStyle: {
-			...closeButtonStyle,
-			[property]: color
-		} } )
-	}
 
 	return (
 		<>
@@ -39,16 +29,6 @@ const Appearance = ( props ) => {
 							setAttributes( { overlayColor: color } ),
 						label: __( 'Overlay Color', 'popper' ),
 						enableAlpha: true,
-					},
-					{
-						value: closeButtonStyle?.backgroundColor,
-						onChange: ( color ) => changeButtonColor( 'backgroundColor', color ),
-						label: __( 'Button Background Color', 'popper' ),
-					},
-					{
-						value: closeButtonStyle?.color,
-						onChange: ( color ) => changeButtonColor( 'color', color ),
-						label: __( 'Button Text Color', 'popper' ),
 					},
 				] }
 			/>

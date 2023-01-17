@@ -55,7 +55,7 @@ const OpenBehaviour = ( props ) => {
 	];
 
 	return (
-		<PanelBody initialOpen={ true } title={ __( 'Open Behaviour', 'popper' ) }>
+		<PanelBody initialOpen={ true } title={ __( 'Open Trigger', 'popper' ) }>
 			<PanelRow>
 				<RadioControl
 					onChange={ handleChangeOpenBehaviour }

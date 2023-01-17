@@ -21,15 +21,61 @@ export default function Controls( props ) {
 		attributes: { borderRadius, boxShadow, align, fullPage, style },
 	} = props;
 
-	const changeBorder = ( val ) => {
-		setAttributes( { style: {
-			...style,
-			border: {
-				...style?.border,
-				radius: val
-			}
-		} } )		
-	}
+	const SHADOW_CONTROLS = [
+		{
+			icon: icons.shadow.none,
+			title: __( 'None', 'popper' ),
+			shadow: 'wp-block-popper__shadow-none',
+		},
+		{
+			icon: icons.shadow.sm,
+			title: __( 'Small', 'popper' ),
+			shadow: 'wp-block-popper__shadow-sm',
+		},
+		{
+			icon: icons.shadow.md,
+			title: __( 'Medium', 'popper' ),
+			shadow: 'wp-block-popper__shadow-md',
+		},
+		{
+			icon: icons.shadow.lg,
+			title: __( 'Large', 'popper' ),
+			shadow: 'wp-block-popper__shadow-lg',
+		},
+		{
+			icon: icons.shadow.xl,
+			title: __( 'X-Large', 'popper' ),
+			shadow: 'wp-block-popper__shadow-xl',
+		},
+	];
+
+	const BORDER_CONTROLS = [
+		{
+			icon: icons.border.none,
+			title: __( 'None', 'popper' ),
+			border: 'wp-block-popper__border-none',
+		},
+		{
+			icon: icons.border.sm,
+			title: __( 'Small', 'popper' ),
+			border: 'wp-block-popper__border-sm',
+		},
+		{
+			icon: icons.border.md,
+			title: __( 'Medium', 'popper' ),
+			border: 'wp-block-popper__border-md',
+		},
+		{
+			icon: icons.border.lg,
+			title: __( 'Large', 'popper' ),
+			border: 'wp-block-popper__border-lg',
+		},
+		{
+			icon: icons.border.xl,
+			title: __( 'X-Large', 'popper' ),
+			border: 'wp-block-popper__border-xl',
+		},
+	];
 
 	return (
 		<Fragment>
@@ -47,118 +93,32 @@ export default function Controls( props ) {
 				</ToolbarGroup>
 				<ToolbarGroup>
 					<ToolbarDropdownMenu
-						icon={ icons.boxShadow }
+						icon={ icons.shadow[boxShadow?.replace( 'wp-block-popper__shadow-', '' )] }
 						label={ __( 'Box shadow', 'popper' ) }
-						controls={ [
-							{
-								label: __( 'None', 'popper' ),
-								title: 'None',
-								icon: icons.boxShadowNone,
-								isActive:
-									boxShadow === 'wp-block-popper__shadow-none'
-										? true
-										: false,
-								onClick: () =>
-									setAttributes( {
-										boxShadow:
-											'wp-block-popper__shadow-none',
-									} ),
-							},
-							{
-								label: __( 'Small', 'popper' ),
-								title: 'Small',
-								icon: icons.boxShadowSmall,
-								isActive:
-									boxShadow === 'wp-block-popper__shadow-sm'
-										? true
-										: false,
-								onClick: () =>
-									setAttributes( {
-										boxShadow: 'wp-block-popper__shadow-sm',
-									} ),
-							},
-							{
-								label: __( 'Medium', 'popper' ),
-								title: 'Medium',
-								icon: icons.boxShadowMedium,
-								isActive:
-									boxShadow === 'wp-block-popper__shadow-md'
-										? true
-										: false,
-								onClick: () =>
-									setAttributes( {
-										boxShadow: 'wp-block-popper__shadow-md',
-									} ),
-							},
-							{
-								label: __( 'Large', 'popper' ),
-								title: 'Large',
-								icon: icons.boxShadowLarge,
-								isActive:
-									boxShadow === 'wp-block-popper__shadow-lg'
-										? true
-										: false,
-								onClick: () =>
-									setAttributes( {
-										boxShadow: 'wp-block-popper__shadow-lg',
-									} ),
-							},
-							{
-								label: __( 'X-Large', 'popper' ),
-								title: 'X-Large',
-								icon: icons.boxShadowXLarge,
-								isActive:
-									boxShadow === 'wp-block-popper__shadow-xl'
-										? true
-										: false,
-								onClick: () =>
-									setAttributes( {
-										boxShadow: 'wp-block-popper__shadow-xl',
-									} ),
-							},
-						] }
+						controls={ SHADOW_CONTROLS.map( ( control ) => {
+							const { shadow } = control;
+							const isActive = boxShadow === shadow;
+
+							return {
+								...control,
+								isActive,
+								onClick: () => setAttributes( { boxShadow: shadow } ),
+							}
+						} ) }
 					/>
 					<ToolbarDropdownMenu
-						icon={ icons.borderRadius }
+						icon={ icons.border[borderRadius?.replace( 'wp-block-popper__border-', '' )] }
 						label={ __( 'Border radius', 'popper' ) }
-						controls={ [
-							{
-								label: __( 'None', 'popper' ),
-								title: 'None',
-								icon: icons.borderRadiusNone,
-								isActive: undefined === style?.border?.radius ? true : false,
-								onClick: () => changeBorder( undefined )
-							},
-							{
-								label: __( 'Small', 'popper' ),
-								title: 'Small',
-								icon: icons.borderRadiusSmall,
-								isActive: '2px' === style?.border?.radius ? true : false,
-								onClick: () => changeBorder( '2px' )
+						controls={ BORDER_CONTROLS.map( ( control ) => {
+							const { border } = control;
+							const isActive = borderRadius === border;
 
-							},
-							{
-								label: __( 'Medium', 'popper' ),
-								title: 'Medium',
-								icon: icons.borderRadiusMedium,
-								isActive: '4px' === style?.border?.radius ? true : false,
-								onClick: () => changeBorder( '4px' )
-							},
-							{
-								label: __( 'Large', 'popper' ),
-								title: 'Large',
-								icon: icons.borderRadiusLarge,
-								isActive: '8px' === style?.border?.radius ? true : false,
-								onClick: () => changeBorder( '8px' )
-							},
-							{
-								label: __( 'X-Large', 'popper' ),
-								title: 'X-Large',
-								icon: icons.borderRadiusXLarge,
-								isActive: '24px' === style?.border?.radius ? true : false,
-								onClick: () => changeBorder( '24px' )
-							},
-						] }
+							return {
+								...control,
+								isActive,
+								onClick: () => setAttributes( { borderRadius: border } )
+							}
+						} ) }
 					/>
 				</ToolbarGroup>
 			</BlockControls>

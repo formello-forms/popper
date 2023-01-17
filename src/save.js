@@ -12,8 +12,6 @@ export default function save( { attributes, className } ) {
 		openBehaviour,
 		backgroundColor,
 		closeButtonStyle,
-		closeButtonColor,
-		closeButtonSize,
 		closeButtonAlignment,
 		borderRadius,
 		boxShadow,
@@ -29,6 +27,7 @@ export default function save( { attributes, className } ) {
 		animation,
 		align,
 		fullPage,
+		id,
 		uuid,
 		devices
 	} = attributes;
@@ -44,7 +43,7 @@ export default function save( { attributes, className } ) {
 		'wp-block-popper--top': align.includes( 'top' ),
 		'wp-block-popper--bottom': align.includes( 'bottom' ),
 	} );
-	const containerClass = classnames( 'wp-block-popper__container', boxShadow, {
+	const containerClass = classnames( 'wp-block-popper__container', boxShadow, borderRadius, {
 		'wp-block-popper__animate': !! animation,
 		wide: fullPage,
 	} );
@@ -58,33 +57,24 @@ export default function save( { attributes, className } ) {
 		modalStyle[ '--popper-animation' ] = animation;
 	}
 
-	const closeButton = (
-		<button
-			className={ buttonClass }
-			aria-label="Close modal"
-			style={ closeButtonStyle }
-		><Icon /></button>
-	);
-
 	return (
 		<div
 			data-open={ openBehaviour }
-			data-anchor={ openBehaviour === 'anchor' ? anchor : '' }
-			data-target={ openBehaviour === 'target' ? target : '' }
-			data-anchorclose={ closeOnAnchorClick ? closeAnchor : '' }
-			data-time={ openBehaviour === 'load' ? waitTime : '' }
-			data-dismiss={ dismissForVisitors ? dismissPeriod : '' }
-			data-offset={ openBehaviour === 'scroll' ? offset : '' }
-			data-pagenum={ openBehaviour === 'pageviews' ? pageviews : '' }
+			data-anchor={ openBehaviour === 'anchor' ? anchor : undefined }
+			data-target={ openBehaviour === 'target' ? target : undefined }
+			data-anchorclose={ closeOnAnchorClick ? closeAnchor : undefined }
+			data-time={ openBehaviour === 'load' ? waitTime : undefined }
+			data-dismiss={ dismissForVisitors ? dismissPeriod : undefined }
+			data-offset={ openBehaviour === 'scroll' ? offset : undefined }
+			data-pagenum={ openBehaviour === 'pageviews' ? pageviews : undefined }
 			data-outside={ closeOnClickOutside }
 			data-form={ closeOnFormSubmission }
-			data-created={ uuid }
-			data-devices={ JSON.stringify( devices ) }
-			id={ 'modal-' + uuid }
+			data-id={ uuid || undefined }
+			data-devices={ devices.join() }
+			id={ id }
 			aria-hidden="true"
 			className={ popperClass }
 		>
-			{ showCloseButton && 'edge' === closeButtonAlignment && closeButton }
 
 			{ 'center center' === align && ! fullPage && (
 				<div
@@ -102,9 +92,6 @@ export default function save( { attributes, className } ) {
 				aria-modal="true"
 				aria-labelledby="modal-title"
 			>
-				{ showCloseButton &&
-					'edge' !== closeButtonAlignment &&
-					closeButton }
 				<main className="wp-block-popper__content">
 					<InnerBlocks.Content />
 				</main>

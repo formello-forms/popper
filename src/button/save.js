@@ -6,9 +6,11 @@ import {
 	__experimentalGetColorClassesAndStyles as getColorClassesAndStyles,
 	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
 } from '@wordpress/block-editor';
+import { ReactComponent as CloseButton } from './close-button.svg';
+import { __ } from '@wordpress/i18n';
 
 export default function save( { attributes } ) {
-	const { text, alignment, type, style } = attributes;
+	const { text, position, isIcon, style } = attributes;
 
 	const borderRadius = style?.border?.radius;
 	const borderProps = getBorderClassesAndStyles( attributes );
@@ -22,16 +24,29 @@ export default function save( { attributes } ) {
 
 	const colorProps = getColorClassesAndStyles( attributes );
 
-	const buttonClasses = classnames( colorProps.className, alignment, 'mortgage-btn' );
+	const buttonClasses = classnames(
+		borderProps.className,
+		colorProps.className,
+		'wp-block-popper__close', {
+		'wp-block-popper__close-outside': 'outside' === position,
+		'wp-block-popper__close-corner': 'corner' === position,
+	} );
 
 	const blockProps = useBlockProps.save( {
 		className: buttonClasses,
 		style: colorProps.style
 	} );
 
-	return (
-		<button { ...blockProps }>
-			{ text }
-		</button>
-	);
+	if( isIcon ){
+		return (
+			<button { ...blockProps }>
+				<CloseButton />
+			</button>
+		);
+	} else {
+		return (
+			<RichText.Content { ...blockProps } tagName="button" value={ text } />
+		);
+	}
+
 }

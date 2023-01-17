@@ -30,12 +30,17 @@
 		}
 	},
 	"attributes": {
-		"lock": {
-			"type": "object",
-			"default": {
-				"move": true,
-				"remove": true
-			}
+		"id": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "id"
+		},
+		"uuid": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-id"
 		},
 		"align": {
 			"type": "string",
@@ -43,94 +48,109 @@
 		},
 		"anchor": {
 			"type": "string",
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-anchor",
 			"default": ""
 		},
 		"animation": {
-			"type": "string"
-		},
-		"backgroundColor": {
 			"type": "string"
 		},
 		"boxShadow": {
 			"type": "string",
 			"default": "wp-block-popper__shadow-md"
 		},
-		"closeAnchor": {
-			"type": "string"
-		},
-		"closeButtonAlignment": {
+		"borderRadius": {
 			"type": "string",
-			"default": "inside"
+			"default": "wp-block-popper__border-md"
 		},
-		"closeButtonColor": {
-			"type": "string"
-		},
-		"closeButtonSize": {
-			"type": "number",
-			"default": 20
-		},
-		"closeButtonStyle": {
-			"type": "object"
+		"closeAnchor": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-anchorclose"
 		},
 		"closeOnAnchorClick": {
 			"type": "boolean",
-			"default": false
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-anchorclose"
 		},
 		"closeOnClickOutside": {
 			"type": "boolean",
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-outside",
 			"default": true
 		},
 		"closeOnFormSubmission": {
-			"type": "boolean",
-			"default": false
+			"type": "string",
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-form"
 		},
 		"devices": {
 			"type": "array",
-			"default": ["desktop", "tablet", "mobile"]
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-devices",
+			"default": [ "desktop,tablet,mobile" ]
 		},
 		"dismissForVisitors": {
 			"type": "boolean",
-			"default": true
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-dismiss"
 		},
 		"dismissPeriod": {
-			"type": "number",
-			"default": 1
-		},
-		"gradientBackground": {
-			"type": "string"
+			"type": "string",
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-dismiss",
+			"default": "3"
 		},
 		"fullPage": {
 			"type": "boolean",
+			"selector": "div.wp-block-popper.wide",
 			"default": false
 		},
 		"offset": {
 			"type": "number",
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-offset",
 			"default": 20
 		},
 		"openBehaviour": {
 			"type": "string",
-			"default": "load"
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-open"
+		},
+		"backgroundColor": {
+			"type": "string"
 		},
 		"overlayColor": {
 			"type": "string"
 		},
-		"showCloseButton": {
-			"type": "boolean",
-			"default": true
-		},
 		"pageviews": {
-			"type": "number"
+			"type": "number",
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-pagenum"
 		},
 		"target": {
 			"type": "string",
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-target",
 			"default": ""
-		},
-		"uuid": {
-			"type": "number",
-			"default": null
 		},
 		"waitTime": {
 			"type": "number",
+			"source": "attribute",
+			"selector": "div.wp-block-popper",
+			"attribute": "data-time",
 			"default": 1
 		},
 		"width": {

@@ -23,7 +23,7 @@ const variations = [
 		attributes: {
 			backgroundColor: '#ffffff',
 		},
-		innerBlocks: [ [ 'core/paragraph' ] ],
+		innerBlocks: [ [ 'core/paragraph' ], [ 'popper/button' ] ],
 		scope: [ 'block' ],
 	},
 	{
@@ -39,6 +39,7 @@ const variations = [
 			backgroundColor: '#ffffff',
 		},
 		innerBlocks: [
+			[ 'popper/button' ],
 			[
 				'core/media-text',
 				{
@@ -98,6 +99,7 @@ const variations = [
 			backgroundColor: '#ffffff',
 		},
 		innerBlocks: [
+			[ 'popper/button' ],
 			[
 				'core/group',
 				{ style: { color: { background: '#fff' } } },

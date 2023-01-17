@@ -2,7 +2,7 @@ import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 import classnames from 'classnames';
 import metadata from '../block.json';
 const { omit } = lodash;
-const { supports } = metadata;
+
 const blockAttributes = {
 	lock: {
 	  type: 'object',
@@ -173,7 +173,8 @@ const v2 =
 				default: false
 			},
 			devices: {
-				type: 'array'
+				type: 'array',
+				default: ['desktop','tablet','mobile']
 			},
 			dismissForVisitors: {
 				type: 'boolean',
@@ -226,8 +227,18 @@ const v2 =
 				default: 500
 			}
 		},
-		supports,
-		save( { attributes, className } ) {
+        migrate( attributes, innerBlocks ) {
+            const { title, ...restAttributes } = attributes;
+
+            return [
+                restAttributes,
+                [
+                    createBlock( 'formello/popper', {} ),
+                    ...innerBlocks,
+                ],
+            ];
+        },
+		save( props ) {
 			const {
 				align,
 				anchor,
@@ -257,7 +268,7 @@ const v2 =
 				uuid,
 				waitTime,
 				width,
-			} = attributes;	
+			} = props.attributes;	
 					
 			const modalStyle = {
 				width,
@@ -282,7 +293,7 @@ const v2 =
 				closeButtonStyle.right = 0;
 			}
 
-			const popperClass = classnames( 'wp-block-popper', className, {
+			const popperClass = classnames( 'wp-block-popper', props.className, {
 				'wp-block-popper--right': align.includes( 'right' ),
 				'wp-block-popper--left': align.includes( 'left' ),
 				'wp-block-popper--top': align.includes( 'top' ),
@@ -356,7 +367,6 @@ const v2 =
 const v1 =
 	{
 		attributes: blockAttributes,
-		supports,
 		save( { attributes, className } ) {
 			const {
 				width,

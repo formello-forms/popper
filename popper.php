@@ -28,6 +28,23 @@ function popper_block_init() {
 		__DIR__
 	);
 	wp_set_script_translations( 'formello-popper-editor-script', 'popper', plugin_dir_path( __FILE__ ) . '/languages/' );
+
+	register_block_pattern_category(
+		'popups',
+		array( 'label' => __( 'Popups', 'popper' ) )
+	);
+	$patterns = get_transient( 'popper_templates', false );
+
+	if ( ! $patterns ) {
+		return;
+	}
+
+	foreach ( $patterns as $pattern ) {
+		register_block_pattern(
+			$pattern['name'],
+			$pattern
+		);
+	}
 }
 add_action( 'init', 'popper_block_init' );
 
@@ -76,6 +93,7 @@ function popper_register() {
 			'custom-fields',
 			'revisions',
 			'author',
+			'excerpt',
 		),
 	);
 	register_post_type( 'popper', $args );
@@ -300,7 +318,7 @@ function popper_columns_display( $column, $post_id ) {
 				'<b>%s</b>',
 				esc_attr( ucfirst( $trigger['trigger'] ) ),
 			);
-			if ( $trigger['value'] ) {
+			if ( $trigger['value'] && 'exit' !== $trigger['trigger'] ) {
 				echo sprintf(
 					': %s',
 					esc_attr( $trigger['value'] ),

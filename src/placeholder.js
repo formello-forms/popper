@@ -84,10 +84,10 @@ function BlockVariationPicker( {
 
 			{ 'templates' === isModalOpen && (
 				<TemplatesModal
-					type={ 'remote' }
 					onRequestClose={ () => setModalOpen( false ) }
+					blockName={ 'formello/popper' }
+					setIsPatternSelectionModalOpen={ () => setModalOpen( false ) }
 					clientId={ clientId }
-					setAttributes={ setAttributes }
 				/>
 			) }
 		</Placeholder>

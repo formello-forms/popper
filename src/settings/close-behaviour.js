@@ -24,10 +24,10 @@ const CloseBehaviour = ( props ) => {
 	};
 
 	return (
-		<PanelBody initialOpen={ false } title={ __( 'Close Behaviour', 'popper' ) }>
+		<PanelBody initialOpen={ false } title={ __( 'Close Trigger', 'popper' ) }>
 			<PanelRow>
 				<CheckboxControl
-					label={ __( 'Show Close Button', 'popper' ) }
+					label={ __( 'Hide Close Button', 'popper' ) }
 					checked={ showCloseButton }
 					onChange={ ( value ) =>
 						changeAttribute( 'showCloseButton', value )
@@ -45,7 +45,7 @@ const CloseBehaviour = ( props ) => {
 			</PanelRow>
 			<PanelRow>
 				<CheckboxControl
-					label={ __( 'Close after form submission', 'popper' ) }
+					label={ __( 'Close on form submission', 'popper' ) }
 					checked={ closeOnFormSubmission }
 					onChange={ ( value ) =>
 						changeAttribute( 'closeOnFormSubmission', value )
@@ -92,15 +92,15 @@ const CloseBehaviour = ( props ) => {
 			{ dismissForVisitors && (
 				<PanelRow>
 					<RangeControl
-						value={ dismissPeriod }
+						value={ parseInt(dismissPeriod) }
 						label={ __(
 							'Number of Days Until the Notice is Shown again',
 							'popper'
 						) }
 						onChange={ ( val ) => {
-							setAttributes( { dismissPeriod: val } );
+							setAttributes( { dismissPeriod: parseInt(val) } );
 						} }
-						min={ 0 }
+						min={ 1 }
 						max={ 100 }
 					/>
 				</PanelRow>

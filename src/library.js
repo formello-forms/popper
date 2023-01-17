@@ -1,196 +1,47 @@
 /**
- * Import CSS
- */
-//import './editor.scss';
-
-/**
- * External dependencies
- */
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
-import { Fragment, RawHTML, useState } from '@wordpress/element';
+import { useDispatch } from '@wordpress/data';
+import {
+	store as blockEditorStore,
+	//__experimentalBlockPatternSetup as BlockPatternSetup,
+} from '@wordpress/block-editor';
+import { Modal } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+import { cloneBlock } from '@wordpress/blocks';
 
-import { __, sprintf } from '@wordpress/i18n';
+import BlockPatternSetup from './blockpattern';
 
-import { decodeEntities } from '@wordpress/html-entities';
+export function TemplatesModal( {
+	clientId,
+	blockName,
+	setIsPatternSelectionModalOpen,
+	onRequestClose
+} ) {
+	const { replaceBlock, updateBlockAttributes, replaceInnerBlocks } = useDispatch( blockEditorStore );
+	const onBlockPatternSelect = ( blocks ) => {
 
-import { useDispatch, useSelect } from '@wordpress/data';
+		updateBlockAttributes( clientId, blocks[0].attributes )
+		replaceInnerBlocks( clientId, blocks[0].innerBlocks );
+		onRequestClose( false );
 
-import { parse } from '@wordpress/blocks';
-
-import { Spinner, Modal, Button } from '@wordpress/components';
-import { BlockPreview } from '@wordpress/block-editor';
-
-export function TemplatesModal( props ) {
-	const { onRequestClose, type, clientId, setAttributes } = props;
-
-	const [ loading, setLoading ] = useState( false );
-	const [ error, setError ] = useState( false );
-
-	const templates = useSelect(
-		( select ) => select( 'formello/popper-templates' ).getTemplates(),
-		[]
-	);
-
-	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
-
-	const insertTemplate = ( content, clientId, cb ) => {
-		const parsedBlocks = parse( content );
-		setAttributes( parsedBlocks[ 0 ].attributes );
-
-		if ( parsedBlocks.length ) {
-			replaceInnerBlocks( clientId, parsedBlocks[ 0 ].innerBlocks );
-			cb( false );
-		}
 	};
-
-	const getTemplates = ( type ) => {
-		if ( ! templates ) {
-			return templates;
-		}
-
-		const result = [];
-
-		templates.forEach( ( template ) => {
-			let allow = ! type;
-
-			// type check.
-			if ( ! allow && template.types ) {
-				template.types.forEach( ( typeData ) => {
-					if ( typeData.slug && type === typeData.slug ) {
-						allow = true;
-					}
-				} );
-			}
-
-			if ( allow ) {
-				result.push( template );
-			}
-		} );
-
-		return result;
-	};
-
-	const allTemplates = getTemplates( type );
-	const showLoadingSpinner = loading || ! allTemplates;
 
 	return (
 		<Modal
-			title={ __( 'Popups', 'popper' ) }
-			className={ classnames(
-				'formello-plugin-templates-modal',
-				'formello-plugin-templates-modal-hide-header',
-				showLoadingSpinner
-					? 'formello-plugin-templates-modal-loading'
-					: ''
-			) }
-			position="top"
+			className="block-editor-query-pattern__selection-modal"
 			isFullScreen
+			title={ __( 'Choose a pattern' ) }
+			closeLabel={ __( 'Cancel' ) }
 			onRequestClose={ onRequestClose }
 		>
-			{ showLoadingSpinner && (
-				<div>
-					<Spinner />
-				</div>
-			) }
-			<Fragment>
-				<div className="formello-plugin-templates-categories-row">
-					<div className="formello-plugin-templates-count">
-						<RawHTML>
-							{ sprintf(
-								/* translators: Number of templates. */
-								__( 'Templates: %s', 'popper' ),
-								`<strong>${
-									allTemplates.length
-										? allTemplates.length
-										: 0
-								}</strong>`
-							) }
-						</RawHTML>
-					</div>
-				</div>
-				{ allTemplates && ! allTemplates.length && (
-					<div>
-						{ 'local' === type ? (
-							<Fragment>
-								<p>{ __( 'No templates found.', 'popper' ) }</p>
-								<a
-									className="components-button is-button is-primary"
-									href={ formello.templatesURL }
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									{ __( 'Add New', 'popper' ) }
-								</a>
-							</Fragment>
-						) : (
-							<p>{ __( 'No templates found.', 'popper' ) }</p>
-						) }
-					</div>
-				) }
-
-				{ allTemplates && (
-					<ul className="popper-templates-list">
-						{ allTemplates.map( ( template ) => {
-							const withPreview = !! template.content;
-							const templateTitle = decodeEntities(
-								template.title
-							);
-
-							return (
-								<li
-									className={ classnames(
-										'formello-plugin-templates-list-item',
-										'formello-plugin-templates-list-item-no-thumb'
-									) }
-									key={ template.id }
-								>
-									<a
-										role="button"
-										tabIndex="0"
-										onClick={ () => {
-											setLoading( true );
-											if (
-												'remote' === type &&
-												template.content
-											) {
-												insertTemplate(
-													template.content,
-													clientId,
-													( errorResponse ) => {
-														if ( errorResponse ) {
-															setError(
-																errorResponse
-															);
-														} else {
-															onRequestClose();
-														}
-													}
-												);
-											} else {
-												onRequestClose( template.id );
-											}
-											setLoading( false );
-										} }
-									>
-										{ withPreview && (
-											<BlockPreview
-												blocks={ parse( template.content ) }
-											/>
-										) }
-										<div className="formello-plugin-templates-list-item-title">
-											{ templateTitle }
-										</div>
-									</a>
-								</li>
-							);
-						} ) }
-					</ul>
-				) }
-			</Fragment>
+			<BlockPatternSetup
+				blockName={ blockName }
+				clientId={ clientId }
+				onBlockPatternSelect={ onBlockPatternSelect }
+				showTitles={ true }
+				initialViewMode={ 'grid' }
+			/>
 		</Modal>
 	);
 }

@@ -130,6 +130,10 @@ class Popper_Rest extends WP_REST_Controller {
 	public function sync_template_library( \WP_REST_Request $request ) {
 		delete_transient( 'popper_templates' );
 
+		if ( current_user_can( 'manage_options' ) ) {
+			return $this->get_templates();
+		}
+
 		return $this->success( true );
 	}
 

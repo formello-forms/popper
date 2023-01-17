@@ -127,6 +127,7 @@
     position: absolute;
     top: 40px !important;
     right: 40px !important;
+    bottom: auto;
   }
 }
 
@@ -191,6 +192,10 @@
   color: currentColor;
 }
 
+/**************************
+  Shadow presets
+**************************/
+
 .wp-block-popper__shadow-none {
   box-shadow: none;
 }
@@ -209,6 +214,30 @@
 
 .wp-block-popper__shadow-xl {
   box-shadow: var( --box-shadow-xl );
+}
+
+/**************************
+  Border presets
+**************************/
+
+.wp-block-popper__border-none {
+  border-radius: none;
+}
+
+.wp-block-popper__border-sm {
+  border-radius: var( --border-radius-sm );
+}
+
+.wp-block-popper__border-md {
+  border-radius: var( --border-radius-md );
+}
+
+.wp-block-popper__border-lg {
+  border-radius: var( --border-radius-lg );
+}
+
+.wp-block-popper__border-xl {
+  border-radius: var( --border-radius-xl );
 }
 
 /**************************

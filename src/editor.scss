@@ -5,12 +5,19 @@
  */
 
 .post-type-popper .editor-styles-wrapper .block-editor-block-list__layout.is-root-container > :where(:not(.alignleft):not(.alignright)) {
-  max-width: 100%;
-  height: 100vh;
+  max-width: 100% !important;
   &.popper-placeholder {
-    max-width: 650px;
-    height: auto;
+	max-width: 650px !important;
+	height: auto;
   }
+}
+
+.wp-block-popper-is-open {
+  max-width: 100% !important;
+}
+
+.post-type-popper .editor-styles-wrapper .wp-block:not(.wp-block-post-title) {
+  max-width: 100%;
 }
 
 .wp-block-popper__container {
@@ -42,25 +49,12 @@
 .wp-block-popper-is-open {
   z-index: 9;
   position: relative;
-  min-height: 600px;
+  min-height: 800px;
   overflow-y: auto;
 }
 
 .wp-block-popper--left, .wp-block-popper--right, .wp-block-popper--top, .wp-block-popper--bottom {
   pointer-events: auto; 
-}
-
-.popper-templates-list {
-  display: flex;
-  flex-wrap: wrap;
-  li {
-    min-width: 33%;
-    padding: 10px;
-    a {
-      text-align: center;
-      cursor: pointer;
-    }
-  }
 }
 
 .popper-modal-rule {
@@ -70,12 +64,12 @@
 
 .popper-modal-row {
   label {
-    display: none;
+	display: none;
   }
   margin-bottom: 1em;
   align-items: center !important;
   .components-form-token-field__input-container{
-    margin: 0;
+	margin: 0;
   }
 }
 

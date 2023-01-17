@@ -30,6 +30,7 @@ class Popup {
 	openModal() {
 		this.closeModals();
 		this.element.classList.add( 'wp-block-popper-is-open' );
+		this.element.setAttribute('aria-hidden', false);
 		this.happened = true;
 		this.element.addEventListener('animationend', () => {
 			this.handleScroll();
@@ -126,7 +127,7 @@ class Popup {
 		if( !devices )
 			return;
 
-		const devicesArr = JSON.parse( devices )
+		const devicesArr = devices.split(',')
 		if( devicesArr.includes( 'desktop' ) && !this.isMobile && !this.isTablet ){
 			this.init();
 		}

@@ -17,7 +17,6 @@ import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 
 import BlockVariationPicker from './placeholder';
-import Button from './settings/button';
 import Appearance from './settings/appearance';
 import Devices from './settings/devices';
 import OpenBehaviour from './settings/open-behaviour';
@@ -31,7 +30,7 @@ import { ReactComponent as Icon } from './assets/Icon.svg';
 import classnames from 'classnames';
 
 function Edit( props ) {
-	const { attributes, setAttributes, clientId, hasInnerBlocks } = props;
+	const { attributes, setAttributes, clientId, hasInnerBlocks, name, isSelected } = props;
 
 	const {
 		width,
@@ -45,25 +44,26 @@ function Edit( props ) {
 		align,
 		fullPage,
 		borderRadius,
-		closeButtonStyle
+		id,
+		uuid
 	} = attributes;
-
-	useEffect( () => {
-		setAttributes( { uuid: postId } );
-	}, [] );
 
 	const postId = useSelect( ( select ) =>
 		select( 'core/editor' ).getCurrentPostId()
 	);
 
+	useEffect( () => {
+		if( id !== 'modal-' + postId  ){
+			setAttributes( { id: 'modal-' + postId } );
+		}
+		if( parseInt( uuid ) !== postId  ){
+			setAttributes( { uuid: postId } );
+		}
+	}, [] );
+
 	const [ isModalOpen, setModalOpen ] = useState( false );
-	const closeModal = () => setModalOpen( false );
 
 	const borderProps = useBorderProps( attributes );
-
-	let buttonStyle = {
-		...closeButtonStyle
-	};
 
 	const modalStyle = {
 		width,
@@ -96,13 +96,8 @@ function Edit( props ) {
 		}
 	);
 
-	const containerClass = classnames( 'wp-block-popper__container', boxShadow, borderProps.className, {
+	const containerClass = classnames( 'wp-block-popper__container', boxShadow, borderRadius, borderProps.className, {
 		wide: fullPage,
-	} );
-
-	const buttonClass = classnames( 'wp-block-popper__close', {
-		'wp-block-popper__close-outside': 'outside' === closeButtonAlignment && !fullPage,
-		'wp-block-popper__close-corner': 'corner' === closeButtonAlignment,
 	} );
 
 	/**
@@ -130,23 +125,13 @@ function Edit( props ) {
 		renderAppender: hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : null,
 	} );
 
-	const closeButton = (
-		<button
-			className={ buttonClass }
-			style={ buttonStyle }
-		><Icon /></button>
-	);
-
-
 	return (
 		<div className={ popperClass } style={ overlayStyle }>
-			{ showCloseButton && 'edge' === closeButtonAlignment && closeButton }
 			<InspectorControls>
 				<OpenBehaviour { ...props } />
 				<CloseBehaviour { ...props } />
 				<Appearance { ...props } />
 				<Devices {...props} />
-				<Button { ...props } />
 			</InspectorControls>
 			<BlockControls>
 				<ToolbarGroup>
@@ -173,22 +158,19 @@ function Edit( props ) {
 				/>
 			</BlockControls>
 			<div {...innerBlocksProps}>
-				{ showCloseButton &&
-					'edge' !== closeButtonAlignment &&
-					closeButton }
 
 				{ children }
 
 			</div>
 			{ 'templates' === isModalOpen && (
 				<TemplatesModal
-					type={ 'remote' }
+					clientId={ clientId }
 					onRequestClose={ () => setModalOpen( false ) }
-					{ ...props }
+					blockName={ name }
 				/>
 			) }
 			{ 'options' === isModalOpen && (
-				<RulesModal onRequestClose={ closeModal } { ...props } />
+				<RulesModal onRequestClose={ () => setModalOpen( false ) } { ...props } />
 			) }
 		</div>
 	);
@@ -225,7 +207,7 @@ function Placeholder( props ) {
 			<BlockVariationPicker
 				icon={ 'external' }
 				label={ 'Popup' }
-				instructions={ __( 'Select a form to start with.', 'popper' ) }
+				instructions={ __( 'Select a template to start with.', 'popper' ) }
 				variations={ variations }
 				clientId={ clientId }
 				setAttributes={ setAttributes }

@@ -3,28 +3,44 @@
 	"apiVersion": 2,
 	"name": "popper/button",
 	"parent": ["formello/popper"],
-	"title": "Button",
-	"icon": "button",
+	"title": "Close Button",
+	"icon": "dismiss",
 	"textdomain": "popper",
 	"attributes": {
-	    "lock": {
-	        "type": "object",
-	        "default": {
-	            "move": true,
-	            "remove": true
-	        }
-	    },
+		"lock": {
+			"type": "object",
+			"default": {
+				"move": true,
+				"remove": true
+			}
+		},
 		"text": {
 			"type": "string",
+	        "source": "text",
+	        "selector": "button.wp-block-popper__close",
 			"default": "Close"
 		},
-		"alignment": {
-			"type": "string",
-			"default": "left"
+		"isIcon": {
+	        "type": "boolean",
+	        "selector": "svg",
+			"default": true
+		},
+		"position": {
+			"type": "string"
+		},
+		"style": {
+			"type": "object",
+			"default": {
+				"color": {
+					"background": "#000000",
+					"text": "#ffffff"
+				}
+			}
 		}
 	},
 	"supports": {
-		"html": false,
+		"html": true,
+		"ariaLabel": true,
 		"lock": false,
 		"multiple": false,
 		"reusable": false,
@@ -35,7 +51,12 @@
 			"gradients": true
 		},
 		"__experimentalBorder": true,
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true			
+		},
 		"spacing": {
+			"margin": true,
 			"padding": true,
 			"__experimentalDefaultControls": {
 				"padding": true

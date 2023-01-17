@@ -14,17 +14,21 @@ const Component = ( props ) => {
 		[]
 	);
 	const [ isModalOpen, setModalOpen ] = useState( false );
+	const [ loading, setLoading ] = useState( false );
 
 	if ( 'popper' !== postType ) {
 		return false;
 	}
 
 	const updateTransient = () => {
+		setLoading(true)
 		apiFetch( {
 			path: '/popper/v1/sync_template_library/',
 			method: 'POST',
 			data: {},
-		} );
+		} ).then( () => {
+			setLoading(false)
+		})
 	};
 
 	const closeModal = () => setModalOpen( false );
@@ -54,6 +58,8 @@ const Component = ( props ) => {
 			<Button
 				isPrimary
 				onClick={ updateTransient }
+				isBusy={ loading }
+				disabled={ loading }
 			>
 				{ __( 'Sync template', 'popper' ) }
 			</Button>

@@ -1,5 +1,6 @@
 const icons = {};
-icons.borderRadiusNone = (
+icons.border = {};
+icons.border.none = (
 	<svg viewBox="0 0 104 104">
 		<defs>
 			<rect height="100" width="100" x="0" y="0" />
@@ -24,7 +25,7 @@ icons.borderRadiusNone = (
 		</g>
 	</svg>
 );
-icons.borderRadiusSmall = (
+icons.border.sm = (
 	<svg viewBox="0 0 104 104">
 		<defs>
 			<rect height="100" width="100" x="0" y="0" />
@@ -50,7 +51,7 @@ icons.borderRadiusSmall = (
 		</g>
 	</svg>
 );
-icons.borderRadiusMedium = (
+icons.border.md = (
 	<svg viewBox="0 0 104 104">
 		<defs>
 			<rect height="100" width="100" x="0" y="0" />
@@ -76,7 +77,7 @@ icons.borderRadiusMedium = (
 		</g>
 	</svg>
 );
-icons.borderRadiusLarge = (
+icons.border.lg = (
 	<svg viewBox="0 0 104 104">
 		<defs>
 			<rect height="100" width="100" x="0" y="0" />
@@ -102,7 +103,7 @@ icons.borderRadiusLarge = (
 		</g>
 	</svg>
 );
-icons.borderRadiusXLarge = (
+icons.border.xl = (
 	<svg viewBox="0 0 104 104">
 		<defs>
 			<rect height="100" width="100" x="0" y="0" />
@@ -237,7 +238,9 @@ icons.borderWidthXLarge = (
 	</svg>
 );
 
-icons.boxShadowNone = (
+icons.shadow = {}
+
+icons.shadow.none = (
 	<svg viewBox="0 0 104 104">
 		<path
 			d="m16 16h68v68h-68z"
@@ -248,7 +251,7 @@ icons.boxShadowNone = (
 		/>
 	</svg>
 );
-icons.boxShadowSmall = (
+icons.shadow.sm = (
 	<svg viewBox="0 0 104 104">
 		<g fill="none" transform="matrix(1 0 0 1 2 2)">
 			<path d="m12 13h68v68h-68z" fill="#d8d8d8" />
@@ -261,7 +264,7 @@ icons.boxShadowSmall = (
 		</g>
 	</svg>
 );
-icons.boxShadowMedium = (
+icons.shadow.md = (
 	<svg viewBox="0 0 104 104">
 		<g fill="none" transform="matrix(1 0 0 1 2 2)">
 			<path d="m19 20h68v68h-68z" fill="#d8d8d8" />
@@ -274,7 +277,7 @@ icons.boxShadowMedium = (
 		</g>
 	</svg>
 );
-icons.boxShadowLarge = (
+icons.shadow.lg = (
 	<svg viewBox="0 0 104 104">
 		<g fill="none" transform="matrix(1 0 0 1 2 2)">
 			<path d="m23 24h68v68h-68z" fill="#d8d8d8" />
@@ -287,7 +290,7 @@ icons.boxShadowLarge = (
 		</g>
 	</svg>
 );
-icons.boxShadowXLarge = (
+icons.shadow.xl = (
 	<svg viewBox="0 0 104 104">
 		<g fill="none" transform="matrix(1 0 0 1 2 2)">
 			<path d="m32 32h68v68h-68z" fill="#d8d8d8" />
