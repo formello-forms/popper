@@ -1,13 +1,13 @@
 import './plugin/';
 import './button/';
-import { registerBlockType } from '@wordpress/blocks';
+import './filter';
 import './style.scss';
+import { registerBlockType } from '@wordpress/blocks';
 import Edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
 import metadata from '../block.json';
 import variations from './variations';
-import './filter';
 
 const { name, attributes, supports } = metadata;
 
