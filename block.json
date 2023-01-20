@@ -91,11 +91,11 @@
 			"attribute": "data-form"
 		},
 		"devices": {
-			"type": "array",
+			"type": "string",
 			"source": "attribute",
 			"selector": "div.wp-block-popper",
 			"attribute": "data-devices",
-			"default": [ "desktop,tablet,mobile" ]
+			"default": "desktop,tablet,mobile"
 		},
 		"dismissForVisitors": {
 			"type": "boolean",

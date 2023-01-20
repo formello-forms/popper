@@ -70,7 +70,7 @@ export default function save( { attributes, className } ) {
 			data-outside={ closeOnClickOutside }
 			data-form={ closeOnFormSubmission }
 			data-id={ uuid || undefined }
-			data-devices={ devices.join() }
+			data-devices={ devices }
 			id={ id }
 			aria-hidden="true"
 			className={ popperClass }

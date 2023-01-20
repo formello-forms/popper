@@ -16,18 +16,19 @@ const Devices = ( props ) => {
 
 	const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
 
+	const devicesArr = devices.split(',');
+
 	const onChange = (val, device) => {
-		let filteredArray = devices;
+		let filteredArray = devicesArr;
 		if(val){
-		    filteredArray = [...devices, device]
-			setAttributes( { devices: filteredArray } );
+		    filteredArray = [...devicesArr, device]
 		} else {
-		    filteredArray = devices.filter(item => item !== device)
-		    setAttributes({devices: filteredArray});							
+		    filteredArray = devicesArr.filter(item => item !== device)
 		}
+		setAttributes( { devices: filteredArray.join(',') } );							
 		setMeta( { ...meta, popper_rules: {
 			...meta.popper_rules,
-			device: filteredArray
+			device: filteredArray.join(',')
 		} } );
 	};
 
@@ -36,17 +37,17 @@ const Devices = ( props ) => {
 			<PanelBody title={ __( 'Devices', 'popper' ) } initialOpen={ false }>
 		        <CheckboxControl
 		            label={ __( 'Desktop', 'popper' ) }
-		            checked={ devices.includes('desktop') }
+		            checked={ devicesArr.includes('desktop') }
 					onChange={ (val) => onChange( val, 'desktop' ) }
 		        />
 		        <CheckboxControl
 		            label={ __( 'Tablet', 'popper' ) }
-		            checked={ devices.includes('tablet') }
+		            checked={ devicesArr.includes('tablet') }
 					onChange={ (val) => onChange( val, 'tablet' ) }
 		        />
 		        <CheckboxControl
 		            label={ __( 'Mobile', 'popper' ) }
-		            checked={ devices.includes('mobile') }
+		            checked={ devicesArr.includes('mobile') }
 					onChange={ (val) => onChange( val, 'mobile' ) }
 		        />
 			</PanelBody>
