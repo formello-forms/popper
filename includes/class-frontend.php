@@ -100,6 +100,10 @@ class Popper_Frontend {
 			// Get the rules.
 			$rule = maybe_unserialize( $rule->meta_value );
 
+			if ( empty( $rule['date'] ) ) {
+				$rule['date'] = array();
+			}
+
 			$matched = Popper_Conditions::show_data( $rule['location'], $rule['exclude'], $rule['user'], $rule['date'] );
 
 			if ( $matched ) {
