@@ -106,7 +106,7 @@ class Popper_Rest extends WP_REST_Controller {
 				if ( $new_templates && is_array( $new_templates ) ) {
 					$templates = $new_templates;
 
-					set_transient( 'popper_templates', $templates, DAY_IN_SECONDS );
+					set_transient( 'popper_templates', $templates );
 				}
 			} else {
 				$templates = array();
