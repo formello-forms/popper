@@ -1,22 +1,14 @@
+import { useState, useEffect } from '@wordpress/element';
+
 import { __ } from '@wordpress/i18n';
-import { CheckboxControl, PanelBody } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
-import { useEntityProp } from '@wordpress/core-data';
 
-const Devices = ( props ) => {
-	const {
-		attributes: { devices },
-		setAttributes,
-	} = props;
+import { Flex, FlexItem, CheckboxControl } from '@wordpress/components';
 
-	const postType = useSelect(
-		( select ) => select( 'core/editor' ).getCurrentPostType(),
-		[]
-	);
+export function Devices( props ) {
 
-	const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
+	const { onDelete, onChangeDevice, rules, activeTab } = props;
 
-	const devicesArr = devices.split(',');
+	const devicesArr = rules[ activeTab ];
 
 	const onChange = (val, device) => {
 		let filteredArray = devicesArr;
@@ -25,16 +17,13 @@ const Devices = ( props ) => {
 		} else {
 		    filteredArray = devicesArr.filter(item => item !== device)
 		}
-		setAttributes( { devices: filteredArray.join(',') } );							
-		setMeta( { ...meta, popper_rules: {
-			...meta.popper_rules,
-			device: filteredArray.join(',')
-		} } );
+		onChangeDevice( filteredArray );
+
 	};
 
 	return (
-		<>
-			<PanelBody title={ __( 'Devices', 'popper' ) } initialOpen={ false }>
+		<Flex align="start" justify="start">
+			<FlexItem>
 		        <CheckboxControl
 		            label={ __( 'Desktop', 'popper' ) }
 		            checked={ devicesArr.includes('desktop') }
@@ -50,9 +39,8 @@ const Devices = ( props ) => {
 		            checked={ devicesArr.includes('mobile') }
 					onChange={ (val) => onChange( val, 'mobile' ) }
 		        />
-			</PanelBody>
-		</>
+			</FlexItem>
+		</Flex>
 	);
-};
 
-export default Devices;
+}

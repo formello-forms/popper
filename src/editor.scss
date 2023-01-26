@@ -22,6 +22,7 @@
 
 .wp-block-popper__container {
   width: fit-content;
+  min-height: 50px;
 }
 
 .wp-block-popper__close {
@@ -71,6 +72,10 @@
   .components-form-token-field__input-container{
 	margin: 0;
   }
+}
+
+.popper-pattern-button {
+  margin: 1em;
 }
 
 .popper-modal-buttons {

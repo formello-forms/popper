@@ -18,14 +18,12 @@ import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 
 import BlockVariationPicker from './placeholder';
 import Appearance from './settings/appearance';
-import Devices from './settings/devices';
 import OpenBehaviour from './settings/open-behaviour';
 import CloseBehaviour from './settings/close-behaviour';
 import { RulesModal } from './plugin/modal';
 import { TemplatesModal } from './library';
 import './editor.scss';
 import Controls from './settings/controls';
-import { ReactComponent as Icon } from './assets/Icon.svg';
 
 import classnames from 'classnames';
 
@@ -131,7 +129,6 @@ function Edit( props ) {
 				<OpenBehaviour { ...props } />
 				<CloseBehaviour { ...props } />
 				<Appearance { ...props } />
-				<Devices {...props} />
 			</InspectorControls>
 			<BlockControls>
 				<ToolbarGroup>

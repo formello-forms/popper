@@ -4,9 +4,11 @@ import { __ } from '@wordpress/i18n';
 
 import { Button, Flex, FlexItem } from '@wordpress/components';
 
-export function UserSelect( props ) {
+function UserRow( props ){
+
 	const [ users, setUsersConditions ] = useState( [] );
-	const { index, onDelete } = props;
+
+	const { onDelete, onChange, onChangeDevice, addRule, rules, onSelect, activeTab } = props;
 
 	useEffect( () => {
 		setUsersConditions( window.popper.users );
@@ -44,10 +46,30 @@ export function UserSelect( props ) {
 					icon="no"
 					isSmall
 					onClick={ () => {
-						onDelete( index );
+						props.onDelete( props.index );
 					} }
 				></Button>
 			</FlexItem>
 		</Flex>
 	);
+
+}
+
+export function Users( props ) {
+
+	const { onDelete, onChange, onChangeDevice, addRule, rules, onSelect, activeTab } = props;
+
+	return rules[ activeTab ].map( ( r, i ) => {
+
+			return (
+				<UserRow
+					onChange={ onChange }
+					onDelete={ onDelete }
+					rule={ r }
+					index={ i }
+					key={ i }
+				/>
+			);
+		} )
+
 }

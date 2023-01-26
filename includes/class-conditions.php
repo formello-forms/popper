@@ -461,7 +461,7 @@ class Popper_Conditions {
 			} else {
 				$label .= $users['role']['rules'][ $data ];
 			}
-			$label .= ', ';
+			$label .= '<br />';
 		}
 		return $label;
 	}

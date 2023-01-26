@@ -1,15 +1,67 @@
 import { useState, useEffect } from '@wordpress/element';
-
 import { __ } from '@wordpress/i18n';
+import { Button, Flex, FlexItem, FormTokenField } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
 
-import { Button, Flex, FlexItem } from '@wordpress/components';
+function Rules( props ) {
+	const { type, rule, index, onChange } = props;
 
-import Rules from './conditions';
+	const posts = useSelect( ( select ) => {
+		return select( 'core' ).getEntityRecords( 'postType', type, {
+			per_page: -1,
+		} );
+	} );
 
-export function MySelect( props ) {
+	let postNames = [];
+	let postsFieldValue = [];
+	const selectedObjects = rule.object;
+
+	if ( posts !== null ) {
+		postNames = posts.map( ( post ) => post.title.raw );
+
+		postsFieldValue = selectedObjects
+			.map( ( postId ) => {
+				const wantedPost = posts.find( ( post ) => {
+					return post.id === parseInt( postId );
+				} );
+				if ( wantedPost === undefined || ! wantedPost ) {
+					return false;
+				}
+				return wantedPost.title.raw;
+			} )
+			.filter( ( p ) => !! p );
+	}
+
+	return (
+		<FormTokenField
+			value={ postsFieldValue }
+			suggestions={ postNames }
+			placeholder={ __( 'Type to choose an item', 'popper' ) }
+			onChange={ ( selectedObjects ) => {
+				// Build array of selected objects.
+				const selectedObjectsArray = [];
+				selectedObjects.forEach( ( postName ) => {
+					const matchingPost = posts.find( ( post ) => {
+						return post.title.raw === postName;
+					} );
+					if ( matchingPost !== undefined ) {
+						selectedObjectsArray.push( matchingPost.id );
+					}
+				} );
+				onChange( 'object', selectedObjectsArray, index );
+			} }
+			maxSuggestions={ 5 }
+			__experimentalShowHowTo={ false }
+		/>
+	);
+}
+
+function LocationRow( props ){
+
+	const { onDelete, onChange, onChangeDevice, addRule, rule, onSelect, index } = props;
+
 	const [ options, setOptions ] = useState( [] );
 	const supported = [ 'post', 'taxonomy' ];
-	const { index, onDelete, rule } = props;
 
 	useEffect( () => {
 		setOptions( window.popper.positions );
@@ -80,4 +132,24 @@ export function MySelect( props ) {
 			</FlexItem>
 		</Flex>
 	);
+
+}
+
+export function Locations( props ) {
+
+	const { onDelete, onChange, rules, activeTab } = props;
+
+	return rules[ activeTab ].map( ( r, i ) => {
+
+			return (
+				<LocationRow
+					onChange={ onChange }
+					onDelete={ onDelete }
+					rule={ r }
+					index={ i }
+					key={ i }
+				/>
+			);
+		} )
+
 }

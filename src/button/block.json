@@ -11,7 +11,7 @@
 			"type": "object",
 			"default": {
 				"move": true,
-				"remove": true
+				"remove": false
 			}
 		},
 		"text": {
@@ -29,13 +29,7 @@
 			"type": "string"
 		},
 		"style": {
-			"type": "object",
-			"default": {
-				"color": {
-					"background": "#000000",
-					"text": "#ffffff"
-				}
-			}
+			"type": "object"
 		}
 	},
 	"supports": {

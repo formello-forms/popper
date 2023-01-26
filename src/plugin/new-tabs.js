@@ -3,10 +3,10 @@ import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import { TabPanel, Button } from '@wordpress/components';
-import { MySelect } from './select';
-import { UserSelect } from './user-select';
-import { Devices } from './devices';
-import { Dates } from './dates';
+import { Locations } from './tabs/locations';
+import { Users } from './tabs/users';
+import { Devices } from './tabs/devices';
+import { Dates } from './tabs/dates';
 
 export function Tabs( props ) {
 
@@ -45,8 +45,8 @@ export function Tabs( props ) {
 			tabs={ [
 				{
 					name: 'location',
-					component: MySelect,
-					title: <span>{ __( 'Location', 'popper' ) }</span>,
+					component: Locations,
+					title: __( 'Location', 'popper' ),
 					description: (
 						<p>
 							{ __(
@@ -58,8 +58,8 @@ export function Tabs( props ) {
 				},
 				{
 					name: 'exclude',
-					component: MySelect,
-					title: <span>{ __( 'Exclude', 'popper' ) }</span>,
+					component: Locations,
+					title: __( 'Exclude', 'popper' ),
 					description: (
 						<p>
 							{ __(
@@ -71,8 +71,8 @@ export function Tabs( props ) {
 				},
 				{
 					name: 'user',
-					component: UserSelect,
-					title: <span>{ __( 'Users', 'popper' ) }</span>,
+					component: Users,
+					title: __( 'Users', 'popper' ),
 					description: (
 						<p>
 							{ __(
@@ -83,35 +83,29 @@ export function Tabs( props ) {
 					),
 				},
 				{
+					name: 'device',
+					component: Devices,
+					title: __( 'Devices', 'popper' ),
+					description: '',
+				},
+				{
 					name: 'date',
 					component: Dates,
-					title: <span>{ __( 'Date', 'popper' ) }</span>,
+					title: __( 'Date', 'popper' ),
 					description: '',
 				},
 			] }
 		>
 			{ ( tabData ) => {
+
+				const Component = tabData.component
 				return (
 					<Fragment>
 						<h2>{ tabData.title }</h2>
 						{ tabData.description }
-						<Fragment>
-							{ rules[ activeTab ].map( ( r, i ) => {
-								const Component = tabData.component
-								return (
-									<Component
-										onChange={ onChange }
-										onChangeDevice={ onChangeDevice }
-										onDelete={ onDelete }
-										rule={ r }
-										index={ i }
-										key={ i }
-									/>
-								);
-							} ) }
-						</Fragment>
+						<Component {...props} />
 						{
-							'date' !== activeTab &&
+							!['date', 'device'].includes( activeTab ) &&
 							<Button
 								isPrimary={ true }
 								onClick={ addRule }

@@ -3,13 +3,15 @@ import { useState, Fragment } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 
-import { DateTimePicker, Popover, Button, Flex, FlexItem, RadioControl } from '@wordpress/components';
+import { DateTimePicker, Button, Flex, FlexItem, RadioControl, Dropdown } from '@wordpress/components';
 
 export function Dates( props ) {
 
 	const [ openStartDate, setOpenStartDate ] = useState( false );
 	const [ openEndDate, setOpenEndDate ] = useState( false );
-	const { index, onChange, onChangeDevice, rule } = props;
+	const { index, onChange, onChangeDevice, rules, activeTab } = props;
+
+	const rule = rules[ activeTab ][0];
 
 	return (
 		<Fragment>
@@ -22,7 +24,7 @@ export function Dates( props ) {
 			                { label: __( 'Evergreen', 'popper' ), value: 'evergreen' },
 			                { label: __( 'Custom dates', 'popper' ), value: 'custom' },
 			            ] }
-			            onChange={ ( val ) => onChange( 'type', val, index ) }
+			            onChange={ ( val ) => onChange( 'type', val, 0 ) }
 			        />
 				</FlexItem>
 			</Flex>
@@ -34,17 +36,23 @@ export function Dates( props ) {
 							<b>From:</b>
 						</FlexItem>
 						<FlexItem>
-							<Button isSecondary onClick={() => setOpenStartDate( ! openStartDate )}>
-									{ rule.startDate ? dateI18n( 'F j, Y g:i a', rule.startDate ) : __( 'Click here to set start date.', 'popper' ) }
-							</Button>
-							{ openStartDate && (
-								<Popover position="bottom" onClose={ setOpenStartDate.bind( null, false )}>
+						    <Dropdown
+						        popoverProps={ { placement: 'bottom-start' } }
+						        renderToggle={ ( { isOpen, onToggle } ) => (
+						            <Button
+						                variant="secondary"
+						                onClick={ onToggle }
+						                aria-expanded={ isOpen }
+						            >
+										{ rule.startDate ? dateI18n( 'F j, Y g:i a', rule.startDate ) : __( 'Click here to set start date.', 'popper' ) }
+						            </Button>
+						        ) }
+						        renderContent={ () => 
 									<DateTimePicker
 										__nextRemoveHelpButton
-										__nextRemoveResetButton
 										label="My Date/Time Picker"
 										currentDate={ rule.startDate }
-					            		onChange={ ( val ) => onChange( 'startDate', val, index ) }
+										onChange={ ( val ) => onChange( 'startDate', val, 0 ) }
 										is12Hour ={true}
 										isInvalidDate={
 											(val) =>  {
@@ -54,31 +62,41 @@ export function Dates( props ) {
 											}
 										}
 									/>
-								</Popover>
-							) }
+						    	}
+						    />	
 						</FlexItem>
 						<FlexItem>
 							<b>To:</b>
 						</FlexItem>
 						<FlexItem>
-							<Button isSecondary onClick={() => setOpenEndDate( ! openEndDate )}>
-									{ rule.endDate ? dateI18n( 'F j, Y g:i a', rule.endDate ) : __( 'Click here to set end date.', 'popper' ) }
-							</Button>
-							{ openEndDate && (
-								<Popover position="bottom" onClose={ setOpenEndDate.bind( null, false )}>
+						    <Dropdown
+						        popoverProps={ { placement: 'bottom-start' } }
+						        renderToggle={ ( { isOpen, onToggle } ) => (
+						            <Button
+						                variant="secondary"
+						                onClick={ onToggle }
+						                aria-expanded={ isOpen }
+						            >
+										{ 
+											rule.endDate ? 
+												dateI18n( 'F j, Y g:i a', rule.endDate ) : 
+												__( 'Click here to set start date.', 'popper' ) 
+										}
+						            </Button>
+						        ) }
+						        renderContent={ () => 
 									<DateTimePicker
 										__nextRemoveHelpButton
-										__nextRemoveResetButton
 										label="My Date/Time Picker"
 										currentDate={ rule.endDate }
-										onChange={ ( val ) => onChange( 'endDate', val, index ) }
+										onChange={ ( val ) => onChange( 'endDate', val, 0 ) }
 										is12Hour ={true}
 										isInvalidDate={
 											(val) =>  new Date(val) < new Date( rule.startDate )
 										}
 									/>
-								</Popover>
-							) }
+						    	}
+						    />	
 						</FlexItem>
 					</Flex>
 				</Fragment>

@@ -222,6 +222,7 @@ add_filter( 'manage_popper_posts_columns', 'popper_columns_table' );
 function popper_columns_table( $columns ) {
 
 	$columns['location'] = __( 'Locations', 'popper' );
+	$columns['exclude'] = __( 'Exclude', 'popper' );
 	$columns['users'] = __( 'Users', 'popper' );
 	$columns['trigger'] = __( 'Trigger', 'popper' );
 	$columns['device'] = __( 'Devices', 'popper' );
@@ -244,55 +245,50 @@ add_action( 'manage_popper_posts_custom_column', 'popper_columns_display', 10, 2
  * @param number $post_id The post id.
  */
 function popper_columns_display( $column, $post_id ) {
+
+	$popup = get_post_meta( $post_id, 'popper_rules', true );
+
 	switch ( $column ) {
 
 		case 'location':
-			$popup = get_post_meta( $post_id, 'popper_rules', true );
-
 			$locations = array();
-			$exclude = array();
 
 			foreach ( $popup['location'] as $value ) {
 				array_push( $locations, Popper_Conditions::get_saved_label( $value ) );
 			}
+
+			$show = implode( '<br />', $locations );
+
+			if ( $show ) {
+				echo wp_kses_post( $show );
+			}
+
+			break;
+
+		case 'exclude':
+			$exclude = array();
+
 			foreach ( $popup['exclude'] as $value ) {
 				array_push( $exclude, Popper_Conditions::get_saved_label( $value ) );
 			}
 
-			$show = implode( ', ', $locations );
-			$exclude = implode( ', ', $exclude );
-
-			if ( $show ) {
-				echo sprintf(
-					'<b>%s</b> %s',
-					// phpcs:ignore.
-					__( 'Show on:', 'formello' ),
-					esc_attr( $show ),
-				);
-			}
+			$exclude = implode( '<br />', $exclude );
 
 			if ( $exclude ) {
-				echo sprintf(
-					'<br /><b>%s</b>: %s',
-					// phpcs:ignore.
-					__( 'Exclude on', 'formello' ),
-					esc_attr( $exclude ),
-				);
+				echo wp_kses_post( $exclude );
 			}
 			break;
 
 		case 'users':
-			$popup = get_post_meta( $post_id, 'popper_rules', true );
-			echo esc_attr( rtrim( Popper_Conditions::get_user_label( $popup['user'] ), ', ' ) );
+			$users = Popper_Conditions::get_user_label( $popup['user'] );
+			echo wp_kses_post( $users );
 			break;
 
 		case 'device':
-			$popup = get_post_meta( $post_id, 'popper_rules', true );
-			echo esc_attr( implode( ', ', $popup['device'] ) );
+			echo wp_kses_post( implode( '<br />', $popup['device'] ) );
 			break;
 
 		case 'dates':
-			$popup = get_post_meta( $post_id, 'popper_rules', true );
 			if ( empty( $popup['date'] ) ) {
 				return;
 			}

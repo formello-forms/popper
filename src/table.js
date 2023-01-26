@@ -3,7 +3,6 @@ import { __ } from '@wordpress/i18n';
 import { Fragment, render, useState, useEffect } from '@wordpress/element';
 import { getQueryArg } from '@wordpress/url';
 import api from '@wordpress/api';
-import { Tabs } from './plugin/tabs';
 
 const Exporter = (props) => {
     const [ isOpen, setOpen ] = useState( false );

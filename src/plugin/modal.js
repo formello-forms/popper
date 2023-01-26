@@ -7,12 +7,10 @@ import { useSelect } from '@wordpress/data';
 import { useEntityProp } from '@wordpress/core-data';
 
 import { TabPanel, Button, Modal } from '@wordpress/components';
-import { Select } from './select';
-import { Tabs } from './tabs';
-import { UserSelect } from './user-select';
+import { Tabs } from './new-tabs';
 
 export function RulesModal( props ) {
-	const { onRequestClose, setAttributes } = props;
+	const { onRequestClose, setAttributes, attributes } = props;
 
 	const postType = useSelect(
 		( select ) => select( 'core/editor' ).getCurrentPostType(),
@@ -54,15 +52,9 @@ export function RulesModal( props ) {
 		setRules( { ...rules, [ activeTab ]: items } );
 	};
 
-	const onChangeDevice = () => {
-		let items = rules[ activeTab ];
-		var result = items.filter(obj => {
-		  return obj.visibility === true
-		}).map( (obj) => {
-			return obj.device;
-		});
-		setAttributes( { devices: result } )
-
+	const onChangeDevice = (items) => {
+		setRules( { ...rules, [ activeTab ]: items } );
+		setAttributes( { devices: items.join(',') } );
 	};
 
 	const updateMetaValue = () => {
