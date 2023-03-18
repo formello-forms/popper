@@ -5,7 +5,6 @@ import { InspectorAdvancedControls } from '@wordpress/block-editor';
 import { SelectControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
-import { parse } from '@wordpress/block-serialization-default-parser';
 import api from '@wordpress/api';
 
 const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
@@ -25,43 +24,45 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 
 		const { popups } = useSelect( ( select ) => ( {
 			popups: select( 'core' ).getEntityRecords( 'postType', 'popper', {
-					per_page: -1,
-				} )
+				per_page: -1,
+			} ),
 		} ) );
 
 		const findById = ( val ) => {
-			return popups.find( x => x.id === Number(val) )
+			return popups.find( ( x ) => x.id === Number( val ) );
 		};
 
 		const setAnchor = ( val ) => {
-			if( val ){
+			if ( val ) {
 				const popup = findById( val );
 				setAttributes( { anchor: popup.meta.popper_trigger.value } );
-			}else{
-				setAttributes( { anchor: val } )
+			} else {
+				setAttributes( { anchor: val } );
 			}
 		};
 
 		const addRule = ( val ) => {
-			if( !val ){
-				return
+			if ( ! val ) {
+				return;
 			}
 			const popup = findById( val );
 
 			const rule = {
 				rule: 'post:' + postType,
-				object: [postId]
+				object: [ postId ],
+			};
+
+			const ruleExists = popup.meta.popper_rules.location.find(
+				( x ) => x.rule === rule.rule && x.object.includes( postId )
+			);
+
+			if ( ruleExists ) {
+				return;
 			}
 
-			const ruleExists  = popup.meta.popper_rules.location.find(x => x.rule === rule.rule && x.object.includes(postId) )
-
-			if( ruleExists ){
-				return
-			}
-
-			popup.meta.popper_rules.location.push( rule )
+			popup.meta.popper_rules.location.push( rule );
 			const post = new api.models.Popper( { id: val } );
-			post.fetch().done( ( data ) => {
+			post.fetch().done( () => {
 				post.setMeta( 'popper_rules', popup.meta.popper_rules );
 				post.save( { id: val } );
 			} );
@@ -69,8 +70,18 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 
 		if ( null !== popups && popups.length ) {
 			popups.forEach( ( post ) => {
-				if( 'anchor' === post.meta.popper_trigger.trigger || 'target' === post.meta.popper_trigger.trigger ) {
-					opts.push( { value: post.id, label: post.title.raw + ' (' + post.meta.popper_trigger.trigger + ')' || __( 'No title', 'popper' ) } );
+				if (
+					'anchor' === post.meta.popper_trigger.trigger ||
+					'target' === post.meta.popper_trigger.trigger
+				) {
+					opts.push( {
+						value: post.id,
+						label:
+							post.title.raw +
+								' (' +
+								post.meta.popper_trigger.trigger +
+								')' || __( 'No title', 'popper' ),
+					} );
 				}
 			} );
 		}

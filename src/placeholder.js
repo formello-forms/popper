@@ -20,7 +20,6 @@ function BlockVariationPicker( {
 	onSelect,
 	allowSkip,
 	clientId,
-	setAttributes,
 } ) {
 	const classes = classnames( 'block-editor-block-variation-picker', {
 		'has-many-variations': variations.length > 4,

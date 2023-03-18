@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useSelect, dispatch, select } from '@wordpress/data';
-import { useState, useEffect, Fragment } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 import {
 	BlockControls,
@@ -8,8 +8,9 @@ import {
 	InnerBlocks,
 	useBlockProps,
 	useInnerBlocksProps,
-	store as blockEditorStore,
 	__experimentalUseBorderProps as useBorderProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
+	store as blockEditorStore,
 } from '@wordpress/block-editor';
 
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
@@ -18,6 +19,7 @@ import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 
 import BlockVariationPicker from './placeholder';
 import Appearance from './settings/appearance';
+import Appearance2 from './settings/appearance2';
 import OpenBehaviour from './settings/open-behaviour';
 import CloseBehaviour from './settings/close-behaviour';
 import { RulesModal } from './plugin/modal';
@@ -28,45 +30,56 @@ import Controls from './settings/controls';
 import classnames from 'classnames';
 
 function Edit( props ) {
-	const { attributes, setAttributes, clientId, hasInnerBlocks, name, isSelected } = props;
+	const {
+		attributes,
+		setAttributes,
+		clientId,
+		name,
+	} = props;
 
 	const {
 		width,
 		backgroundColor,
-		showCloseButton,
-		closeButtonColor,
-		closeButtonSize,
-		closeButtonAlignment,
 		boxShadow,
 		overlayColor,
 		align,
 		fullPage,
 		borderRadius,
 		id,
-		uuid
+		uuid,
 	} = attributes;
 
-	const postId = useSelect( ( select ) =>
-		select( 'core/editor' ).getCurrentPostId()
-	);
+	const { postId, deviceType } = useSelect( ( select ) => {
+		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
+
+		return {
+			deviceType: __experimentalGetPreviewDeviceType(),
+			postId: select( 'core/editor' ).getCurrentPostId(),
+		};
+	}, [] );
 
 	useEffect( () => {
-		if( id !== 'modal-' + postId  ){
+		if ( id !== 'modal-' + postId ) {
 			setAttributes( { id: 'modal-' + postId } );
 		}
-		if( parseInt( uuid ) !== postId  ){
+		if ( parseInt( uuid ) !== postId ) {
 			setAttributes( { uuid: postId } );
 		}
 	}, [] );
 
 	const [ isModalOpen, setModalOpen ] = useState( false );
 
+	const { selectBlock } = dispatch( blockEditorStore );
+
+
 	const borderProps = useBorderProps( attributes );
+	const spacingProps = useSpacingProps( attributes );
 
 	const modalStyle = {
-		width,
 		borderRadius,
-		...borderProps.style
+		...borderProps.style,
+		width,
+		...spacingProps.style,
 	};
 
 	const overlayStyle = {
@@ -84,6 +97,7 @@ function Edit( props ) {
 	const popperClass = classnames(
 		'wp-block-popper wp-block-popper-is-open',
 		'wp-block-formello-popper',
+		'alignfull',
 		{
 			'wp-block-popper--right': align.includes( 'right' ),
 			'wp-block-popper--left': align.includes( 'left' ),
@@ -94,20 +108,15 @@ function Edit( props ) {
 		}
 	);
 
-	const containerClass = classnames( 'wp-block-popper__container', boxShadow, borderRadius, borderProps.className, {
-		wide: fullPage,
-	} );
-
-	/**
-	 * Returns the current deviceType.
-	 */
-	const { deviceType } = useSelect( ( select ) => {
-		const { __experimentalGetPreviewDeviceType } = select( 'core/edit-post' );
-
-		return {
-			deviceType: __experimentalGetPreviewDeviceType(),
-		};
-	}, [] );
+	const containerClass = classnames(
+		'wp-block-popper__container',
+		boxShadow,
+		borderRadius,
+		borderProps.className,
+		{
+			wide: fullPage,
+		}
+	);
 
 	if ( 'Mobile' === deviceType ) {
 		modalStyle.width = undefined;
@@ -115,16 +124,17 @@ function Edit( props ) {
 
 	const blockProps = useBlockProps( {
 		className: containerClass,
-		style: modalStyle
-	} )
+		style: modalStyle,
+	} );
 
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
+		template: [ [ 'core/paragraph' ] ],
 		templateLock: false,
-		renderAppender: hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : null,
+		renderAppender: InnerBlocks.DefaultBlockAppender,
 	} );
 
 	return (
-		<div className={ popperClass } style={ overlayStyle }>
+		<>
 			<InspectorControls>
 				<OpenBehaviour { ...props } />
 				<CloseBehaviour { ...props } />
@@ -154,11 +164,19 @@ function Edit( props ) {
 					setAttributes={ setAttributes }
 				/>
 			</BlockControls>
-			<div {...innerBlocksProps}>
 
-				{ children }
+				<div className={ popperClass }>
+					<div
+						className="wp-block-popper__overlay"
+						style={ overlayStyle }
+						onClick={ () => selectBlock( clientId ) }
+					></div>
+					<main className="wp-block-popper__content" { ...innerBlocksProps }>
+						{ children }
+					</main>
+				</div>				
+			
 
-			</div>
 			{ 'templates' === isModalOpen && (
 				<TemplatesModal
 					clientId={ clientId }
@@ -167,9 +185,12 @@ function Edit( props ) {
 				/>
 			) }
 			{ 'options' === isModalOpen && (
-				<RulesModal onRequestClose={ () => setModalOpen( false ) } { ...props } />
+				<RulesModal
+					onRequestClose={ () => setModalOpen( false ) }
+					{ ...props }
+				/>
 			) }
-		</div>
+		</>
 	);
 }
 
@@ -181,26 +202,22 @@ function Placeholder( props ) {
 	const { getBlockVariations, getDefaultBlockVariation } =
 		select( 'core/blocks' );
 
-	const defaultVariation = useSelect(
-		() => {
-			return typeof getDefaultBlockVariation === 'undefined'
-				? null
-				: getDefaultBlockVariation( props.name );
-		},
-		[ name ]
-	);
+	const defaultVariation = useSelect( () => {
+		return typeof getDefaultBlockVariation === 'undefined'
+			? null
+			: getDefaultBlockVariation( props.name );
+	}, [ name ] );
 
-	const variations = useSelect(
-		() => {
-			return getBlockVariations( name, 'block' );
-		},
-		[ name ]
-	);
+	const variations = useSelect( () => {
+		return getBlockVariations( name, 'block' );
+	}, [ name ] );
 
 	return (
-		<div { ...useBlockProps({
-			className: 'popper-placeholder'
-		}) }>
+		<div
+			{ ...useBlockProps( {
+				className: 'popper-placeholder',
+			} ) }
+		>
 			<BlockVariationPicker
 				icon={ 'external' }
 				label={ 'Popup' }

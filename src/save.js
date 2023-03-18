@@ -1,6 +1,12 @@
 import classnames from 'classnames';
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
-import { ReactComponent as Icon } from './assets/Icon.svg';
+import {
+	useBlockProps,
+	useInnerBlocksProps,
+	InnerBlocks,
+	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
+	__experimentalGetColorClassesAndStyles as getColorClassesAndStyles,
+	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
+} from '@wordpress/block-editor';
 
 export default function save( { attributes, className } ) {
 	const {
@@ -11,8 +17,6 @@ export default function save( { attributes, className } ) {
 		offset,
 		openBehaviour,
 		backgroundColor,
-		closeButtonStyle,
-		closeButtonAlignment,
 		borderRadius,
 		boxShadow,
 		overlayColor,
@@ -22,19 +26,28 @@ export default function save( { attributes, className } ) {
 		closeOnFormSubmission,
 		dismissForVisitors,
 		dismissPeriod,
-		showCloseButton,
 		pageviews,
 		animation,
 		align,
 		fullPage,
 		id,
 		uuid,
-		devices
+		devices,
 	} = attributes;
 
+	const borderProps = getBorderClassesAndStyles( attributes );
+	const spacingProps = getSpacingClassesAndStyles( attributes );
+	const colorProps = getColorClassesAndStyles( attributes );
+
 	const modalStyle = {
-		width,
 		backgroundColor,
+		...borderProps.style,
+	};
+
+	const contentStyle = {
+		width,
+		...spacingProps.style,
+		...colorProps.style,
 	};
 
 	const popperClass = classnames( 'wp-block-popper', className, {
@@ -43,15 +56,17 @@ export default function save( { attributes, className } ) {
 		'wp-block-popper--top': align.includes( 'top' ),
 		'wp-block-popper--bottom': align.includes( 'bottom' ),
 	} );
-	const containerClass = classnames( 'wp-block-popper__container', boxShadow, borderRadius, {
-		'wp-block-popper__animate': !! animation,
-		wide: fullPage,
-	} );
 
-	const buttonClass = classnames( 'wp-block-popper__close', {
-		'wp-block-popper__close-outside': 'outside' === closeButtonAlignment && !fullPage,
-		'wp-block-popper__close-corner': 'corner' === closeButtonAlignment,
-	} );
+	const containerClass = classnames(
+		'wp-block-popper__container',
+		boxShadow,
+		borderRadius,
+		colorProps.className,
+		{
+			'wp-block-popper__animate': !! animation,
+			wide: fullPage,
+		}
+	);
 
 	if ( animation ) {
 		modalStyle[ '--popper-animation' ] = animation;
@@ -75,7 +90,6 @@ export default function save( { attributes, className } ) {
 			aria-hidden="true"
 			className={ popperClass }
 		>
-
 			{ 'center center' === align && ! fullPage && (
 				<div
 					className="wp-block-popper__overlay"
@@ -92,7 +106,7 @@ export default function save( { attributes, className } ) {
 				aria-modal="true"
 				aria-labelledby="modal-title"
 			>
-				<main className="wp-block-popper__content">
+				<main className="wp-block-popper__content" style={ contentStyle }>
 					<InnerBlocks.Content />
 				</main>
 			</div>

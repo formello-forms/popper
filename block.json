@@ -14,10 +14,11 @@
 		"reusable": false,
 		"inserter": false,
 		"spacing": {
-			"padding": true,
-			"margin": true
+			"__experimentalSkipSerialization": true,
+			"padding": true
 		},
 		"__experimentalBorder": {
+			"__experimentalSkipSerialization": true,
 			"color": true,
 			"radius": true,
 			"style": true,

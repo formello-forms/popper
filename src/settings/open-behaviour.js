@@ -14,40 +14,41 @@ const OpenBehaviour = ( props ) => {
 	const { openBehaviour, anchor, waitTime, offset, target, pageviews } =
 		attributes;
 
-    const postType = useSelect(
-        ( select ) => select( 'core/editor' ).getCurrentPostType(),
-        []
-    );
+	const postType = useSelect(
+		( select ) => select( 'core/editor' ).getCurrentPostType(),
+		[]
+	);
 
-    const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
+	const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
 
-    const metaFieldValue = meta[ 'popper_trigger' ];
+	const metaFieldValue = meta.popper_trigger;
 
-    const updateTrigger = ( key, val ) => {
-		setAttributes( { [key]: val } );
-        setMeta( { 
-        	...meta,
-        	popper_trigger: { 
-        		...meta.popper_trigger,
-        		value: String(val)
-        	} 
-        } );
-    };
+	const updateTrigger = ( key, val ) => {
+		setAttributes( { [ key ]: val } );
+		setMeta( {
+			...meta,
+			popper_trigger: {
+				...metaFieldValue,
+				value: String( val ),
+			},
+		} );
+	};
 
 	const handleChangeOpenBehaviour = ( val ) => {
 		setAttributes( { openBehaviour: val } );
-        setMeta( { 
-        	...meta,
-        	popper_trigger: { 
-        		...meta.popper_trigger,
-        		trigger: val
-        	} 
-        } );
+		setMeta( {
+			...meta,
+			popper_trigger: {
+				...metaFieldValue,
+				trigger: val,
+			},
+		} );
 	};
 
 	const options = [
 		{ label: __( 'Timer', 'popper' ), value: 'load' },
 		{ label: __( 'On Anchor Click', 'popper' ), value: 'anchor' },
+		{ label: __( 'On AdBlock Detect', 'popper' ), value: 'adBlock' },
 		{ label: __( 'On Target Visibility', 'popper' ), value: 'target' },
 		{ label: __( 'On Scroll', 'popper' ), value: 'scroll' },
 		{ label: __( 'On Page Views', 'popper' ), value: 'pageviews' },
@@ -69,14 +70,27 @@ const OpenBehaviour = ( props ) => {
 						value={ anchor }
 						label={ __( 'Anchor', 'popper' ) }
 						help={
-							<small>
-								{ __(
-									'You can add anchors to button blocks. Using the same anchor here will open the popup when you click the respective button.',
-									'popper'
-								) }
-							</small>
+							__(
+								'You can add anchors to button blocks. Using the same anchor here will open the popup when you click the respective button.',
+								'popper'
+							)
 						}
-						onChange={ (val) => updateTrigger( 'anchor', val ) }
+						onChange={ ( val ) => updateTrigger( 'anchor', val ) }
+					/>
+				) }
+				{ openBehaviour === 'adBlock' && (
+					<RangeControl
+						label={ __( 'Scroll Distance in Percent', 'popper' ) }
+						help={
+							__(
+								'How much time to wait before showing the popup.'
+							)
+						}
+						beforeIcon="image-flip-vertical"
+						value={ offset }
+						onChange={ ( val ) => updateTrigger( 'offset', val ) }
+						min={ 20 }
+						max={ 100 }
 					/>
 				) }
 				{ openBehaviour === 'target' && (
@@ -84,29 +98,25 @@ const OpenBehaviour = ( props ) => {
 						value={ target }
 						label={ __( 'Target', 'popper' ) }
 						help={
-							<small>
-								{ __(
-									'Show a popup when element with this anchor enter in viewport.',
-									'popper'
-								) }
-							</small>
+							__(
+								'Show a popup when element with this anchor enter in viewport.',
+								'popper'
+							)
 						}
-						onChange={ (val) => updateTrigger( 'target', val ) }
+						onChange={ ( val ) => updateTrigger( 'target', val ) }
 					/>
 				) }
 				{ openBehaviour === 'scroll' && (
 					<RangeControl
 						label={ __( 'Scroll Distance in Percent', 'popper' ) }
 						help={
-							<small>
-								{ __(
-									'Show the popup when this percentage of the page has been scrolled.'
-								) }
-							</small>
+							__(
+								'Show the popup when this percentage of the page has been scrolled.'
+							)
 						}
 						beforeIcon="image-flip-vertical"
 						value={ offset }
-						onChange={ (val) => updateTrigger( 'offset', val ) }
+						onChange={ ( val ) => updateTrigger( 'offset', val ) }
 						min={ 0 }
 						max={ 100 }
 					/>
@@ -115,15 +125,13 @@ const OpenBehaviour = ( props ) => {
 					<RangeControl
 						label={ __( 'Number of pages', 'popper' ) }
 						help={
-							<small>
-								{ __(
-									'Show the popup when this number of pages has been visited.'
-								) }
-							</small>
+							__(
+								'Show the popup when this number of pages has been visited.'
+							)
 						}
 						beforeIcon="visibility"
 						value={ pageviews }
-						onChange={ (val) => updateTrigger( 'pageviews', val ) }
+						onChange={ ( val ) => updateTrigger( 'pageviews', val ) }
 						min={ 0 }
 						max={ 100 }
 					/>
@@ -132,15 +140,13 @@ const OpenBehaviour = ( props ) => {
 					<RangeControl
 						label={ __( 'Wait Time in Seconds', 'popper' ) }
 						help={
-							<small>
-								{ __(
-									'How much time to wait before showing the popup.'
-								) }
-							</small>
+							__(
+								'How much time to wait before showing the popup.'
+							)
 						}
 						beforeIcon="clock"
 						value={ waitTime }
-						onChange={ (val) => updateTrigger( 'waitTime', val ) }
+						onChange={ ( val ) => updateTrigger( 'waitTime', val ) }
 						min={ 0 }
 						max={ 100 }
 					/>

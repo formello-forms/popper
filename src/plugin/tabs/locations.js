@@ -56,9 +56,12 @@ function Rules( props ) {
 	);
 }
 
-function LocationRow( props ){
-
-	const { onDelete, onChange, onChangeDevice, addRule, rule, onSelect, index } = props;
+function LocationRow( props ) {
+	const {
+		onDelete,
+		rule,
+		index,
+	} = props;
 
 	const [ options, setOptions ] = useState( [] );
 	const supported = [ 'post', 'taxonomy' ];
@@ -81,7 +84,10 @@ function LocationRow( props ){
 	return (
 		<Flex align="start" justify="start" className="popper-modal-row">
 			<FlexItem>
-				<label className="components-form-token-field__label" htmlFor="select">
+				<label
+					className="components-form-token-field__label"
+					htmlFor="select"
+				>
 					{ __( 'Where', 'popper' ) }
 				</label>
 				<select
@@ -132,24 +138,20 @@ function LocationRow( props ){
 			</FlexItem>
 		</Flex>
 	);
-
 }
 
 export function Locations( props ) {
-
 	const { onDelete, onChange, rules, activeTab } = props;
 
 	return rules[ activeTab ].map( ( r, i ) => {
-
-			return (
-				<LocationRow
-					onChange={ onChange }
-					onDelete={ onDelete }
-					rule={ r }
-					index={ i }
-					key={ i }
-				/>
-			);
-		} )
-
+		return (
+			<LocationRow
+				onChange={ onChange }
+				onDelete={ onDelete }
+				rule={ r }
+				index={ i }
+				key={ i }
+			/>
+		);
+	} );
 }

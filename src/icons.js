@@ -238,7 +238,7 @@ icons.borderWidthXLarge = (
 	</svg>
 );
 
-icons.shadow = {}
+icons.shadow = {};
 
 icons.shadow.none = (
 	<svg viewBox="0 0 104 104">

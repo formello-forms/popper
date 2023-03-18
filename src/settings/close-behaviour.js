@@ -92,13 +92,13 @@ const CloseBehaviour = ( props ) => {
 			{ dismissForVisitors && (
 				<PanelRow>
 					<RangeControl
-						value={ parseInt(dismissPeriod) }
+						value={ parseInt( dismissPeriod ) }
 						label={ __(
 							'Number of Days Until the Notice is Shown again',
 							'popper'
 						) }
 						onChange={ ( val ) => {
-							setAttributes( { dismissPeriod: parseInt(val) } );
+							setAttributes( { dismissPeriod: parseInt( val ) } );
 						} }
 						min={ 1 }
 						max={ 100 }

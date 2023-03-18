@@ -2,16 +2,12 @@ import { __ } from '@wordpress/i18n';
 
 import {
 	useBlockProps,
-	AlignmentToolbar,
-	BlockControls,
-	InspectorAdvancedControls,
 	InspectorControls,
 	RichText,
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
 } from '@wordpress/block-editor';
 
-import { SelectControl, ToggleControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
 import classnames from 'classnames';
@@ -40,13 +36,15 @@ export default function Edit( props ) {
 	const buttonClasses = classnames(
 		borderProps.className,
 		colorProps.className,
-		'wp-block-popper__close', {
-		'wp-block-popper__close-outside': 'outside' === position,
-		'wp-block-popper__close-corner': 'corner' === position,
-	} );
+		'wp-block-popper__close',
+		{
+			'wp-block-popper__close-outside': 'outside' === position,
+			'wp-block-popper__close-corner': 'corner' === position,
+		}
+	);
 
 	const blockProps = useBlockProps( {
-		className: buttonClasses
+		className: buttonClasses,
 	} );
 
 	return (
@@ -54,20 +52,21 @@ export default function Edit( props ) {
 			<InspectorControls>
 				<Button { ...props } />
 			</InspectorControls>
-			{
-				isIcon ?
-				<button {...blockProps}><CloseButton /></button>
-				:
+			{ isIcon ? (
+				<button { ...blockProps }>
+					<CloseButton />
+				</button>
+			) : (
 				<RichText
-					{...blockProps}
+					{ ...blockProps }
 					tagName="span"
 					value={ text }
 					onChange={ ( val ) => setAttributes( { text: val } ) }
 					placeholder={ __( 'Enter close text…', 'popper' ) }
 					allowedFormats={ [ 'core/bold', 'core/italic' ] }
 					multiline={ false }
-				/>				
-			}		
+				/>
+			) }
 		</Fragment>
 	);
 }

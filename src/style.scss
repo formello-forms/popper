@@ -1,278 +1,285 @@
-@import './animations';
+@import "./animations";
 
-.wp-block-popper-is-open, .wp-block-popper__container, .popper {
+.wp-block-popper-is-open,
+.wp-block-popper__container,
+.popper {
 
-  /* Box Shadow Color */
-  --box-shadow-color: 0,0,0;
+	/* Box Shadow Color */
+	--box-shadow-color: 0, 0, 0;
 
-  /* Border Radius */
-  --border-radius-sm:2px;
-  --border-radius-md:4px;
-  --border-radius-lg:8px;
-  --border-radius-xl:24px;
-  --border-radius-2xl:9999px;
+	/* Border Radius */
+	--border-radius-sm: 2px;
+	--border-radius-md: 4px;
+	--border-radius-lg: 8px;
+	--border-radius-xl: 24px;
+	--border-radius-2xl: 9999px;
 
-  /* Box Shadow */
-  --box-shadow-sm: 0px 0px 5px 0px rgba( var( --box-shadow-color ), 0.6 );
-  --box-shadow-md: 0px 0px 10px 0px rgba( var( --box-shadow-color ), 0.6 );
-  --box-shadow-lg: 0px 0px 15px 0px rgba( var( --box-shadow-color ), 0.6 );
-  --box-shadow-xl: 0px 0px 25px 0px rgba( var( --box-shadow-color ), 0.6 );
-  --box-shadow-2xl: 0px 0px 35px 0px rgba( var( --box-shadow-color ), 0.6 );
+	/* Box Shadow */
+	--box-shadow-sm: 0 0 5px 0 rgba(var(--box-shadow-color), 0.6);
+	--box-shadow-md: 0 0 10 0 rgba(var(--box-shadow-color), 0.6);
+	--box-shadow-lg: 0 0 15px 0 rgba(var(--box-shadow-color), 0.6);
+	--box-shadow-xl: 0 0 25px 0 rgba(var(--box-shadow-color), 0.6);
+	--box-shadow-2xl: 0 0 35px 0 rgba(var(--box-shadow-color), 0.6);
 }
 
 
 /**************************
-  Reset some default rules of core block
-**************************/
+	Reset some default rules of core block
 
 .wp-block-formello-popper, .popper {
-  p:empty {
-    display: none;
-  }
-  .wp-block-image, .wp-block-embed {
-    margin: 0;
-    line-height: 0;
-  }
+	p:empty {
+	display: none;
+	}
+	.wp-block-image, .wp-block-embed {
+	margin: 0;
+	line-height: 0;
+	}
 }
+**************************/
 
 /**************************
-  Basic Modal Styles
+	Basic Modal Styles
 **************************/
 
 .wp-block-popper {
-  display: none;
+	display: none;
 }
 
 .wp-block-popper-is-open {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index:101;
-  overflow-y: auto;
-  height: 100%;
-  flex-wrap: wrap;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 101;
+	overflow-y: auto;
+	height: 100%;
+	flex-wrap: wrap;
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
 }
 
 .wp-block-popper-is-open::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 .wp-block-popper--left {
-  justify-content: left;
-  pointer-events: none;
+	justify-content: left;
+	pointer-events: none;
 }
 
 .wp-block-popper--right {
-  justify-content: right;
-  pointer-events: none;
+	justify-content: right;
+	pointer-events: none;
 }
 
 .wp-block-popper--top {
-  align-items: start;
-  pointer-events: none;
+	align-items: start;
+	pointer-events: none;
 }
 
 .wp-block-popper--bottom {
-  align-items: end;
-  pointer-events: none;
+	align-items: end;
+	pointer-events: none;
 }
 
 .wp-block-popper__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index:100;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 100;
 }
 
 .wp-block-popper__container {
-  pointer-events: auto; 
-  padding: 0px;
-  max-width: 90vw;
-  //min-width: 400px;
-  border-radius: 0px;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 1000;
-  //max-height: 90vh;
-  margin: 2em 0;
+	pointer-events: auto;
+	padding: 0;
+	max-width: 90vw;
+	//min-width: 400px;
+	border-radius: 0;
+	box-sizing: border-box;
+	position: relative;
+	z-index: 1000;
+	//max-height: 90vh;
+	//margin: 2em 0;
+}
+
+.wp-block-popper__close {
+	align-items: center;
+	background-color: transparent;
+	border: 0;
+	color: #000;
+	cursor: pointer !important;
+	display: inline-flex;
+	font-size: 1em;
+	height: auto;
+	line-height: 1em;
+	margin: 0;
+	outline: none;
+	padding: 0.3em;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	z-index: 1000;
+
+	svg {
+		fill: currentcolor;
+		width: 1em;
+		height: 1em;
+	}
+}
+
+.wp-block-popper__close:hover,
+.wp-block-popper__close:focus {
+	background-color: inherit;
+	outline: none;
+	text-decoration: none;
+	color: currentcolor;
 }
 
 .wp-block-popper__container.wide {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: absolute;
-  margin: 0 !important;
-  width: 100% !important;
-  height: 100%;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  border-radius: 0 !important;
-  box-shadow: none;
-  .wp-block-popper__close {
-    position: absolute;
-    top: 40px !important;
-    right: 40px !important;
-    bottom: auto;
-  }
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: absolute;
+	margin: 0 !important;
+	width: 100% !important;
+	height: 100%;
+	max-width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+	border-radius: 0 !important;
+	box-shadow: none;
+
+	.wp-block-popper__close {
+		position: absolute;
+		top: 40px !important;
+		right: 40px !important;
+		bottom: auto;
+	}
 }
 
 .wp-block-popper__animate {
-  -webkit-animation: var( --popper-animation ) 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-          animation: var( --popper-animation ) 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	-webkit-animation: var(--popper-animation) 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+	animation: var(--popper-animation) 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 .wp-block-popper__content {
-  min-height: auto;
+	min-height: auto;
+	max-width: 90vw;
 }
 
 /* Works on Chrome, Edge, and Safari */
 .wp-block-popper__content::-webkit-scrollbar {
-  width: 8px;
+	width: 8px;
 }
 
 .wp-block-popper__content::-webkit-scrollbar-thumb {
-  border-radius: 20px;
-  border: 1px solid gray;
-}
-
-.wp-block-popper__close {
-  align-items: center;
-  background-color: transparent;
-  border: 0;
-  color: #000;
-  cursor: pointer !important;
-  display: inline-flex;
-  font-size: 1em;
-  height: auto;
-  line-height: 1em;
-  margin: 0px;
-  outline: none;
-  padding: 0.3em;
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  z-index: 1000;
-  svg {
-    fill: currentColor;
-    width: 1em;
-    height: 1em;
-  }
+	border-radius: 20px;
+	border: 1px solid #dedede;
 }
 
 .wp-block-popper__close-outside {
-  bottom: calc( 100% + 5px );
-  top: auto;
-  right: 0;
+	bottom: calc(100% + 5px);
+	top: auto;
+	right: 0;
 }
 
 .wp-block-popper__close-corner {
-  top: -.9em;
-  right: -.9em;
-}
-
-.wp-block-popper__close:hover, .wp-block-popper__close:focus {
-  background-color: transparent;
-  outline: none;
-  text-decoration: none;
-  color: currentColor;
+	top: -0.9em;
+	right: -0.9em;
 }
 
 /**************************
-  Shadow presets
+	Shadow presets
 **************************/
 
 .wp-block-popper__shadow-none {
-  box-shadow: none;
+	box-shadow: none;
 }
 
 .wp-block-popper__shadow-sm {
-  box-shadow: var( --box-shadow-sm );
+	box-shadow: var(--box-shadow-sm);
 }
 
 .wp-block-popper__shadow-md {
-  box-shadow: var( --box-shadow-md );
+	box-shadow: var(--box-shadow-md);
 }
 
 .wp-block-popper__shadow-lg {
-  box-shadow: var( --box-shadow-lg );
+	box-shadow: var(--box-shadow-lg);
 }
 
 .wp-block-popper__shadow-xl {
-  box-shadow: var( --box-shadow-xl );
+	box-shadow: var(--box-shadow-xl);
 }
 
 /**************************
-  Border presets
+	Border presets
 **************************/
 
 .wp-block-popper__border-none {
-  border-radius: none;
+	border-radius: none;
 }
 
 .wp-block-popper__border-sm {
-  border-radius: var( --border-radius-sm );
+	border-radius: var(--border-radius-sm);
 }
 
 .wp-block-popper__border-md {
-  border-radius: var( --border-radius-md );
+	border-radius: var(--border-radius-md);
 }
 
 .wp-block-popper__border-lg {
-  border-radius: var( --border-radius-lg );
+	border-radius: var(--border-radius-lg);
 }
 
 .wp-block-popper__border-xl {
-  border-radius: var( --border-radius-xl );
+	border-radius: var(--border-radius-xl);
 }
 
 /**************************
-  Mobile custom styles for individual modals
+	Mobile custom styles for individual modals
 **************************/
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-    
-  .wp-block-popper__container {
-    width: 90%;
-    min-width: 90%;
-    max-width: 90%;
-    &.wide {
-      width: 100%;
-      max-height: 100vh;
-    }
-  }
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
 
-  @supports (display: flex) {
-  
-      .wp-block-popper__container {
-          width: 90%;
-          max-width: 90%;
-          min-width: 90%;
-          //max-height: 90vh;
-          &.wide {
-            width: 100%;
-            max-height: 100vh;
-          }
-      }
-      
-  }
-  
-  .wp-block-popper__content {
-    -webkit-overflow-scrolling: touch;
-  }
+	.wp-block-popper__container {
+		width: 90%;
+		min-width: 90%;
+		max-width: 90%;
+
+		&.wide {
+			width: 100%;
+			max-height: 100vh;
+		}
+	}
+
+	@supports (display: flex) {
+
+		.wp-block-popper__container {
+			width: 90%;
+			max-width: 90%;
+			min-width: 90%;
+			//max-height: 90vh;
+			&.wide {
+				width: 100%;
+				max-height: 100vh;
+			}
+		}
+
+	}
+
+	.wp-block-popper__content {
+		-webkit-overflow-scrolling: touch;
+	}
 
 }

@@ -21,14 +21,14 @@ const Component = ( props ) => {
 	}
 
 	const updateTransient = () => {
-		setLoading(true)
+		setLoading( true );
 		apiFetch( {
 			path: '/popper/v1/sync_template_library/',
 			method: 'POST',
 			data: {},
 		} ).then( () => {
-			setLoading(false)
-		})
+			setLoading( false );
+		} );
 	};
 
 	const closeModal = () => setModalOpen( false );
@@ -54,7 +54,7 @@ const Component = ( props ) => {
 					{ __( 'Conditions', 'popper' ) }
 				</Button>
 			</BaseControl>
-			
+
 			<Button
 				isPrimary
 				onClick={ updateTransient }
@@ -79,7 +79,9 @@ const Component = ( props ) => {
 				</>
 			) }
 
-			{ isModalOpen && <RulesModal onRequestClose={ closeModal } {...props} /> }
+			{ isModalOpen && (
+				<RulesModal onRequestClose={ closeModal } { ...props } />
+			) }
 		</PluginDocumentSettingPanel>
 	);
 };

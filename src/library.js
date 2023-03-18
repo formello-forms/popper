@@ -4,43 +4,40 @@
 import { useDispatch } from '@wordpress/data';
 import {
 	store as blockEditorStore,
-	//__experimentalBlockPatternSetup as BlockPatternSetup,
+	__experimentalBlockPatternSetup as BlockPatternSetup,
 } from '@wordpress/block-editor';
-import { Modal, Button, BaseControl } from '@wordpress/components';
+import { Modal, Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { cloneBlock } from '@wordpress/blocks';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 
-import BlockPatternSetup from './blockpattern';
+//import BlockPatternSetup from './blockpattern';
 
 export function TemplatesModal( {
 	clientId,
 	blockName,
-	setIsPatternSelectionModalOpen,
-	onRequestClose
+	onRequestClose,
 } ) {
-	const { replaceBlock, updateBlockAttributes, replaceInnerBlocks } = useDispatch( blockEditorStore );
+	const { updateBlockAttributes, replaceInnerBlocks } =
+		useDispatch( blockEditorStore );
 	const onBlockPatternSelect = ( blocks ) => {
-
-		updateBlockAttributes( clientId, blocks[0].attributes )
-		replaceInnerBlocks( clientId, blocks[0].innerBlocks );
+		updateBlockAttributes( clientId, blocks[ 0 ].attributes );
+		replaceInnerBlocks( clientId, blocks[ 0 ].innerBlocks );
 		onRequestClose( false );
-
 	};
 
 	const [ loading, setLoading ] = useState( false );
 
 	const updateTransient = () => {
-		setLoading(true)
+		setLoading( true );
 		apiFetch( {
 			path: '/popper/v1/sync_template_library/',
 			method: 'POST',
 			data: {},
 		} ).then( () => {
-			setLoading(false)
-			window.location.reload()
-		})
+			setLoading( false );
+			window.location.reload();
+		} );
 	};
 
 	return (

@@ -18,7 +18,7 @@ import icons from '../icons';
 export default function Controls( props ) {
 	const {
 		setAttributes,
-		attributes: { borderRadius, boxShadow, align, fullPage, style },
+		attributes: { borderRadius, boxShadow, align, fullPage },
 	} = props;
 
 	const SHADOW_CONTROLS = [
@@ -93,7 +93,14 @@ export default function Controls( props ) {
 				</ToolbarGroup>
 				<ToolbarGroup>
 					<ToolbarDropdownMenu
-						icon={ icons.shadow[boxShadow?.replace( 'wp-block-popper__shadow-', '' )] }
+						icon={
+							icons.shadow[
+								boxShadow?.replace(
+									'wp-block-popper__shadow-',
+									''
+								)
+							]
+						}
 						label={ __( 'Box shadow', 'popper' ) }
 						controls={ SHADOW_CONTROLS.map( ( control ) => {
 							const { shadow } = control;
@@ -102,12 +109,20 @@ export default function Controls( props ) {
 							return {
 								...control,
 								isActive,
-								onClick: () => setAttributes( { boxShadow: shadow } ),
-							}
+								onClick: () =>
+									setAttributes( { boxShadow: shadow } ),
+							};
 						} ) }
 					/>
 					<ToolbarDropdownMenu
-						icon={ icons.border[borderRadius?.replace( 'wp-block-popper__border-', '' )] }
+						icon={
+							icons.border[
+								borderRadius?.replace(
+									'wp-block-popper__border-',
+									''
+								)
+							]
+						}
 						label={ __( 'Border radius', 'popper' ) }
 						controls={ BORDER_CONTROLS.map( ( control ) => {
 							const { border } = control;
@@ -116,8 +131,9 @@ export default function Controls( props ) {
 							return {
 								...control,
 								isActive,
-								onClick: () => setAttributes( { borderRadius: border } )
-							}
+								onClick: () =>
+									setAttributes( { borderRadius: border } ),
+							};
 						} ) }
 					/>
 				</ToolbarGroup>

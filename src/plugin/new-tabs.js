@@ -1,4 +1,4 @@
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 
@@ -9,34 +9,38 @@ import { Devices } from './tabs/devices';
 import { Dates } from './tabs/dates';
 
 export function Tabs( props ) {
+	const {
+		addRule,
+		rules,
+		onSelect,
+		activeTab,
+	} = props;
 
-	const { onDelete, onChange, onChangeDevice, addRule, rules, onSelect, activeTab } = props;
-
-	if( !rules['device'] ){
-		rules['device'] = [
+	if ( ! rules.device ) {
+		rules.device = [
 			{
 				device: 'desktop',
-				visibility: false
+				visibility: false,
 			},
 			{
 				device: 'tablet',
-				visibility: false
+				visibility: false,
 			},
 			{
 				device: 'mobile',
-				visibility: false
+				visibility: false,
 			},
-		]
+		];
 	}
 
-	if( !rules['date'] ){
-		rules['date'] = [
+	if ( ! rules.date ) {
+		rules.date = [
 			{
 				date: 'evergreen',
 				startDate: false,
-				endDate: false
+				endDate: false,
 			},
-		]
+		];
 	}
 
 	return (
@@ -97,15 +101,13 @@ export function Tabs( props ) {
 			] }
 		>
 			{ ( tabData ) => {
-
-				const Component = tabData.component
+				const Component = tabData.component;
 				return (
 					<Fragment>
 						<h2>{ tabData.title }</h2>
 						{ tabData.description }
-						<Component {...props} />
-						{
-							!['date', 'device'].includes( activeTab ) &&
+						<Component { ...props } />
+						{ ! [ 'date', 'device' ].includes( activeTab ) && (
 							<Button
 								isPrimary={ true }
 								onClick={ addRule }
@@ -113,7 +115,7 @@ export function Tabs( props ) {
 							>
 								{ __( 'Add rule', 'popper' ) }
 							</Button>
-						}
+						) }
 					</Fragment>
 				);
 			} }

@@ -1,16 +1,9 @@
 /**
  * WordPress dependencies
  */
-import { 
-	useSelect,
-	store as coreStore,
-} from '@wordpress/data';
-import {
-	parse,
-} from '@wordpress/blocks';
-import {
-	store as blockEditorStore,
-} from '@wordpress/block-editor';
+import { useSelect, store as coreStore } from '@wordpress/data';
+import { parse } from '@wordpress/blocks';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 
 function usePatternsSetup( clientId, blockName, filterPatternsFn ) {
 	return useSelect(
@@ -27,27 +20,23 @@ function usePatternsSetup( clientId, blockName, filterPatternsFn ) {
 				? blockName
 				: [ blockName ];
 
-			const patterns = allPatterns.filter( ( pattern ) => 
-					pattern?.blockTypes?.some?.( ( name ) => 
-						normalizedBlockNames.includes( name )
-					)
-				);
+			const patterns = allPatterns.filter( ( pattern ) =>
+				pattern?.blockTypes?.some?.( ( name ) =>
+					normalizedBlockNames.includes( name )
+				)
+			);
 
 			if ( filterPatternsFn ) {
-				return patterns.filter(
-					filterPatternsFn
-				);
+				return patterns.filter( filterPatternsFn );
 			}
-			return patterns
-				.map( ( pattern ) => {
-					return {
-						...pattern,
-						blocks: parse( pattern.content, {
-							__unstableSkipMigrationLogs: true,
-						} ),
-					};
-				});
-
+			return patterns.map( ( pattern ) => {
+				return {
+					...pattern,
+					blocks: parse( pattern.content, {
+						__unstableSkipMigrationLogs: true,
+					} ),
+				};
+			} );
 		},
 		[ clientId, blockName, filterPatternsFn ]
 	);

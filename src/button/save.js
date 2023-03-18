@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 	RichText,
@@ -7,7 +8,6 @@ import {
 	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
 } from '@wordpress/block-editor';
 import { ReactComponent as CloseButton } from './close-button.svg';
-import { __ } from '@wordpress/i18n';
 
 export default function save( { attributes } ) {
 	const { text, position, isIcon, style } = attributes;
@@ -27,26 +27,26 @@ export default function save( { attributes } ) {
 	const buttonClasses = classnames(
 		borderProps.className,
 		colorProps.className,
-		'wp-block-popper__close', {
-		'wp-block-popper__close-outside': 'outside' === position,
-		'wp-block-popper__close-corner': 'corner' === position,
-	} );
+		'wp-block-popper__close',
+		{
+			'wp-block-popper__close-outside': 'outside' === position,
+			'wp-block-popper__close-corner': 'corner' === position,
+		}
+	);
 
 	const blockProps = useBlockProps.save( {
 		className: buttonClasses,
-		style: colorProps.style
+		style: colorProps.style,
 	} );
 
-	if( isIcon ){
+	if ( isIcon ) {
 		return (
-			<button { ...blockProps }>
+			<button { ...blockProps } aria-label={ __( 'Close modal', 'popper' ) }>
 				<CloseButton />
 			</button>
 		);
-	} else {
-		return (
-			<RichText.Content { ...blockProps } tagName="button" value={ text } />
-		);
 	}
-
+	return (
+		<RichText.Content { ...blockProps } tagName="button" value={ text } />
+	);
 }

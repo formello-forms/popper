@@ -17,13 +17,12 @@ const { name, attributes, supports } = metadata;
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 registerBlockType( name, {
-
 	attributes,
 
 	variations,
 
 	deprecated,
-	
+
 	supports,
 
 	/**
@@ -35,5 +34,4 @@ registerBlockType( name, {
 	 * @see ./save.js
 	 */
 	save,
-
 } );

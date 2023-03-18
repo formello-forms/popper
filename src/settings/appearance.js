@@ -4,12 +4,7 @@ import { PanelColorSettings } from '@wordpress/block-editor';
 
 const Appearance = ( props ) => {
 	const { attributes, setAttributes } = props;
-	const {
-		width,
-		backgroundColor,
-		overlayColor,
-		animation,
-	} = attributes;
+	const { width, backgroundColor, overlayColor, animation } = attributes;
 
 	return (
 		<>

@@ -19,7 +19,9 @@ class Popup {
 			'(min-width:768px) and (max-width: 992px)'
 		).matches;
 		this.checkDevice();
-		this.scrollBarWidth = Math.abs(window.innerWidth - document.documentElement.clientWidth);
+		this.scrollBarWidth = Math.abs(
+			window.innerWidth - document.documentElement.clientWidth
+		);
 	}
 
 	init() {
@@ -30,11 +32,11 @@ class Popup {
 	openModal() {
 		this.closeModals();
 		this.element.classList.add( 'wp-block-popper-is-open' );
-		this.element.setAttribute('aria-hidden', false);
+		this.element.setAttribute( 'aria-hidden', false );
 		this.happened = true;
-		this.element.addEventListener('animationend', () => {
+		this.element.addEventListener( 'animationend', () => {
 			this.handleScroll();
-		});
+		} );
 		this.handleScroll();
 	}
 
@@ -46,17 +48,17 @@ class Popup {
 	}
 
 	handleScroll() {
+		const hasVerticalScrollbar =
+			this.element.querySelector( '.wp-block-popper__container' )
+				.scrollHeight > this.element.clientHeight;
 
-		var hasVerticalScrollbar = this.element.querySelector('.wp-block-popper__container').scrollHeight > this.element.clientHeight;
-
-		if( hasVerticalScrollbar ){
+		if ( hasVerticalScrollbar ) {
 			this.element.style.pointerEvents = 'auto';
 			//this.element.style.overflow = 'auto';
 			//this.element.style.pointerEvents = 'auto';
 			//document.body.style.overflow = 'hidden';
 			//document.body.style.paddingRight = this.scrollBarWidth + 'px';
 		}
-
 	}
 
 	closeModal() {
@@ -64,8 +66,10 @@ class Popup {
 		this.element.classList.remove( 'wp-block-popper-is-open' );
 		const frames = document.getElementsByTagName( 'iframe' );
 		for ( const item of frames ) {
-			if( 'tox-edit-area__iframe' === item.getAttribute('class') ) // if is tinyMce skip
+			// if is tinyMce skip
+			if ( 'tox-edit-area__iframe' === item.getAttribute( 'class' ) ) {
 				continue;
+			}
 			item.setAttribute( 'src', item.src );
 		}
 
@@ -124,17 +128,22 @@ class Popup {
 
 	checkDevice() {
 		const { devices } = this.element.dataset;
-		if( !devices )
+		if ( ! devices ) {
 			return;
+		}
 
-		const devicesArr = devices.split(',')
-		if( devicesArr.includes( 'desktop' ) && !this.isMobile && !this.isTablet ){
+		const devicesArr = devices.split( ',' );
+		if (
+			devicesArr.includes( 'desktop' ) &&
+			! this.isMobile &&
+			! this.isTablet
+		) {
 			this.init();
 		}
-		if( devicesArr.includes( 'tablet' ) && this.isTablet ){
+		if ( devicesArr.includes( 'tablet' ) && this.isTablet ) {
 			this.init();
 		}
-		if( devicesArr.includes( 'mobile' ) && this.isMobile ){
+		if ( devicesArr.includes( 'mobile' ) && this.isMobile ) {
 			this.init();
 		}
 	}
@@ -144,6 +153,9 @@ class Popup {
 		switch ( open ) {
 			case 'anchor':
 				this.bindAnchors();
+				break;
+			case 'adBlock':
+				this.bindAdBlock();
 				break;
 			case 'pageviews':
 				this.bindPageViews();
@@ -228,6 +240,27 @@ class Popup {
 				this.oldScroll = window.scrollY;
 			}, 5000 );
 		};
+	}
+
+	async bindAdBlock() {
+		const adBlock = await this.isAdBlocked();
+
+		window.addEventListener( 'scroll', () => {
+			if ( ! adBlock ) {
+				return false;
+			}
+
+			if ( this.happened ) {
+				return false;
+			}
+
+			const { offset } = this.element.dataset;
+			if ( Number( offset || 50 ) >= this.getScrolledPercent() ) {
+				return false;
+			}
+
+			this.openModal();
+		} );
 	}
 
 	bindTarget() {
@@ -363,6 +396,16 @@ class Popup {
 		}
 
 		oStore.set( data );
+	}
+
+	async isAdBlocked() {
+		let adsBlocked = false;
+
+		const url = `https://ads.google.com?=${ new Date().getTime() }`;
+		await fetch( url, { mode: 'no-cors' } )
+			.catch( () => adsBlocked = true );
+
+		return adsBlocked;
 	}
 }
 

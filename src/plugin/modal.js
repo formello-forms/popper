@@ -1,4 +1,4 @@
-import { Fragment, useState } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 
@@ -6,11 +6,11 @@ import { useSelect } from '@wordpress/data';
 
 import { useEntityProp } from '@wordpress/core-data';
 
-import { TabPanel, Button, Modal } from '@wordpress/components';
+import { Button, Modal } from '@wordpress/components';
 import { Tabs } from './new-tabs';
 
 export function RulesModal( props ) {
-	const { onRequestClose, setAttributes, attributes } = props;
+	const { onRequestClose, setAttributes } = props;
 
 	const postType = useSelect(
 		( select ) => select( 'core/editor' ).getCurrentPostType(),
@@ -52,9 +52,9 @@ export function RulesModal( props ) {
 		setRules( { ...rules, [ activeTab ]: items } );
 	};
 
-	const onChangeDevice = (items) => {
+	const onChangeDevice = ( items ) => {
 		setRules( { ...rules, [ activeTab ]: items } );
-		setAttributes( { devices: items.join(',') } );
+		setAttributes( { devices: items.join( ',' ) } );
 	};
 
 	const updateMetaValue = () => {
@@ -79,13 +79,13 @@ export function RulesModal( props ) {
 			className={ 'popper-modal-rule' }
 			shouldCloseOnClickOutside={ false }
 		>
-			<Tabs 
-				onDelete={ onDelete } 
-				onChange={ onChange } 
-				onChangeDevice={ onChangeDevice } 
-				addRule={ addRule } 
-				rules={ rules } 
-				onSelect={ onSelect } 
+			<Tabs
+				onDelete={ onDelete }
+				onChange={ onChange }
+				onChangeDevice={ onChangeDevice }
+				addRule={ addRule }
+				rules={ rules }
+				onSelect={ onSelect }
 				activeTab={ activeTab }
 			/>
 			<div className={ 'popper-modal-buttons' }>

@@ -98,10 +98,7 @@ function BlockPattern( { pattern, onSelect, composite, showTitles } ) {
 				className={ `${ baseClassName }__item` }
 				onClick={ () => onSelect( blocks ) }
 			>
-				<BlockPreview
-					blocks={ blocks }
-					viewportWidth={ viewportWidth }
-				/>
+				<BlockPreview blocks={ blocks } viewportWidth={ viewportWidth } />
 				{ showTitles && (
 					<div className={ `${ baseClassName }__item-title` }>
 						{ pattern.title }
@@ -129,10 +126,7 @@ function BlockPatternSlide( { className, pattern, minHeight } ) {
 			aria-label={ title }
 			aria-describedby={ description ? descriptionId : undefined }
 		>
-			<BlockPreview
-				blocks={ blocks }
-				__experimentalMinHeight={ minHeight }
-			/>
+			<BlockPreview blocks={ blocks } __experimentalMinHeight={ minHeight } />
 			{ !! description && (
 				<VisuallyHidden id={ descriptionId }>
 					{ description }
@@ -189,9 +183,7 @@ const BlockPatternSetup = ( {
 						setActiveSlide( ( active ) => active - 1 );
 					} }
 					onBlockPatternSelect={ () => {
-						onPatternSelectCallback(
-							patterns[ activeSlide ].blocks
-						);
+						onPatternSelectCallback( patterns[ activeSlide ].blocks );
 					} }
 				/>
 			</div>
