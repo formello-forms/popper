@@ -6,7 +6,7 @@
  * WordPress Dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { ToolbarDropdownMenu, ToolbarGroup } from '@wordpress/components';
+import { ToolbarDropdownMenu, ToolbarGroup, ToolbarButton } from '@wordpress/components';
 import {
 	BlockControls,
 	__experimentalBlockAlignmentMatrixControl as BlockAlignmentMatrixControl,
@@ -18,7 +18,7 @@ import icons from '../icons';
 export default function Controls( props ) {
 	const {
 		setAttributes,
-		attributes: { borderRadius, boxShadow, align, fullPage },
+		attributes: { borderRadius, boxShadow, align, fullPage, fullWidth },
 	} = props;
 
 	const SHADOW_CONTROLS = [
@@ -88,7 +88,14 @@ export default function Controls( props ) {
 					/>
 					<FullHeightAlignmentControl
 						isActive={ fullPage }
+						label={ __( 'Toggle full page', 'popper' ) }
 						onToggle={ () => setAttributes( { fullPage: ! fullPage } ) }
+					/>
+					<ToolbarButton
+						icon={ 'align-wide' }
+						label={ __( 'Toggle full width', 'popper' ) }
+						isActive={ fullWidth }
+						onClick={ () => setAttributes( { fullWidth: ! fullWidth } ) }
 					/>
 				</ToolbarGroup>
 				<ToolbarGroup>

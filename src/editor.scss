@@ -7,6 +7,11 @@
 	opacity: 1;
 }
 
+.wp-block-popper__container:empty {
+	min-height: 40px;
+	min-width: 400px;
+}
+
 .wp-block-popper__close {
 	position: absolute !important;
 }
@@ -27,3 +32,29 @@
 	pointer-events: auto;
 }
 
+.popper-modal-rule {
+
+	@media ( min-width: 1024px ) {
+		min-width: 600px;
+	}
+
+}
+
+.popper-modal-row {
+
+	label {
+		display: none;
+	}
+	margin-bottom: 1em;
+	align-items: center !important;
+
+	.components-form-token-field__input-container {
+		margin: 0;
+	}
+}
+
+.popper-modal-buttons {
+	display: flex;
+	margin: 1em 0;
+	flex-direction: row-reverse;
+}

@@ -15,7 +15,8 @@
 		"inserter": false,
 		"spacing": {
 			"__experimentalSkipSerialization": true,
-			"padding": true
+			"padding": true,
+			"margin": true
 		},
 		"__experimentalBorder": {
 			"__experimentalSkipSerialization": true,
@@ -116,6 +117,11 @@
 			"selector": "div.wp-block-popper.wide",
 			"default": false
 		},
+		"fullWidth": {
+			"type": "boolean",
+			"selector": "div.wp-block-popper.alignfull",
+			"default": false
+		},
 		"offset": {
 			"type": "number",
 			"source": "attribute",
@@ -155,9 +161,8 @@
 			"attribute": "data-time",
 			"default": 1
 		},
-		"width": {
-			"type": "number",
-			"default": 500
+		"minWidth": {
+			"type": "string"
 		}
 	},
 	"editorScript": "file:./build/index.js",

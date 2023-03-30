@@ -1,7 +1,6 @@
 import classnames from 'classnames';
 import {
 	useBlockProps,
-	useInnerBlocksProps,
 	InnerBlocks,
 	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
 	__experimentalGetColorClassesAndStyles as getColorClassesAndStyles,
@@ -10,7 +9,7 @@ import {
 
 export default function save( { attributes, className } ) {
 	const {
-		width,
+		minWidth,
 		anchor,
 		target,
 		waitTime,
@@ -30,11 +29,12 @@ export default function save( { attributes, className } ) {
 		animation,
 		align,
 		fullPage,
+		fullWidth,
 		id,
 		uuid,
 		devices,
 	} = attributes;
-
+	console.log( attributes );
 	const borderProps = getBorderClassesAndStyles( attributes );
 	const spacingProps = getSpacingClassesAndStyles( attributes );
 	const colorProps = getColorClassesAndStyles( attributes );
@@ -45,9 +45,9 @@ export default function save( { attributes, className } ) {
 	};
 
 	const contentStyle = {
-		width,
 		...spacingProps.style,
 		...colorProps.style,
+		minWidth: fullWidth ? undefined : minWidth,
 	};
 
 	const popperClass = classnames( 'wp-block-popper', className, {
@@ -65,6 +65,7 @@ export default function save( { attributes, className } ) {
 		{
 			'wp-block-popper__animate': !! animation,
 			wide: fullPage,
+			fullwidth: fullWidth,
 		}
 	);
 

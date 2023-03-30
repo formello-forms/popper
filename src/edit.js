@@ -18,7 +18,6 @@ import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 
 import BlockVariationPicker from './placeholder';
-import Appearance from './settings/appearance';
 import Appearance2 from './settings/appearance2';
 import OpenBehaviour from './settings/open-behaviour';
 import CloseBehaviour from './settings/close-behaviour';
@@ -38,12 +37,13 @@ function Edit( props ) {
 	} = props;
 
 	const {
-		width,
+		minWidth,
 		backgroundColor,
 		boxShadow,
 		overlayColor,
 		align,
 		fullPage,
+		fullWidth,
 		borderRadius,
 		id,
 		uuid,
@@ -71,14 +71,13 @@ function Edit( props ) {
 
 	const { selectBlock } = dispatch( blockEditorStore );
 
-
 	const borderProps = useBorderProps( attributes );
 	const spacingProps = useSpacingProps( attributes );
 
 	const modalStyle = {
 		borderRadius,
 		...borderProps.style,
-		width,
+		minWidth: fullWidth ? undefined : minWidth,
 		...spacingProps.style,
 	};
 
@@ -86,7 +85,7 @@ function Edit( props ) {
 		backgroundColor: overlayColor,
 	};
 
-	if ( overlayColor && ! align.includes( 'center' ) ) {
+	if ( overlayColor && 'center center' !== align ) {
 		overlayStyle.backgroundColor = undefined;
 	}
 
@@ -104,7 +103,7 @@ function Edit( props ) {
 			'wp-block-popper--top': align.includes( 'top' ),
 			'wp-block-popper--bottom': align.includes( 'bottom' ),
 			'wp-block-formello-popper--nobg':
-				! align.includes( 'center' ) || undefined === overlayColor,
+				'center center' !== align || undefined === overlayColor,
 		}
 	);
 
@@ -114,6 +113,7 @@ function Edit( props ) {
 		borderRadius,
 		borderProps.className,
 		{
+			fullwidth: fullWidth,
 			wide: fullPage,
 		}
 	);
@@ -138,8 +138,8 @@ function Edit( props ) {
 			<InspectorControls>
 				<OpenBehaviour { ...props } />
 				<CloseBehaviour { ...props } />
-				<Appearance { ...props } />
 			</InspectorControls>
+			<Appearance2 { ...props } />
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarButton
@@ -165,17 +165,16 @@ function Edit( props ) {
 				/>
 			</BlockControls>
 
-				<div className={ popperClass }>
-					<div
-						className="wp-block-popper__overlay"
-						style={ overlayStyle }
-						onClick={ () => selectBlock( clientId ) }
-					></div>
-					<main className="wp-block-popper__content" { ...innerBlocksProps }>
-						{ children }
-					</main>
-				</div>				
-			
+			<div className={ popperClass }>
+				<div
+					className="wp-block-popper__overlay"
+					style={ overlayStyle }
+					onClick={ () => selectBlock( clientId ) }
+				></div>
+				<main className="wp-block-popper__content" { ...innerBlocksProps }>
+					{ children }
+				</main>
+			</div>
 
 			{ 'templates' === isModalOpen && (
 				<TemplatesModal

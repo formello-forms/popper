@@ -11,8 +11,6 @@ import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 
-//import BlockPatternSetup from './blockpattern';
-
 export function TemplatesModal( {
 	clientId,
 	blockName,

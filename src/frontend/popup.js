@@ -54,23 +54,28 @@ class Popup {
 
 		if ( hasVerticalScrollbar ) {
 			this.element.style.pointerEvents = 'auto';
-			//this.element.style.overflow = 'auto';
-			//this.element.style.pointerEvents = 'auto';
-			//document.body.style.overflow = 'hidden';
-			//document.body.style.paddingRight = this.scrollBarWidth + 'px';
 		}
 	}
 
 	closeModal() {
 		document.body.style.overflow = 'auto';
 		this.element.classList.remove( 'wp-block-popper-is-open' );
-		const frames = document.getElementsByTagName( 'iframe' );
+		const frames = this.element.getElementsByTagName( 'iframe' );
+		const videos = this.element.getElementsByTagName( 'video' );
+
 		for ( const item of frames ) {
-			// if is tinyMce skip
-			if ( 'tox-edit-area__iframe' === item.getAttribute( 'class' ) ) {
-				continue;
-			}
-			item.setAttribute( 'src', item.src );
+			const iframeSrc = item.src;
+			item.src = '';
+			item.src = iframeSrc;
+
+			//item.contentWindow.location.reload(true)
+			//item.contentWindow.postMessage( '{"event":"command","func":"pauseVideo","args":""}', '*' );
+
+			//item.setAttribute( 'src', iframeSrc );
+		}
+
+		for ( const item of videos ) {
+			item.pause();
 		}
 
 		this.element.style.removeProperty( 'overflow' );
@@ -402,7 +407,7 @@ class Popup {
 		let adsBlocked = false;
 
 		const url = `https://ads.google.com?=${ new Date().getTime() }`;
-		await fetch( url, { mode: 'no-cors' } )
+		await fetch( url, { mode: 'no-cors', method: 'HEAD' } )
 			.catch( () => adsBlocked = true );
 
 		return adsBlocked;

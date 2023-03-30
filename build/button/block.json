@@ -1,60 +1,74 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "popper/button",
-	"parent": ["formello/popper"],
-	"title": "Close Button",
-	"icon": "dismiss",
-	"textdomain": "popper",
-	"attributes": {
-		"lock": {
-			"type": "object",
-			"default": {
-				"move": true,
-				"remove": false
-			}
-		},
-		"text": {
-			"type": "string",
-	        "source": "text",
-	        "selector": "button.wp-block-popper__close",
-			"default": "Close"
-		},
-		"isIcon": {
-	        "type": "boolean",
-	        "selector": "svg",
-			"default": true
-		},
-		"position": {
-			"type": "string"
-		},
-		"style": {
-			"type": "object"
-		}
-	},
-	"supports": {
-		"html": true,
-		"ariaLabel": true,
-		"lock": false,
-		"multiple": false,
-		"reusable": false,
-		"className": false,
-		"color": {
-			"background": true,
-			"text": true,
-			"gradients": true
-		},
-		"__experimentalBorder": true,
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true			
-		},
-		"spacing": {
-			"margin": true,
-			"padding": true,
-			"__experimentalDefaultControls": {
-				"padding": true
-			}
-		}
-	}
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "popper/button",
+  "ancestor": [
+    "formello/popper"
+  ],
+  "title": "Close Button",
+  "icon": "dismiss",
+  "textdomain": "popper",
+  "attributes": {
+    "lock": {
+      "type": "object",
+      "default": {
+        "move": true,
+        "remove": false
+      }
+    },
+    "text": {
+      "type": "string",
+      "source": "text",
+      "selector": "button.wp-block-popper__close",
+      "default": "Close"
+    },
+    "isIcon": {
+      "type": "boolean",
+      "selector": "svg",
+      "default": true
+    },
+    "position": {
+      "type": "string"
+    },
+    "style": {
+      "type": "object"
+    }
+  },
+  "supports": {
+    "html": true,
+    "ariaLabel": true,
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "color": {
+      "background": true,
+      "text": true,
+      "gradients": true
+    },
+    "__experimentalBorder": true,
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "__experimentalDefaultControls": {
+        "padding": true
+      }
+    }
+  },
+  "variations": [
+    {
+      "name": "wordpress",
+      "isDefault": true,
+      "title": "Rounded",
+      "description": "Rounded button",
+      "icon": "WordPressIcon",
+      "attributes": {
+        "providerNameSlug": "wordpress"
+      }
+    }
+  ]
 }

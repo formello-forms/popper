@@ -7,7 +7,7 @@ import { useSelect } from '@wordpress/data';
 import { useEntityProp } from '@wordpress/core-data';
 
 import { Button, Modal } from '@wordpress/components';
-import { Tabs } from './new-tabs';
+import { Tabs } from './tabs';
 
 export function RulesModal( props ) {
 	const { onRequestClose, setAttributes } = props;

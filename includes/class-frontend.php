@@ -71,6 +71,8 @@ class Popper_Frontend {
 			return false;
 		}
 		global $wpdb;
+		global $wp_embed;
+
 		remove_filter( 'the_content', 'wpautop' );
 
 		$popups = '';
@@ -108,8 +110,8 @@ class Popper_Frontend {
 
 			if ( $matched ) {
 				$popper = get_post( $popper_id );
-				// phpcs:ignore
-				$popups .= apply_filters( 'the_content', $popper->post_content );
+
+				$popups .= $wp_embed->autoembed( $popper->post_content );
 
 				$matched = false;
 			}

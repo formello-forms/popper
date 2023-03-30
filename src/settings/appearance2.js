@@ -1,8 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import {
-	RangeControl,
 	SelectControl,
-	__experimentalUnitControl as UnitControl,
+	PanelBody,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
 import {
@@ -10,87 +9,80 @@ import {
 	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 	InspectorControls,
 	InspectorAdvancedControls,
+	HeightControl,
 } from '@wordpress/block-editor';
 
 const Appearance2 = ( props ) => {
 	const { attributes, setAttributes, clientId } = props;
-	const { width, backgroundColor, overlayColor, animation } = attributes;
+	const { minWidth, backgroundColor, overlayColor, animation } = attributes;
 
 	const colorGradientSettings = useMultipleOriginColorsAndGradients();
 
 	return (
 		<>
-			<InspectorControls __experimentalGroup="dimensions">
+			<InspectorControls group="dimensions">
 				<ToolsPanelItem
-					hasValue={ () => !! width }
+					hasValue={ () => !! minWidth }
 					label={ __( 'Minimum width' ) }
 					onDeselect={ () =>
 						setAttributes( {
-							width: undefined,
+							minWidth: undefined,
 						} )
 					}
 					resetAllFilter={ () => ( {
-						width: undefined,
+						minWidth: undefined,
 					} ) }
 					isShownByDefault={ true }
 					panelId={ clientId }
 				>
-					<RangeControl
-						value={ width }
-						label={ __( 'Popup Min Width', 'popper' ) }
-						onChange={ ( val ) => {
-							setAttributes( { width: val } );
-						} }
-						allowReset
-						min={ 50 }
-						max={ 1000 }
-					/>
-					<UnitControl
-						label={ __( 'Width' ) }
+					<HeightControl
+						label={ __( 'Min Width' ) }
 						labelPosition="edge"
-						__unstableInputWidth="80px"
-						value={ width || '' }
+						value={ minWidth }
 						onChange={ ( nextWidth ) => {
-							nextWidth =
-								0 > parseFloat( nextWidth ) ? '0' : nextWidth;
-							setAttributes( { width: nextWidth } );
+							setAttributes( { minWidth: nextWidth } );
 						} }
 					/>
 				</ToolsPanelItem>
 			</InspectorControls>
-			<InspectorAdvancedControls>
-				<SelectControl
-					label={ __( 'Animation', 'popper' ) }
-					value={ animation }
-					options={ [
-						{ label: __( 'None', 'popper' ), value: '' },
-						{
-							label: __( 'Slide in Top', 'popper' ),
-							value: 'slide-in-top',
-						},
-						{
-							label: __( 'Slide in Bottom', 'popper' ),
-							value: 'slide-in-bottom',
-						},
-						{
-							label: __( 'Slide in Right', 'popper' ),
-							value: 'slide-in-right',
-						},
-						{
-							label: __( 'Slide in Left', 'popper' ),
-							value: 'slide-in-left',
-						},
-						{ label: __( 'Unfold In', 'popper' ), value: 'unfoldIn' },
-						{ label: __( 'Puff In', 'popper' ), value: 'puff-in' },
-						{
-							label: __( 'Puff In Back', 'popper' ),
-							value: 'puff-in-back',
-						},
-					] }
-					onChange={ ( val ) => setAttributes( { animation: val } ) }
-				/>
-			</InspectorAdvancedControls>
-			<InspectorControls __experimentalGroup="color">
+			<InspectorControls group="styles">
+				<PanelBody
+					title={ __( 'Animation', 'popper' ) }
+					initialOpen={ false }
+				>
+					<SelectControl
+						label={ __( 'Animation', 'popper' ) }
+						value={ animation }
+						options={ [
+							{ label: __( 'None', 'popper' ), value: '' },
+							{
+								label: __( 'Slide in Top', 'popper' ),
+								value: 'slide-in-top',
+							},
+							{
+								label: __( 'Slide in Bottom', 'popper' ),
+								value: 'slide-in-bottom',
+							},
+							{
+								label: __( 'Slide in Right', 'popper' ),
+								value: 'slide-in-right',
+							},
+							{
+								label: __( 'Slide in Left', 'popper' ),
+								value: 'slide-in-left',
+							},
+							{ label: __( 'Unfold In', 'popper' ), value: 'unfoldIn' },
+							{ label: __( 'Puff In', 'popper' ), value: 'puff-in' },
+							{
+								label: __( 'Puff In Back', 'popper' ),
+								value: 'puff-in-back',
+							},
+						] }
+						onChange={ ( val ) => setAttributes( { animation: val } ) }
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="color">
 				<ColorGradientSettingsDropdown
 					panelId={ clientId }
 					settings={ [
