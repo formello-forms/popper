@@ -3,7 +3,7 @@ Contributors:      Formello, tropicalista
 Tags:              popup, pop up, exit intent, popup maker, exit popup, popup builder, wordpress popup block
 Requires at least: 5.6.0
 Tested up to:      6.2
-Stable tag:        0.4.9
+Stable tag:        0.5.0
 Requires PHP:      5.6.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -36,6 +36,15 @@ Popper has a nice set of animation ready to use and you can also choose differen
 **DOCUMENTATION**
 
 Here you can find [documentation](https://docs.formello.net/addons/popper).
+
+## Privacy Policy 
+Popup with exit intent, scroll triggered and anchor click for opt-ins, lead gen &amp; more uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
+
+Appsero SDK **does not gather any data by default.** The SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users. 
+
+Integrating Appsero SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
+
+Learn more about how [Appsero collects and uses this data](https://appsero.com/privacy-policy/).
 
 == WHAT’S NEXT ==
 
@@ -81,6 +90,9 @@ No. No external library is required. We mantain a clean fast code without depend
 6. Popper display settings
 
 == Changelog ==
+
+= 0.5.0 =
+* Added Appsero
 
 = 0.4.9 =
 * Fix error on iframe removing

@@ -3,7 +3,7 @@
  * Plugin Name: Popper
  * Plugin URI:  https://formello.net/
  * Description: Popup builder with exit-intent powered by Gutenberg.
- * Version:     0.4.9
+ * Version:     0.5.0
  * Requires Plugins: formello
  * Author:      Formello
  * Author URI:  https://formello.net
@@ -14,6 +14,7 @@
  * @package     Popper
  */
 
+require __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/includes/class-conditions.php';
 require_once __DIR__ . '/includes/class-rest.php';
 require_once __DIR__ . '/includes/class-frontend.php';
@@ -24,7 +25,7 @@ load_plugin_textdomain( 'popper', false, dirname( plugin_basename( __FILE__ ) ) 
  * Init hook
  */
 function popper_block_init() {
-	register_block_type_from_metadata(
+	register_block_type(
 		__DIR__
 	);
 	wp_set_script_translations( 'formello-popper-editor-script', 'popper', plugin_dir_path( __FILE__ ) . '/languages/' );
@@ -104,29 +105,31 @@ function popper_register() {
 	);
 	register_post_type( 'popper', $args );
 
+	$defaults = array(
+		'location' => array(),
+		'exclude' => array(),
+		'user' => array(),
+		'date' => array(
+			array(
+				'type' => 'evergreen',
+				'startDate' => false,
+				'endDate' => false,
+			),
+		),
+		'device' => array(
+			'desktop',
+			'tablet',
+			'mobile',
+		),
+	);
+
 	register_meta(
 		'post',
 		'popper_rules',
 		array(
 			'single' => true,
 			'type' => 'object',
-			'default' => array(
-				'location' => array(),
-				'exclude' => array(),
-				'user' => array(),
-				'date' => array(
-					array(
-						'type' => 'evergreen',
-						'startDate' => false,
-						'endDate' => false,
-					),
-				),
-				'device' => array(
-					'desktop',
-					'tablet',
-					'mobile',
-				),
-			),
+			'default' => $defaults,
 			'show_in_rest'  => array(
 				'schema' => array(
 					'type'  => 'object',
@@ -187,8 +190,8 @@ add_action( 'init', 'popper_register' );
  * Print default positions options.
  */
 function popper_positions() {
-	$positions = Popper_Conditions::get_conditions();
-	$users = Popper_Conditions::get_user_conditions();
+	$positions = \Popper\Conditions::get_conditions();
+	$users = \Popper\Conditions::get_user_conditions();
 
 	$screen = get_current_screen();
 	if ( 'edit-popper' === $screen->id ) {
@@ -260,7 +263,7 @@ function popper_columns_display( $column, $post_id ) {
 			$locations = array();
 
 			foreach ( $popup['location'] as $value ) {
-				array_push( $locations, Popper_Conditions::get_saved_label( $value ) );
+				array_push( $locations, \Popper\Conditions::get_saved_label( $value ) );
 			}
 
 			$show = implode( '<br />', $locations );
@@ -275,7 +278,7 @@ function popper_columns_display( $column, $post_id ) {
 			$exclude = array();
 
 			foreach ( $popup['exclude'] as $value ) {
-				array_push( $exclude, Popper_Conditions::get_saved_label( $value ) );
+				array_push( $exclude, \Popper\Conditions::get_saved_label( $value ) );
 			}
 
 			$exclude = implode( '<br />', $exclude );
@@ -286,7 +289,7 @@ function popper_columns_display( $column, $post_id ) {
 			break;
 
 		case 'users':
-			$users = Popper_Conditions::get_user_label( $popup['user'] );
+			$users = \Popper\Conditions::get_user_label( $popup['user'] );
 			echo wp_kses_post( $users );
 			break;
 
@@ -331,3 +334,23 @@ function popper_columns_display( $column, $post_id ) {
 
 	}
 }
+
+/**
+ * Initialize the plugin tracker
+ *
+ * @return void
+ */
+function popper_appsero_init_tracker() {
+
+	if ( ! class_exists( 'Appsero\Client' ) ) {
+		require_once __DIR__ . '/appsero/src/Client.php';
+	}
+
+	$client = new Appsero\Client( '3cf9fb47-a835-47f8-be36-df7bdfceda26', 'Popup with exit intent, scroll triggered and anchor click for opt-ins, lead gen &amp; more', __FILE__ );
+
+	// Active insights.
+	$client->insights()->init();
+
+}
+
+popper_appsero_init_tracker();

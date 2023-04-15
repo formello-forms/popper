@@ -2,13 +2,15 @@
 /**
  * Manage Template API.
  *
- * @package Formello
+ * @package Popper
  */
+
+namespace Popper;
 
 /**
  * REST_API Handler
  */
-class Popper_Rest extends WP_REST_Controller {
+class Rest extends \WP_REST_Controller {
 
 	/**
 	 * Instance.
@@ -209,4 +211,5 @@ class Popper_Rest extends WP_REST_Controller {
 	}
 
 }
-Popper_Rest::get_instance();
+
+Rest::get_instance();

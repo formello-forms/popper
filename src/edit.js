@@ -27,6 +27,7 @@ import './editor.scss';
 import Controls from './settings/controls';
 
 import classnames from 'classnames';
+import { layout } from '@wordpress/icons';
 
 function Edit( props ) {
 	const {
@@ -144,7 +145,7 @@ function Edit( props ) {
 				<ToolbarGroup>
 					<ToolbarButton
 						label={ __( 'Template', 'popper' ) }
-						icon={ 'layout' }
+						icon={ layout }
 						onClick={ () => {
 							setModalOpen( 'templates' );
 						} }

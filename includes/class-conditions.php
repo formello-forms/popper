@@ -5,6 +5,8 @@
  * @package Popper
  */
 
+namespace Popper;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // No direct access, please.
 }
@@ -12,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The conditions class.
  */
-class Popper_Conditions {
+class Conditions {
 	/**
 	 * Instance.
 	 *
@@ -468,4 +470,4 @@ class Popper_Conditions {
 
 }
 
-Popper_Conditions::get_instance();
+Conditions::get_instance();

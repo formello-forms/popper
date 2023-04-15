@@ -16,20 +16,11 @@ const Component = ( props ) => {
 	const [ isModalOpen, setModalOpen ] = useState( false );
 	const [ loading, setLoading ] = useState( false );
 
-	if ( 'popper' !== postType ) {
+	const allowed = ['formello_form', 'popper'];
+
+	if ( ! allowed.includes( postType ) ) {
 		return false;
 	}
-
-	const updateTransient = () => {
-		setLoading( true );
-		apiFetch( {
-			path: '/popper/v1/sync_template_library/',
-			method: 'POST',
-			data: {},
-		} ).then( () => {
-			setLoading( false );
-		} );
-	};
 
 	const closeModal = () => setModalOpen( false );
 
@@ -54,15 +45,6 @@ const Component = ( props ) => {
 					{ __( 'Conditions', 'popper' ) }
 				</Button>
 			</BaseControl>
-
-			<Button
-				isPrimary
-				onClick={ updateTransient }
-				isBusy={ loading }
-				disabled={ loading }
-			>
-				{ __( 'Sync template', 'popper' ) }
-			</Button>
 
 			{ ! formelloInstalled.length && (
 				<>

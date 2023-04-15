@@ -5,6 +5,8 @@
  * @package Popper
  */
 
+namespace Popper;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // No direct access, please.
 }
@@ -12,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The conditions class.
  */
-class Popper_Frontend {
+class Frontend {
 	/**
 	 * Instance.
 	 *
@@ -98,6 +100,7 @@ class Popper_Frontend {
 		// loop through all rules for all boxes.
 		foreach ( $rules as $rule ) {
 			$popper_id = $rule->post_id;
+			$popper_content = $rule->post_content;
 
 			// Get the rules.
 			$rule = maybe_unserialize( $rule->meta_value );
@@ -106,12 +109,11 @@ class Popper_Frontend {
 				$rule['date'] = array();
 			}
 
-			$matched = Popper_Conditions::show_data( $rule['location'], $rule['exclude'], $rule['user'], $rule['date'] );
+			$matched = Conditions::show_data( $rule['location'], $rule['exclude'], $rule['user'], $rule['date'] );
 
 			if ( $matched ) {
-				$popper = get_post( $popper_id );
 
-				$popups .= $wp_embed->autoembed( $popper->post_content );
+				$popups .= $wp_embed->autoembed( $popper_content );
 
 				$matched = false;
 			}
@@ -123,4 +125,4 @@ class Popper_Frontend {
 
 }
 
-Popper_Frontend::get_instance();
+Frontend::get_instance();
