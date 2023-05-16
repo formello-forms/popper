@@ -34,7 +34,7 @@ export default function save( { attributes, className } ) {
 		uuid,
 		devices,
 	} = attributes;
-	console.log( attributes );
+
 	const borderProps = getBorderClassesAndStyles( attributes );
 	const spacingProps = getSpacingClassesAndStyles( attributes );
 	const colorProps = getColorClassesAndStyles( attributes );

@@ -7,7 +7,7 @@
 	opacity: 1;
 }
 
-.wp-block-popper__container:empty {
+.wp-block-popper__container.empty, .wp-block-popper__container:empty {
 	min-height: 40px;
 	min-width: 400px;
 }

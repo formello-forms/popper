@@ -59,6 +59,15 @@ function Edit( props ) {
 		};
 	}, [] );
 
+	const hasInnerBlocks = useSelect(
+		( select ) => {
+			const { getBlock } = select( 'core/block-editor' );
+			const block = getBlock( clientId );
+			return block && ( 1 === block.innerBlocks.length );
+		},
+		[ clientId ]
+	);
+console.log(hasInnerBlocks)
 	useEffect( () => {
 		if ( id !== 'modal-' + postId ) {
 			setAttributes( { id: 'modal-' + postId } );
@@ -116,6 +125,7 @@ function Edit( props ) {
 		{
 			fullwidth: fullWidth,
 			wide: fullPage,
+			'empty': hasInnerBlocks
 		}
 	);
 
@@ -257,7 +267,7 @@ const PopperEdit = ( props ) => {
 	);
 	const Component = hasInnerBlocks ? Edit : Placeholder;
 
-	return <Component { ...props } />;
+	return <Component hasInnerBlocks={ hasInnerBlocks } { ...props } />;
 };
 
 export default PopperEdit;

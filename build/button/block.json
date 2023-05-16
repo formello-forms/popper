@@ -59,16 +59,27 @@
       }
     }
   },
-  "variations": [
+  "styles": [
     {
-      "name": "wordpress",
-      "isDefault": true,
-      "title": "Rounded",
-      "description": "Rounded button",
-      "icon": "WordPressIcon",
-      "attributes": {
-        "providerNameSlug": "wordpress"
-      }
+      "name": "regular",
+      "label": "Default",
+      "isDefault": true
+    },
+    {
+      "name": "rounded",
+      "label": "Rounded black"
+    },
+    {
+      "name": "rounded-alt",
+      "label": "Rounded black alt"
+    },
+    {
+      "name": "squared",
+      "label": "Squared black"
+    },
+    {
+      "name": "squared-alt",
+      "label": "Squared black alt"
     }
   ]
 }

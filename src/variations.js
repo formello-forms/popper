@@ -23,7 +23,7 @@ const variations = [
 		attributes: {
 			backgroundColor: '#ffffff',
 		},
-		innerBlocks: [ [ 'core/paragraph' ], [ 'popper/button' ] ],
+		innerBlocks: [ [ 'core/paragraph' ] ],
 		scope: [ 'block' ],
 	},
 	{
