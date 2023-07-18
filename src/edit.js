@@ -18,7 +18,7 @@ import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 
 import BlockVariationPicker from './placeholder';
-import Appearance2 from './settings/appearance2';
+import Appearance from './settings/appearance';
 import OpenBehaviour from './settings/open-behaviour';
 import CloseBehaviour from './settings/close-behaviour';
 import { RulesModal } from './plugin/modal';
@@ -63,11 +63,11 @@ function Edit( props ) {
 		( select ) => {
 			const { getBlock } = select( 'core/block-editor' );
 			const block = getBlock( clientId );
-			return block && ( 1 === block.innerBlocks.length );
+			return block.innerBlocks.length > 1;
 		},
 		[ clientId ]
 	);
-console.log(hasInnerBlocks)
+
 	useEffect( () => {
 		if ( id !== 'modal-' + postId ) {
 			setAttributes( { id: 'modal-' + postId } );
@@ -125,7 +125,7 @@ console.log(hasInnerBlocks)
 		{
 			fullwidth: fullWidth,
 			wide: fullPage,
-			'empty': hasInnerBlocks
+			'empty': ! hasInnerBlocks
 		}
 	);
 
@@ -150,7 +150,7 @@ console.log(hasInnerBlocks)
 				<OpenBehaviour { ...props } />
 				<CloseBehaviour { ...props } />
 			</InspectorControls>
-			<Appearance2 { ...props } />
+			<Appearance { ...props } />
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarButton
@@ -267,7 +267,7 @@ const PopperEdit = ( props ) => {
 	);
 	const Component = hasInnerBlocks ? Edit : Placeholder;
 
-	return <Component hasInnerBlocks={ hasInnerBlocks } { ...props } />;
+	return <Component { ...props } />;
 };
 
 export default PopperEdit;

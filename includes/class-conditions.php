@@ -391,7 +391,7 @@ class Conditions {
 			}
 		}
 
-		return $show;
+		return apply_filters( 'popper_show_popup', $show );
 	}
 
 	/**
