@@ -389,6 +389,22 @@ class Conditions {
 			if ( 'evergreen' === $type ) {
 				$show = true;
 			}
+			// Now check further for time/day.
+			if( ! empty( $dates[0]['customTime'] ) ) {
+				$show = self::is_between( $dates[0]['startTime'], $dates[0]['endTime'] );
+			}
+
+			if( ! empty( $dates[0]['customDays'] ) ) {
+				$day = date('l');
+				$show = in_array( $day, array_keys( $dates[0]['days'] ) );
+				if( $show ) {
+					$show = self::is_between( 
+						$dates[0]['days'][ $day ]['startTime'], 
+						$dates[0]['days'][ $day ]['endTime'] 
+					);
+				}
+			}
+
 		}
 
 		return apply_filters( 'popper_show_popup', $show );
@@ -466,6 +482,14 @@ class Conditions {
 			$label .= '<br />';
 		}
 		return $label;
+	}
+
+	private static function is_between( $from, $till ) {
+		$fromTime = strtotime( $from );
+		$toTime = strtotime( $till );
+		$inputTime = strtotime( date('H:i') );
+
+		return ( $inputTime >= $fromTime and $inputTime <= $toTime );
 	}
 
 }

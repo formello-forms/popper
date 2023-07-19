@@ -1,7 +1,6 @@
 import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Button, Flex, FlexItem, FormTokenField } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
 import { TaxonomyRules } from './taxonomy-rules';
 import { Rules } from './rules';
 

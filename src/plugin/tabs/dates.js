@@ -1,7 +1,7 @@
 import { dateI18n } from '@wordpress/date';
 import { Fragment } from '@wordpress/element';
-
 import { __ } from '@wordpress/i18n';
+import { Scheduler } from './dates/scheduler';
 
 import {
 	DateTimePicker,
@@ -132,6 +132,8 @@ export function Dates( props ) {
 					</Flex>
 				</Fragment>
 			) }
+			<hr />
+			<Scheduler rule={ rule } onChange={ onChange } />
 		</Fragment>
 	);
 }
