@@ -390,10 +390,6 @@ class Conditions {
 				$show = true;
 			}
 			// Now check further for time/day.
-			if( ! empty( $dates[0]['customTime'] ) ) {
-				$show = self::is_between( $dates[0]['startTime'], $dates[0]['endTime'] );
-			}
-
 			if( ! empty( $dates[0]['customDays'] ) ) {
 				$day = date('l');
 				$show = in_array( $day, array_keys( $dates[0]['days'] ) );
@@ -403,6 +399,10 @@ class Conditions {
 						$dates[0]['days'][ $day ]['endTime'] 
 					);
 				}
+			}
+
+			if( ! empty( $dates[0]['customTime'] ) ) {
+				$show = self::is_between( $dates[0]['startTime'], $dates[0]['endTime'] );
 			}
 
 		}
@@ -487,7 +487,8 @@ class Conditions {
 	private static function is_between( $from, $till ) {
 		$fromTime = strtotime( $from );
 		$toTime = strtotime( $till );
-		$inputTime = strtotime( date('H:i') );
+		$timeZone = wp_timezone_string();
+		$inputTime = strtotime( wp_date( 'H:i' ) );
 
 		return ( $inputTime >= $fromTime and $inputTime <= $toTime );
 	}

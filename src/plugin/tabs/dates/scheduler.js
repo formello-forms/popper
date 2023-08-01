@@ -30,7 +30,6 @@ export function Scheduler( props ) {
     	let newObj = { ...rule.days };
 		delete newObj[day];
 		onChange( 'days', newObj, 0 );
-		console.log(newObj)
 	}
 	
 	return (
