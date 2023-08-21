@@ -2,8 +2,8 @@
 Contributors:      Formello, tropicalista
 Tags:              popup, pop up, exit intent, popup maker, exit popup, popup builder, wordpress popup block
 Requires at least: 5.6.0
-Tested up to:      6.2
-Stable tag:        0.5.3
+Tested up to:      6.3
+Stable tag:        0.5.4
 Requires PHP:      5.6.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -90,6 +90,9 @@ No. No external library is required. We mantain a clean fast code without depend
 6. Popper display settings
 
 == Changelog ==
+
+= 0.5.4 =
+* Fix display button for Formello form
 
 = 0.5.3 =
 * Fix custom time

@@ -6,6 +6,7 @@ import { BaseControl, PanelRow, Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { RulesModal } from './modal';
 import { __ } from '@wordpress/i18n';
+import { useEntityProp } from '@wordpress/core-data';
 import apiFetch from '@wordpress/api-fetch';
 
 const Component = ( props ) => {
@@ -15,6 +16,7 @@ const Component = ( props ) => {
 	);
 	const [ isModalOpen, setModalOpen ] = useState( false );
 	const [ loading, setLoading ] = useState( false );
+    const [ formello_options ] = useEntityProp( 'root', 'site', 'formello' );
 
 	const allowed = ['formello_form', 'popper'];
 
@@ -41,22 +43,34 @@ const Component = ( props ) => {
 					onClick={ () => {
 						setModalOpen( true );
 					} }
+					disabled={ 'formello_form' === postType && ! formello_options?.enabled_addons.includes( 'inserter' ) }
 				>
 					{ __( 'Conditions', 'popper' ) }
 				</Button>
 			</BaseControl>
+
+			{
+				'formello_form' === postType && ! formello_options?.enabled_addons.includes( 'inserter' ) &&
+				<PanelRow>
+					<p>
+						{ __(
+							'You must enable Formello Inserter to set display conditions.', 'popper'
+						) }
+					</p>
+				</PanelRow>
+			}
 
 			{ ! formelloInstalled.length && (
 				<>
 					<PanelRow>
 						<p>
 							{ __(
-								'To take full advantage of Popper and start collecting leads, we suggest using our Formello plugin.'
+								'To take full advantage of Popper and start collecting leads, we suggest using our Formello plugin.', 'popper'
 							) }
 						</p>
 					</PanelRow>
 					<Button isPrimary href={ window.popper.installLink }>
-						{ __( 'Install form', 'popper' ) }
+						{ __( 'Install Formello form', 'popper' ) }
 					</Button>
 				</>
 			) }
